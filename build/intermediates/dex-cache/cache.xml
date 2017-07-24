@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/nandpa/.android/build-cache/60ea66bb7810a776c0a525e907c62252ecdbcab1/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="152e1df65212df23a4b5dba0e819e63bca93192c">
+        <dex dex="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_fae0c2b7897f9698a4391a2fd37371ebf1397739/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/nandpa/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-android-1.2.0_04ca16f8cdcf34027fcd89f8d743276ad0a43d42/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="4641c3507680d329f6252aaebd8296f1a6d1f3eb">
+        <dex dex="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_393a77cde0b26e8d994daab297f53f224cb23eff/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/nandpa/Documents/Intellij-Local/UMentor/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_b00e29e9779400a770f0436bd199af6e31524a0b/classes.dex" />
+    </item>
+
+</items>
