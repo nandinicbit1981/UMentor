@@ -1,4 +1,4 @@
-package parimi.com.umentor;
+package parimi.com.umentor.views.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import parimi.com.umentor.R;
+
 public class MainActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager mCallbackManager;
@@ -29,15 +31,7 @@ public class MainActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
 
         setContentView(R.layout.activity_main);
-//
-//        FragmentManager fm = getSupportFragmentManager();
-//        fragment = fm.findFragmentByTag("myFragmentTag");
-//        if (fragment == null) {
-//            FragmentTransaction ft = fm.beginTransaction();
-//            fragment =new MainFragment();
-//            ft.add(android.R.id.content,fragment,"myFragmentTag");
-//            ft.commit();
-//        }
+
 
         mCallbackManager = CallbackManager.Factory.create();
         loginButton = (LoginButton) findViewById(R.id.login_button);
@@ -55,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
                             String email = object.getString("email");
 
                             Log.d("Name + Email + ID", name + " " + email + " " + id);
+                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                            intent.putExtra("name", name);
+                            intent.putExtra("id", id);
+                            intent.putExtra("email", email);
+                            startActivity(intent);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

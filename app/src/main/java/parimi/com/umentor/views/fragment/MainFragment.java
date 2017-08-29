@@ -1,4 +1,4 @@
-package parimi.com.umentor;
+package parimi.com.umentor.views.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import parimi.com.umentor.R;
 
 
 public class MainFragment extends Fragment {
