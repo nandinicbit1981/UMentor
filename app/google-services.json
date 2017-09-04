@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "987598133433",
+    "firebase_url": "https://umentor-d21ff.firebaseio.com",
+    "project_id": "umentor-d21ff",
+    "storage_bucket": "umentor-d21ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987598133433:android:707c6759035afb5e",
+        "android_client_info": {
+          "package_name": "parimi.com.umentor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987598133433-8v98tvlph23m2hbtqessdksbsn54j4lc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "parimi.com.umentor",
+            "certificate_hash": "49602a4c6797fc6f32637a7614279d5c0f8f2512"
+          }
+        },
+        {
+          "client_id": "987598133433-f6hslnbvlrfmcomo9qg36oeg2a2t6ppa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuD0edrOgum9172NQxjonW0WEVEE849bY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987598133433-f6hslnbvlrfmcomo9qg36oeg2a2t6ppa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
