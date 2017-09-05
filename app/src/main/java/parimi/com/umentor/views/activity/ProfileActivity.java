@@ -1,7 +1,6 @@
 package parimi.com.umentor.views.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -13,7 +12,7 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends NavActivity {
 
     @Inject
     DatabaseHelper databaseHelper;
