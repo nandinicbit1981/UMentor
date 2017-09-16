@@ -46,57 +46,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        AppEventsLogger.activateApp(this);
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//
-//
-//        mCallbackManager = CallbackManager.Factory.create();
-//        loginButton = (LoginButton) findViewById(R.id.login_button);
-//        loginButton.setReadPermissions("email", "public_profile");
-//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//                    @Override
-//                    public void onCompleted(JSONObject object, GraphResponse response) {
-//
-//                        try {
-//                            String name = object.getString("name");
-//                            String id = object.getString("id");
-//                            String email = object.getString("email");
-//
-//                            Log.d("Name + Email + ID", name + " " + email + " " + id);
-//                            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-//                            intent.putExtra("name", name);
-//                            intent.putExtra("id", id);
-//                            intent.putExtra("email", email);
-//                            startActivity(intent);
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//
-//                Bundle parameters = new Bundle();
-//                parameters.putString("fields", "id,name,email");
-//                graphRequest.setParameters(parameters);
-//                graphRequest.executeAsync();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
