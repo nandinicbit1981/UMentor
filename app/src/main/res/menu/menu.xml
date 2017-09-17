@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/profile"
+        android:icon="@drawable/profile"
+        app:showAsAction="ifRoom"
         android:title="Profile" />
     <item android:id="@+id/mentors"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/search"
         android:title="Mentors" />
+    <item android:id="@+id/messages"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/messages"
+        android:title="Messages" />
+    <item android:id="@+id/notifications"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/notification"
+        android:title="Notifications" />
 </menu>

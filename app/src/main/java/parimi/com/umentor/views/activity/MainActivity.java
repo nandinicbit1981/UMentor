@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -23,14 +26,15 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
+import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.views.fragment.MentorSearchFragment;
+import parimi.com.umentor.views.fragment.NotificationsFragment;
+import parimi.com.umentor.views.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.username)
-    TextView mUsernameTxt;
 
     private String mUsername;
     private FirebaseDatabase mFirebaseDatabase;
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 999 ;
     private static final int RC_PHOTO_PICKER = 2;
+    private static final String USER = "user";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,42 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+
+        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.profile:
+                                selectedFragment = new ProfileFragment();
+                                break;
+                            case R.id.mentors:
+                                selectedFragment = new MentorSearchFragment();
+                                break;
+                            case R.id.messages:
+                                selectedFragment = new MentorSearchFragment();
+                                break;
+                            case R.id.notifications:
+                                selectedFragment = new NotificationsFragment();
+                                break;
+
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new ProfileFragment());
+        transaction.commit();
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -95,10 +136,18 @@ public class MainActivity extends AppCompatActivity {
                 "",
                 1);
 
-        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-        intent.putExtra("user", user);
-        startActivity(intent);
-        mUsernameTxt.setText(mUsername);
+//        Fragment fragment = new ProfileFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(USER, user);
+//        fragment.setArguments(bundle);
+//        FragmentManager manager = getSupportFragmentManager();
+//        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+//        transaction.replace(R.id.frame_layout, fragment).commit();
+
+//        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+//        intent.putExtra("user", user);
+//        startActivity(intent);
+        //mUsernameTxt.setText(mUsername);
     }
 
     @Override

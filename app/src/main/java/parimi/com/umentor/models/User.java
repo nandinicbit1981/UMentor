@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * Created by nandpa on 8/26/17.
  */
 
-public class User implements Parcelable{
+public class User implements Parcelable, Serializable {
     private String name;
     private String id;
     private String email;
