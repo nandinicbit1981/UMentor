@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -25,11 +24,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
+import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
 import parimi.com.umentor.views.fragment.MessagesFragment;
@@ -46,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mStorageReference;
+
+    User user;
 
     private static final int RC_SIGN_IN = 999 ;
     private static final int RC_PHOTO_PICKER = 2;
@@ -102,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.profile:
                                 selectedFragment = new ProfileFragment();
+                                ((ProfileFragment)selectedFragment).setActivity(MainActivity.this);
                                 break;
                             case R.id.mentors:
                                 selectedFragment = new MentorSearchFragment();
@@ -114,17 +118,15 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                         }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                       insertFragment(selectedFragment);
                         return true;
                     }
                 });
 
         //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, new ProfileFragment());
-        transaction.commit();
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setActivity(MainActivity.this);
+        insertFragment(fragment);
 
 
 
@@ -136,21 +138,25 @@ public class MainActivity extends AppCompatActivity {
                 firebaseUser.getUid(),
                 firebaseUser.getEmail(),
                 "",
+                0,
                 "",
-                1);
-
+                1,
+                new ArrayList<Category>());
+        this.user = user;
         Fragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(USER, user);
         fragment.setArguments(bundle);
-        FragmentManager manager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment).commit();
+        insertFragment(fragment);
+    }
 
-//        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-//        intent.putExtra("user", user);
-//        startActivity(intent);
-        //mUsernameTxt.setText(mUsername);
+    @Override
+    protected void onResume() {
+        Fragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER, user);
+        fragment.setArguments(bundle);
+        super.onResume();
     }
 
     @Override
@@ -228,6 +234,12 @@ public class MainActivity extends AppCompatActivity {
             };
             mDatabaseReference.addChildEventListener(mChildEventListener);
         }
+    }
+
+    public void insertFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment).commit();
     }
 
 

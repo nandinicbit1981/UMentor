@@ -7,6 +7,7 @@ import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +19,8 @@ public class User implements Parcelable, Serializable {
     private String id;
     private String email;
     private String gender;
+    private int age;
+    private List<Category> category;
     private String expertise;
     private int experience;
 
@@ -26,8 +29,10 @@ public class User implements Parcelable, Serializable {
         id = in.readString();
         email = in.readString();
         gender = in.readString();
+        age = in.readInt();
         expertise = in.readString();
         experience = in.readInt();
+        in.readList(this.getCategory(), Category.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -46,13 +51,18 @@ public class User implements Parcelable, Serializable {
 
     }
 
-    public User(String displayName, String uid, String email, String gender, String expertise, int experience) {
+    public User(String displayName,
+                String uid, String email,
+                String gender, int age, String expertise,
+                int experience, List<Category> category) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
         this.gender = gender;
+        this.age = age;
         this.expertise = expertise;
         this.experience = experience;
+        this.category = category;
     }
 
     public String getName() {
@@ -103,6 +113,15 @@ public class User implements Parcelable, Serializable {
         this.experience = experience;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -128,8 +147,18 @@ public class User implements Parcelable, Serializable {
         parcel.writeString(id);
         parcel.writeString(email);
         parcel.writeString(gender);
+        parcel.writeInt(age);
         parcel.writeString(expertise);
         parcel.writeInt(experience);
+        parcel.writeList(category);
 
+    }
+
+    public List<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<Category> category) {
+        this.category = category;
     }
 }
