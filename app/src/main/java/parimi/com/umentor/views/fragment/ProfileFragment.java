@@ -8,15 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
+import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment {
+
+
+    @Inject
+    DatabaseHelper databaseHelper;
 
     User user;
 
@@ -52,6 +59,12 @@ public class ProfileFragment extends Fragment {
             user = (User) bundle.get("user");
             nameTxt.setText(user.getName());
             emailTxt.setText(user.getEmail());
+        }
+        if(databaseHelper == null) {
+            databaseHelper = new DatabaseHelper();
+        }
+        if(user != null && user.getId() != null) {
+            databaseHelper.saveUser(user);
         }
         return view;
     }

@@ -21,4 +21,8 @@ public class DatabaseHelper {
     public void saveUser(User user) {
         mDatabase.child("users").child(user.getId()).setValue(user);
     }
+
+    public DatabaseReference getCategories() {
+       return mDatabase.child("categories");
+    }
 }

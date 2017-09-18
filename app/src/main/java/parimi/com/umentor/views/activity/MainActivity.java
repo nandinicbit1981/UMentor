@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import parimi.com.umentor.R;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
+import parimi.com.umentor.views.fragment.MessagesFragment;
 import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 
@@ -60,42 +62,6 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseStorage = FirebaseStorage.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navigation);
-
-        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.profile:
-                                selectedFragment = new ProfileFragment();
-                                break;
-                            case R.id.mentors:
-                                selectedFragment = new MentorSearchFragment();
-                                break;
-                            case R.id.messages:
-                                selectedFragment = new MentorSearchFragment();
-                                break;
-                            case R.id.notifications:
-                                selectedFragment = new NotificationsFragment();
-                                break;
-
-                        }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
-                        return true;
-                    }
-                });
-
-        //Manually displaying the first fragment - one time only
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, new ProfileFragment());
-        transaction.commit();
-
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -124,6 +90,43 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+
+        BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.profile:
+                                selectedFragment = new ProfileFragment();
+                                break;
+                            case R.id.mentors:
+                                selectedFragment = new MentorSearchFragment();
+                                break;
+                            case R.id.messages:
+                                selectedFragment = new MessagesFragment();
+                                break;
+                            case R.id.notifications:
+                                selectedFragment = new NotificationsFragment();
+                                break;
+
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, new ProfileFragment());
+        transaction.commit();
+
+
 
     }
 
@@ -136,13 +139,13 @@ public class MainActivity extends AppCompatActivity {
                 "",
                 1);
 
-//        Fragment fragment = new ProfileFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(USER, user);
-//        fragment.setArguments(bundle);
-//        FragmentManager manager = getSupportFragmentManager();
-//        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.replace(R.id.frame_layout, fragment).commit();
+        Fragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER, user);
+        fragment.setArguments(bundle);
+        FragmentManager manager = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.frame_layout, fragment).commit();
 
 //        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
 //        intent.putExtra("user", user);
