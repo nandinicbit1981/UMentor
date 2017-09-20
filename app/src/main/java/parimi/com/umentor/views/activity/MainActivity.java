@@ -40,7 +40,6 @@ import parimi.com.umentor.views.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String mUsername;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildEventListener;
@@ -106,6 +105,9 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
                             case R.id.profile:
                                 selectedFragment = new ProfileFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(USER, user);
+                                selectedFragment.setArguments(bundle);
                                 ((ProfileFragment)selectedFragment).setActivity(MainActivity.this);
                                 break;
                             case R.id.mentors:
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("umentor-d21ff").child("users").child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = new User(
+                 user = new User(
                         dataSnapshot.child("name").getValue().toString(),
                         dataSnapshot.child("id").getValue().toString(),
                         dataSnapshot.child("email").getValue().toString(),
