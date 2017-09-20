@@ -27,6 +27,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
@@ -140,7 +142,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("umentor-d21ff").child("users").child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 user = new User(
+
+                List<Category> categories = new ArrayList<Category>();
+                List<HashMap<String, String>> category = (List<HashMap<String,String>>) dataSnapshot.child("category").getValue();
+                for(HashMap<String, String> map : category) {
+                    categories.add(new Category(map.get("category").toString()));
+                }
+                user = new User(
                         dataSnapshot.child("name").getValue().toString(),
                         dataSnapshot.child("id").getValue().toString(),
                         dataSnapshot.child("email").getValue().toString(),
@@ -148,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
                         Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
                         dataSnapshot.child("expertise").getValue().toString(),
                         Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                        new ArrayList<Category>());
+                        categories
+                       );
 
                        Fragment fragment = new ProfileFragment();
                        Bundle bundle = new Bundle();

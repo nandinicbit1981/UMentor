@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.CategoryAdapter;
 import parimi.com.umentor.database.DatabaseHelper;
+import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
 
 /**
@@ -63,7 +64,7 @@ public class MentorSearchFragment extends Fragment {
                     categories.add(new Category(categoriesSnapshot.getValue().toString()));
                 }
 
-                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories);
+                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.MENTORSEARCHFRAGMENT);
                 gridView.setAdapter(categoryAdapter);
 
 
