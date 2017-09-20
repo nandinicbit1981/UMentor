@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -133,21 +134,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUsername(FirebaseUser firebaseUser) {
-        User user = new User(
-                firebaseUser.getDisplayName(),
-                firebaseUser.getUid(),
-                firebaseUser.getEmail(),
-                "",
-                0,
-                "",
-                1,
-                new ArrayList<Category>());
-        this.user = user;
-        Fragment fragment = new ProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(USER, user);
-        fragment.setArguments(bundle);
-        insertFragment(fragment);
+
+        FirebaseDatabase.getInstance().getReference("umentor-d21ff").child("users").child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = new User(
+                        dataSnapshot.child("name").getValue().toString(),
+                        dataSnapshot.child("id").getValue().toString(),
+                        dataSnapshot.child("email").getValue().toString(),
+                        dataSnapshot.child("gender").getValue().toString(),
+                        Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
+                        dataSnapshot.child("expertise").getValue().toString(),
+                        Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
+                        new ArrayList<Category>());
+
+                       Fragment fragment = new ProfileFragment();
+                       Bundle bundle = new Bundle();
+                       bundle.putSerializable(USER, user);
+                       fragment.setArguments(bundle);
+                       insertFragment(fragment);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

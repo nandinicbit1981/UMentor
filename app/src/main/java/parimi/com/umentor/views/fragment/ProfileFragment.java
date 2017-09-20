@@ -72,6 +72,9 @@ public class ProfileFragment extends Fragment {
             user = (User) bundle.get("user");
             nameTxt.setText(user.getName());
             emailTxt.setText(user.getEmail());
+            ageTxt.setText(String.valueOf(user.getAge()));
+            experienceTxt.setText(String.valueOf(user.getExperience()));
+            expertiseTxt.setText(String.valueOf(user.getExpertise()));
         }
         if(databaseHelper == null) {
             databaseHelper = new DatabaseHelper();
