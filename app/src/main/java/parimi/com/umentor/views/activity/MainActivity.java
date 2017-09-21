@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference mStorageReference;
 
     User user;
-
+    FirebaseUser firebaseUser;
     private static final int RC_SIGN_IN = 999 ;
     private static final int RC_PHOTO_PICKER = 2;
     private static final String USER = "user";
@@ -137,33 +137,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void updateUsername(FirebaseUser firebaseUser) {
-
+    private void updateUsername(final FirebaseUser firebaseUser) {
+        this.firebaseUser = firebaseUser;
         FirebaseDatabase.getInstance().getReference("umentor-d21ff").child("users").child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    List<Category> categories = new ArrayList<Category>();
+                    if (dataSnapshot.child("category").getValue() != null) {
+                        List<HashMap<String, String>> category = (List<HashMap<String, String>>) dataSnapshot.child("category").getValue();
+                        for (HashMap<String, String> map : category) {
+                            categories.add(new Category(map.get("category").toString()));
+                        }
+                    }
+                    user = new User(
+                            dataSnapshot.child("name").getValue().toString(),
+                            dataSnapshot.child("id").getValue().toString(),
+                            dataSnapshot.child("email").getValue().toString(),
+                            dataSnapshot.child("gender").getValue().toString(),
+                            Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
+                            dataSnapshot.child("expertise").getValue().toString(),
+                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
+                            categories
+                    );
 
-                List<Category> categories = new ArrayList<Category>();
-                List<HashMap<String, String>> category = (List<HashMap<String,String>>) dataSnapshot.child("category").getValue();
-                for(HashMap<String, String> map : category) {
-                    categories.add(new Category(map.get("category").toString()));
+                } else{
+                    user = new User(
+                            firebaseUser.getDisplayName(),
+                            firebaseUser.getUid(),
+                            firebaseUser.getEmail(),
+                            "",
+                            0,
+                            "",
+                            0,
+                            new ArrayList<Category>());
                 }
-                user = new User(
-                        dataSnapshot.child("name").getValue().toString(),
-                        dataSnapshot.child("id").getValue().toString(),
-                        dataSnapshot.child("email").getValue().toString(),
-                        dataSnapshot.child("gender").getValue().toString(),
-                        Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                        dataSnapshot.child("expertise").getValue().toString(),
-                        Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                        categories
-                       );
 
-                       Fragment fragment = new ProfileFragment();
-                       Bundle bundle = new Bundle();
-                       bundle.putSerializable(USER, user);
-                       fragment.setArguments(bundle);
-                       insertFragment(fragment);
+
+                Fragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(USER, user);
+                fragment.setArguments(bundle);
+                insertFragment(fragment);
             }
 
             @Override
@@ -171,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
     }
 
     @Override
