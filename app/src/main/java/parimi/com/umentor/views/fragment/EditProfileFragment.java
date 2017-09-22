@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -61,7 +62,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     List<Category> categories = new ArrayList<>();
 
-    List<Category> selectedCategories = new ArrayList<>();
+    HashMap<String , String> selectedCategories = new HashMap<>();
     public  EditProfileFragment() {
     }
 
@@ -79,7 +80,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
-            selectedCategories.addAll(user.getCategory());
+            selectedCategories = user.getCategory();
 
         }
         if(databaseHelper == null) {
@@ -96,7 +97,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
                 }
 
                 CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
-                categoryAdapter.setOnItemSelected(EditProfileFragment.this);
+                categoryAdapter.setOnChechboxItemSelected(EditProfileFragment.this);
                 listView.setAdapter(categoryAdapter);
 
 
@@ -125,6 +126,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     @Override
     public void onItemSelected(String name) {
-        selectedCategories.add(new Category(name));
+        selectedCategories.put(name, name);
     }
 }

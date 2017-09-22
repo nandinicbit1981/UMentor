@@ -25,4 +25,8 @@ public class DatabaseHelper {
     public DatabaseReference getCategories() {
        return mDatabase.child("categories");
     }
+
+    public DatabaseReference getUsers() {
+        return mDatabase.child("users");
+    }
 }

@@ -1,17 +1,20 @@
 package parimi.com.umentor.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import java.util.List;
 
 import parimi.com.umentor.CheckBoxClickInterface;
+import parimi.com.umentor.MentorSearchButtonClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
@@ -26,6 +29,7 @@ public class CategoryAdapter extends BaseAdapter {
     Context context;
     String callingFragment;
     CheckBoxClickInterface checkBoxClickInterface;
+    MentorSearchButtonClickInterface mentorSearchButtonClickInterface;
 
     @Override
     public int getCount() {
@@ -63,8 +67,16 @@ public class CategoryAdapter extends BaseAdapter {
                 gridView = inflater.inflate(R.layout.category_list_item_button, null);
 
                 // set value into textview
-                TextView textView = (TextView) gridView.findViewById(R.id.category_name);
-                textView.setText(categories.get(i).getCategory().toString());
+                final Button button = (Button) gridView.findViewById(R.id.category_name);
+                button.setText(categories.get(i).getCategory().toString());
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                        mentorSearchButtonClickInterface.onItemSelected(((AppCompatButton)view).getText().toString());
+                    }
+                });
             } else {
                 // get layout from mobile.xml
                 gridView = inflater.inflate(R.layout.category_list_item_checkbox, null);
@@ -87,7 +99,11 @@ public class CategoryAdapter extends BaseAdapter {
         return gridView;
     }
 
-    public void setOnItemSelected(CheckBoxClickInterface checkBoxClickInterface) {
+    public void setOnChechboxItemSelected(CheckBoxClickInterface checkBoxClickInterface) {
         this.checkBoxClickInterface = checkBoxClickInterface;
+    }
+
+    public  void setOnCategorySelected(MentorSearchButtonClickInterface mentorSearchButtonClickInterface) {
+        this.mentorSearchButtonClickInterface = mentorSearchButtonClickInterface;
     }
 }

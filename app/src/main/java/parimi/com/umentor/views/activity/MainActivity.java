@@ -25,15 +25,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
-import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
 import parimi.com.umentor.views.fragment.MessagesFragment;
@@ -143,12 +140,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
-                    List<Category> categories = new ArrayList<Category>();
+                     HashMap<String, String> categories = new HashMap<>();
                     if (dataSnapshot.child("category").getValue() != null) {
-                        List<HashMap<String, String>> category = (List<HashMap<String, String>>) dataSnapshot.child("category").getValue();
-                        for (HashMap<String, String> map : category) {
-                            categories.add(new Category(map.get("category").toString()));
-                        }
+                        categories= (HashMap<String, String>) dataSnapshot.child("category").getValue();
                     }
                     user = new User(
                             dataSnapshot.child("name").getValue().toString(),
@@ -170,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                             0,
                             "",
                             0,
-                            new ArrayList<Category>());
+                            new HashMap<String, String>());
                 }
 
 

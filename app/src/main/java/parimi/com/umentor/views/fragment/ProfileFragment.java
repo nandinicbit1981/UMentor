@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import parimi.com.umentor.R;
 import parimi.com.umentor.database.DatabaseHelper;
-import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
@@ -76,11 +75,13 @@ public class ProfileFragment extends Fragment {
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
             String categoryString = "";
-            for(Category category : user.getCategory()) {
-                if(categoryString != "") {
-                    categoryString += ", ";
+            if(user.getCategory() != null && user.getCategory() != null) {
+                for (String category : user.getCategory().keySet()) {
+                    if (categoryString != "") {
+                        categoryString += ", ";
+                    }
+                    categoryString += category;
                 }
-               categoryString += category.getCategory();
             }
             expertiseTxt.setText(categoryString);
         }

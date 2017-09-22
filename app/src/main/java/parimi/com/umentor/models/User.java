@@ -7,7 +7,6 @@ import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,7 +19,7 @@ public class User implements Parcelable, Serializable {
     private String email;
     private String gender;
     private int age;
-    private List<Category> category;
+    private HashMap<String, String> category;
     private String expertise;
     private int experience;
 
@@ -32,7 +31,7 @@ public class User implements Parcelable, Serializable {
         age = in.readInt();
         expertise = in.readString();
         experience = in.readInt();
-        in.readList(this.getCategory(), Category.class.getClassLoader());
+        in.readMap(this.getCategory(), Category.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -54,7 +53,7 @@ public class User implements Parcelable, Serializable {
     public User(String displayName,
                 String uid, String email,
                 String gender, int age, String expertise,
-                int experience, List<Category> category) {
+                int experience, HashMap<String, String> category) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
@@ -150,15 +149,15 @@ public class User implements Parcelable, Serializable {
         parcel.writeInt(age);
         parcel.writeString(expertise);
         parcel.writeInt(experience);
-        parcel.writeList(category);
+        parcel.writeMap(category);
 
     }
 
-    public List<Category> getCategory() {
+    public HashMap<String, String> getCategory() {
         return category;
     }
 
-    public void setCategory(List<Category> category) {
+    public void setCategory(HashMap<String, String> category) {
         this.category = category;
     }
 }

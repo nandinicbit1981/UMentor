@@ -19,22 +19,30 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import parimi.com.umentor.MentorSearchButtonClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.CategoryAdapter;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
+import parimi.com.umentor.models.User;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MentorSearchFragment extends Fragment {
+public class MentorSearchFragment extends Fragment implements MentorSearchButtonClickInterface{
 
     @Inject
     DatabaseHelper databaseHelper;
 
     @BindView(R.id.gridview)
     GridView gridView;
+
+
+
+    List<Category> selectedCategories = new ArrayList<>();
+    List<User> filteredMentors = new ArrayList<>();
 
 
     public MentorSearchFragment() {
@@ -64,7 +72,9 @@ public class MentorSearchFragment extends Fragment {
                     categories.add(new Category(categoriesSnapshot.getValue().toString()));
                 }
 
+
                 CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.MENTORSEARCHFRAGMENT);
+                categoryAdapter.setOnCategorySelected(MentorSearchFragment.this);
                 gridView.setAdapter(categoryAdapter);
 
 
@@ -77,6 +87,31 @@ public class MentorSearchFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onItemSelected(String name) {
+        Category category = new Category(name);
+        if(!selectedCategories.contains(category)) {
+            selectedCategories.add(category);
+        }
+    }
+
+    @OnClick(R.id.search)
+    public void onSearchClicked() {
+        for (Category category : selectedCategories) {
+            databaseHelper.getUsers().child("category").child(category.getCategory()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    System.out.println(dataSnapshot);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
 }
