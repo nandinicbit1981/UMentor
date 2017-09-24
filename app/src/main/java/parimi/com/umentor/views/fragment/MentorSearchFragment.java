@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.views.activity.MainActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,11 +40,9 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
 
     @BindView(R.id.gridview)
     GridView gridView;
-
-
-
     List<Category> selectedCategories = new ArrayList<>();
     List<User> filteredMentors = new ArrayList<>();
+    List<String> filteredMentorUid = new ArrayList<>();
 
 
     public MentorSearchFragment() {
@@ -100,10 +100,19 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
     @OnClick(R.id.search)
     public void onSearchClicked() {
         for (Category category : selectedCategories) {
-            databaseHelper.getUsers().child("category").child(category.getCategory()).addValueEventListener(new ValueEventListener() {
+
+            databaseHelper.getSelectedCategories().child(category.getCategory()).orderByValue().equalTo(true).addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    System.out.println(dataSnapshot);
+                    for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
+                        filteredMentorUid.add(userSnapShot.getKey().toString());
+                    }
+                    Fragment fragment = new FilteredMentorListFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("filteredMentors", (Serializable) filteredMentorUid);
+                    fragment.setArguments(bundle);
+                    ((MainActivity)getActivity()).insertFragment(fragment);
                 }
 
                 @Override
@@ -113,5 +122,4 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
             });
         }
     }
-
 }

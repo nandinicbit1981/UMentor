@@ -62,7 +62,10 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     List<Category> categories = new ArrayList<>();
 
-    HashMap<String , String> selectedCategories = new HashMap<>();
+    List<String> selectedCategories = new ArrayList<>();
+
+    HashMap<String, Boolean> saveSelectedCategories = new HashMap<>();
+
     public  EditProfileFragment() {
     }
 
@@ -80,7 +83,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
-            selectedCategories = user.getCategory();
 
         }
         if(databaseHelper == null) {
@@ -99,8 +101,18 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
                 CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
                 categoryAdapter.setOnChechboxItemSelected(EditProfileFragment.this);
                 listView.setAdapter(categoryAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
+        databaseHelper.getSelectedCategories().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
             }
 
@@ -109,6 +121,8 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
             }
         });
+
+
 
         return view;
     }
@@ -120,12 +134,26 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         user.setName(nameTxt.getText().toString());
         user.setAge(Integer.parseInt(ageTxt.getText().toString()));
         user.setExperience(Integer.parseInt(experienceTxt.getText().toString()));
-        user.setCategory(selectedCategories);
+        //user.setCategory(selectedCategories);
         databaseHelper.saveUser(user);
+
+        for(int i=0;i < selectedCategories.size();i++) {
+            saveSelectedCategories.put(user.getId(), true);
+            databaseHelper.saveUserToCategories(selectedCategories.get(i), user.getId());
+        }
+//
+//
+//        Iterator it = selectedCategories.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pair = (Map.Entry)it.next();
+//            databaseHelper.saveUserToCategories(user.getId(), pair.getValue().toString());
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+
     }
 
     @Override
     public void onItemSelected(String name) {
-        selectedCategories.put(name, name);
+        selectedCategories.add(name);
     }
 }

@@ -129,9 +129,6 @@ public class MainActivity extends AppCompatActivity {
         ProfileFragment fragment = new ProfileFragment();
         fragment.setActivity(MainActivity.this);
         insertFragment(fragment);
-
-
-
     }
 
     private void updateUsername(final FirebaseUser firebaseUser) {
@@ -151,8 +148,7 @@ public class MainActivity extends AppCompatActivity {
                             dataSnapshot.child("gender").getValue().toString(),
                             Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
                             dataSnapshot.child("expertise").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                            categories
+                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString())
                     );
 
                 } else{
@@ -163,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
                             "",
                             0,
                             "",
-                            0,
-                            new HashMap<String, String>());
+                            0);
                 }
 
 

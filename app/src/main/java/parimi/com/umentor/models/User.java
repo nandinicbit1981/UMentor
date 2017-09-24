@@ -19,7 +19,6 @@ public class User implements Parcelable, Serializable {
     private String email;
     private String gender;
     private int age;
-    private HashMap<String, String> category;
     private String expertise;
     private int experience;
 
@@ -31,7 +30,6 @@ public class User implements Parcelable, Serializable {
         age = in.readInt();
         expertise = in.readString();
         experience = in.readInt();
-        in.readMap(this.getCategory(), Category.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -53,7 +51,7 @@ public class User implements Parcelable, Serializable {
     public User(String displayName,
                 String uid, String email,
                 String gender, int age, String expertise,
-                int experience, HashMap<String, String> category) {
+                int experience) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
@@ -61,7 +59,6 @@ public class User implements Parcelable, Serializable {
         this.age = age;
         this.expertise = expertise;
         this.experience = experience;
-        this.category = category;
     }
 
     public String getName() {
@@ -149,15 +146,18 @@ public class User implements Parcelable, Serializable {
         parcel.writeInt(age);
         parcel.writeString(expertise);
         parcel.writeInt(experience);
-        parcel.writeMap(category);
 
     }
 
-    public HashMap<String, String> getCategory() {
-        return category;
-    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof User)) {
+            return false;
+        }
 
-    public void setCategory(HashMap<String, String> category) {
-        this.category = category;
+        User user = (User) o;
+
+        return user.getId().equals(name);
     }
 }

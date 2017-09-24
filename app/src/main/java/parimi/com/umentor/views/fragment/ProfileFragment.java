@@ -75,15 +75,15 @@ public class ProfileFragment extends Fragment {
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
             String categoryString = "";
-            if(user.getCategory() != null && user.getCategory() != null) {
-                for (String category : user.getCategory().keySet()) {
-                    if (categoryString != "") {
-                        categoryString += ", ";
-                    }
-                    categoryString += category;
-                }
-            }
-            expertiseTxt.setText(categoryString);
+//            if(user.getCategory() != null && user.getCategory() != null) {
+//                for (String category : user.getCategory().keySet()) {
+//                    if (categoryString != "") {
+//                        categoryString += ", ";
+//                    }
+//                    categoryString += category;
+//                }
+//            }
+//            expertiseTxt.setText(categoryString);
         }
         if(databaseHelper == null) {
             databaseHelper = new DatabaseHelper();

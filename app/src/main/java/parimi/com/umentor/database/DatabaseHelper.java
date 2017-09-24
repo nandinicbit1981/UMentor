@@ -22,11 +22,19 @@ public class DatabaseHelper {
         mDatabase.child("users").child(user.getId()).setValue(user);
     }
 
+    public void saveUserToCategories(String category,String user) {
+        mDatabase.child("selectedCategories").child(category).child(user).setValue(true);
+    }
+
     public DatabaseReference getCategories() {
        return mDatabase.child("categories");
     }
 
     public DatabaseReference getUsers() {
         return mDatabase.child("users");
+    }
+
+    public DatabaseReference getSelectedCategories() {
+        return mDatabase.child("selectedCategories");
     }
 }
