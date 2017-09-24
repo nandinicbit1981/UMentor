@@ -1,6 +1,8 @@
 package parimi.com.umentor.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import java.util.List;
 
 import parimi.com.umentor.R;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.views.activity.MainActivity;
+import parimi.com.umentor.views.fragment.ProfileFragment;
 
 /**
  * Created by nandpa on 9/23/17.
@@ -21,6 +25,7 @@ public class MentorListAdapter extends BaseAdapter {
 
     Context context;
     List<User> usersLlist = new ArrayList<>();
+
 
     public MentorListAdapter(Context context) {
         this.context = context;
@@ -47,7 +52,7 @@ public class MentorListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
+    public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View listView;
@@ -61,6 +66,17 @@ public class MentorListAdapter extends BaseAdapter {
         } else {
             listView = (View) convertView;
         }
+
+        listView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", usersLlist.get(i));
+                fragment.setArguments(bundle);
+                ((MainActivity)context).insertFragment(fragment);
+            }
+        });
 
         return listView;
     }

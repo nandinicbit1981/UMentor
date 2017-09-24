@@ -5,9 +5,13 @@
         android:icon="@drawable/profile"
         app:showAsAction="ifRoom"
         android:title="Profile" />
-    <item android:id="@+id/mentors"
+    <item android:id="@+id/search"
         app:showAsAction="ifRoom"
         android:icon="@drawable/search"
+        android:title="Search" />
+    <item android:id="@+id/mentors"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/mentor"
         android:title="Mentors" />
     <item android:id="@+id/messages"
         app:showAsAction="ifRoom"

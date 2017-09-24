@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment.setArguments(bundle);
                                 ((ProfileFragment)selectedFragment).setActivity(MainActivity.this);
                                 break;
-                            case R.id.mentors:
+                            case R.id.search:
                                 selectedFragment = new MentorSearchFragment();
                                 break;
                             case R.id.messages:
