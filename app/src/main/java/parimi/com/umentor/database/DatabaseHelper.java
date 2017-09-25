@@ -3,6 +3,9 @@ package parimi.com.umentor.database;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import javax.inject.Inject;
+
+import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
 
 /**
@@ -13,7 +16,7 @@ public class DatabaseHelper {
 
     private DatabaseReference mDatabase;
 
-
+    @Inject
     public DatabaseHelper(){
         mDatabase = FirebaseDatabase.getInstance().getReference("umentor-d21ff");
     }
@@ -36,5 +39,13 @@ public class DatabaseHelper {
 
     public DatabaseReference getSelectedCategories() {
         return mDatabase.child("selectedCategories");
+    }
+
+    public DatabaseReference getRequests() {
+        return mDatabase.child("requests");
+    }
+
+    public void saveRequest(Requests requests) {
+        mDatabase.child("requests").setValue(requests);
     }
 }

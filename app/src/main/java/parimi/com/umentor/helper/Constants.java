@@ -7,4 +7,5 @@ package parimi.com.umentor.helper;
 public class Constants {
     public static String MENTORSEARCHFRAGMENT = "MentorSearchFragment";
     public static String EDITPROFILEFRAGMENT = "EditProfileFragment";
+    public static String USER = "USER";
 }

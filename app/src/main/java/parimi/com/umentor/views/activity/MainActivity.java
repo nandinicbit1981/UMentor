@@ -28,16 +28,25 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import parimi.com.umentor.R;
+import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
+import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
 import parimi.com.umentor.views.fragment.MessagesFragment;
+import parimi.com.umentor.views.fragment.MyMentorListFragment;
 import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Inject
+    DatabaseHelper databaseHelper;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -54,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER = "user";
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -112,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.search:
                                 selectedFragment = new MentorSearchFragment();
                                 break;
+                            case R.id.mentors:
+                                selectedFragment = new MyMentorListFragment();
+                                break;
                             case R.id.messages:
                                 selectedFragment = new MessagesFragment();
                                 break;
@@ -162,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                             0);
                 }
 
-
+                SharedPreferenceHelper.saveUser(MainActivity.this, user);
                 Fragment fragment = new ProfileFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(USER, user);

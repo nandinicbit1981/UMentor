@@ -7,20 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import javax.inject.Inject;
-
 import parimi.com.umentor.R;
-import parimi.com.umentor.database.DatabaseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotificationsFragment extends Fragment {
+public class MyMentorListFragment extends Fragment {
 
-    @Inject
-    DatabaseHelper databaseHelper;
 
-    public NotificationsFragment() {
+    public MyMentorListFragment() {
         // Required empty public constructor
     }
 
@@ -29,8 +24,7 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_notifications, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_my_mentor_list, container, false);
     }
 
 }

@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import parimi.com.umentor.R;
 import parimi.com.umentor.database.DatabaseHelper;
+import parimi.com.umentor.helper.MentorStatus;
+import parimi.com.umentor.helper.SharedPreferenceHelper;
+import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
@@ -51,6 +54,8 @@ public class ProfileFragment extends Fragment {
 
     MainActivity mainActivity;
 
+    User currentUser;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -68,12 +73,17 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
+        User currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         if (bundle != null) {
             user = (User) bundle.get("user");
+            if(!currentUser.getId().equals(user.getId())) {
+                editButton.setText(getString(R.string.request_mentor));
+            }
             nameTxt.setText(user.getName());
             emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
+
             String categoryString = "";
 //            if(user.getCategory() != null && user.getCategory() != null) {
 //                for (String category : user.getCategory().keySet()) {
@@ -98,9 +108,20 @@ public class ProfileFragment extends Fragment {
     public void onEditButtonClick() {
         Fragment fragment = new EditProfileFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("user", user);
-        fragment.setArguments(bundle);
-        ((MainActivity)getActivity()).insertFragment(fragment);
+        if(currentUser == null) {
+            currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
+        }
+        if(currentUser.getId() == user.getId()) {
+            bundle.putSerializable("user", user);
+            fragment.setArguments(bundle);
+            ((MainActivity) getActivity()).insertFragment(fragment);
+        } else {
+            Requests requests = new Requests(currentUser.getId(), user.getId(), MentorStatus.REQUEST_MENTOR);
+            databaseHelper.saveRequest(requests);
+//            databaseHelper.getRequests()
+//                    .orderByChild("receiver").equalTo(user.getId())
+//                    .orderByChild("sender").equalTo(currentUser.getId())
+        }
 
     }
 
