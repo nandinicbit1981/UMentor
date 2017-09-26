@@ -31,8 +31,8 @@ import java.util.HashMap;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import dagger.android.AndroidInjection;
 import parimi.com.umentor.R;
+import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER = "user";
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
+        UMentorDaggerInjector.get().inject(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);

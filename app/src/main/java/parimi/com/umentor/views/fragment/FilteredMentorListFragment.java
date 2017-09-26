@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.MentorListAdapter;
+import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
 
@@ -47,6 +48,7 @@ public class FilteredMentorListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        UMentorDaggerInjector.get().inject(this);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_filtered_mentor_list, container, false);
         ButterKnife.bind(this, view);
@@ -62,9 +64,7 @@ public class FilteredMentorListFragment extends Fragment {
 
     private void getFilteredMentors() {
         for(int i=0;i<filteredMentorUid.size() ; i++) {
-            if(databaseHelper == null) {
-                databaseHelper = new DatabaseHelper();
-            }
+
             databaseHelper.getUsers().child(filteredMentorUid.get(i)).addValueEventListener(new ValueEventListener() {
 
                 @Override

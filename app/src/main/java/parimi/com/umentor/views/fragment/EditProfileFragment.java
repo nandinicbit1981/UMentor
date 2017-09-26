@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import parimi.com.umentor.CheckBoxClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.CategoryAdapter;
+import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
@@ -73,7 +74,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        UMentorDaggerInjector.get().inject(this);
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
@@ -84,9 +85,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
 
-        }
-        if(databaseHelper == null) {
-            databaseHelper = new DatabaseHelper();
         }
 
         databaseHelper.getCategories().addValueEventListener(new ValueEventListener() {

@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import parimi.com.umentor.R;
+import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.MentorStatus;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
@@ -69,7 +70,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        UMentorDaggerInjector.get().inject(this);
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
@@ -95,9 +96,6 @@ public class ProfileFragment extends Fragment {
 //            }
 //            expertiseTxt.setText(categoryString);
         }
-        if(databaseHelper == null) {
-            databaseHelper = new DatabaseHelper();
-        }
         if(user != null && user.getId() != null) {
             databaseHelper.saveUser(user);
         }
@@ -111,7 +109,7 @@ public class ProfileFragment extends Fragment {
         if(currentUser == null) {
             currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         }
-        if(currentUser.getId() == user.getId()) {
+        if(currentUser.getId().equals(user.getId())) {
             bundle.putSerializable("user", user);
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
