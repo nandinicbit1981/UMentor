@@ -5,6 +5,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;
 
+import parimi.com.umentor.helper.NotificationType;
+import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
 
@@ -46,6 +48,37 @@ public class DatabaseHelper {
     }
 
     public void saveRequest(Requests requests) {
-        mDatabase.child("requests").setValue(requests);
+
+        // save the request to the requests
+        DatabaseReference requests1 = mDatabase.child("requests").push();
+        requests1.setValue(requests);
+
+        // create an entry in the notifications
+        DatabaseReference notificationsRequest = mDatabase.child("notifications").push();
+        Notification notification = new Notification(
+                notificationsRequest.getKey(),
+                requests.getSender(),
+                requests.getReceiver(),
+                NotificationType.REQUEST,
+                "",
+                requests.getSenderName() + " would like to add you as a mentor");
+        notificationsRequest.setValue(notification);
+
+    }
+
+    public void updateRequest(Requests requests) {
+        mDatabase.child("requests").child(requests.getId()).setValue(requests);
+    }
+
+    public DatabaseReference getNotifications() {
+        return mDatabase.child("notifications");
+    }
+
+    public void addMentorToUser(String userId,String mentorId) {
+        mDatabase.child("mentors").child(userId).child(mentorId).setValue(true);
+    }
+
+    public DatabaseReference getMentors() {
+        return mDatabase.child("mentors");
     }
 }

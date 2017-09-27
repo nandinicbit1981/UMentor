@@ -13,8 +13,8 @@ import android.widget.CheckBox;
 
 import java.util.List;
 
+import parimi.com.umentor.ButtonClickInterface;
 import parimi.com.umentor.CheckBoxClickInterface;
-import parimi.com.umentor.MentorSearchButtonClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
@@ -29,7 +29,7 @@ public class CategoryAdapter extends BaseAdapter {
     Context context;
     String callingFragment;
     CheckBoxClickInterface checkBoxClickInterface;
-    MentorSearchButtonClickInterface mentorSearchButtonClickInterface;
+    ButtonClickInterface buttonClickInterface;
 
     @Override
     public int getCount() {
@@ -74,7 +74,7 @@ public class CategoryAdapter extends BaseAdapter {
                     @Override
                     public void onClick(View view) {
                         button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                        mentorSearchButtonClickInterface.onItemSelected(((AppCompatButton)view).getText().toString());
+                        buttonClickInterface.onItemSelected(((AppCompatButton)view).getText().toString());
                     }
                 });
             } else {
@@ -103,7 +103,7 @@ public class CategoryAdapter extends BaseAdapter {
         this.checkBoxClickInterface = checkBoxClickInterface;
     }
 
-    public  void setOnCategorySelected(MentorSearchButtonClickInterface mentorSearchButtonClickInterface) {
-        this.mentorSearchButtonClickInterface = mentorSearchButtonClickInterface;
+    public  void setOnCategorySelected(ButtonClickInterface buttonClickInterface) {
+        this.buttonClickInterface = buttonClickInterface;
     }
 }

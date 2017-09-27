@@ -18,21 +18,22 @@ import parimi.com.umentor.views.activity.MainActivity;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 
 /**
- * Created by nandpa on 9/27/17.
+ * Created by nandpa on 9/23/17.
  */
 
-public class MentorListAdapter extends BaseAdapter {
+public class SearchedMentorListAdapter extends BaseAdapter {
 
-    List<User> mentors = new ArrayList<>();
     Context context;
-    public MentorListAdapter(List<User> mentors, Context context) {
-        this.mentors = mentors;
+    List<User> usersLlist = new ArrayList<>();
+
+
+    public SearchedMentorListAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return mentors.size();
+        return usersLlist.size();
     }
 
     @Override
@@ -45,19 +46,23 @@ public class MentorListAdapter extends BaseAdapter {
         return 0;
     }
 
+    public void setUsersLlist(List<User> usersLlist) {
+        this.usersLlist = usersLlist;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         View listView;
 
         if (convertView == null) {
-            listView = inflater.inflate(R.layout.mentors_list_item, null);
+            listView = inflater.inflate(R.layout.users_list_item, null);
             final TextView nameText = (TextView) listView.findViewById(R.id.name);
             final TextView experienceText = (TextView) listView.findViewById(R.id.experience);
-            nameText.setText(mentors.get(i).getName().toString());
-            experienceText.setText(String.valueOf(mentors.get(i).getExperience()));
+            nameText.setText(usersLlist.get(i).getName().toString());
+            experienceText.setText(String.valueOf(usersLlist.get(i).getExperience()));
         } else {
             listView = (View) convertView;
         }
@@ -67,18 +72,12 @@ public class MentorListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Fragment fragment = new ProfileFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("user", mentors.get(i));
+                bundle.putSerializable("user", usersLlist.get(i));
                 fragment.setArguments(bundle);
                 ((MainActivity)context).insertFragment(fragment);
             }
         });
 
         return listView;
-
-    }
-
-    public void setMentors(List<User> mentors) {
-        this.mentors = mentors;
-        notifyDataSetChanged();
     }
 }

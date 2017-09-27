@@ -2,7 +2,6 @@ package parimi.com.umentor.views.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,20 +20,21 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import parimi.com.umentor.MentorSearchButtonClickInterface;
+import parimi.com.umentor.ButtonClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.CategoryAdapter;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
+import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class MentorSearchFragment extends Fragment implements MentorSearchButtonClickInterface{
+public class MentorSearchFragment extends android.support.v4.app.Fragment implements ButtonClickInterface {
 
     @Inject
     DatabaseHelper databaseHelper;
@@ -70,11 +70,9 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
                     categories.add(new Category(categoriesSnapshot.getValue().toString()));
                 }
 
-
                 CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.MENTORSEARCHFRAGMENT);
                 categoryAdapter.setOnCategorySelected(MentorSearchFragment.this);
                 gridView.setAdapter(categoryAdapter);
-
 
             }
 
@@ -95,6 +93,11 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
         }
     }
 
+    @Override
+    public void onRequestAccepted(Notification notification, String acceptOrReject) {
+
+    }
+
     @OnClick(R.id.search)
     public void onSearchClicked() {
         for (Category category : selectedCategories) {
@@ -106,7 +109,7 @@ public class MentorSearchFragment extends Fragment implements MentorSearchButton
                     for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
                         filteredMentorUid.add(userSnapShot.getKey().toString());
                     }
-                    Fragment fragment = new FilteredMentorListFragment();
+                    android.support.v4.app.Fragment fragment = new FilteredMentorListFragment();
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("filteredMentors", (Serializable) filteredMentorUid);
                     fragment.setArguments(bundle);

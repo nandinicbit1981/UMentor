@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment selectedFragment = null;
+                        android.support.v4.app.Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.profile:
                                 selectedFragment = new ProfileFragment();
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 SharedPreferenceHelper.saveUser(MainActivity.this, user);
-                Fragment fragment = new ProfileFragment();
+                android.support.v4.app.Fragment fragment = new ProfileFragment();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(USER, user);
                 fragment.setArguments(bundle);
@@ -195,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Fragment fragment = new ProfileFragment();
+        android.support.v4.app.Fragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(USER, user);
         fragment.setArguments(bundle);
@@ -279,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void insertFragment(Fragment fragment) {
+    public void insertFragment(android.support.v4.app.Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.frame_layout, fragment).commit();

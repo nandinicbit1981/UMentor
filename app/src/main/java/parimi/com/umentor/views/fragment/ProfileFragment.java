@@ -114,7 +114,11 @@ public class ProfileFragment extends Fragment {
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
         } else {
-            Requests requests = new Requests(currentUser.getId(), user.getId(), MentorStatus.REQUEST_MENTOR);
+            Requests requests = new Requests(null,
+                    currentUser.getId(),
+                    user.getId(),
+                    MentorStatus.REQUEST_MENTOR,
+                    currentUser.getName());
             databaseHelper.saveRequest(requests);
 //            databaseHelper.getRequests()
 //                    .orderByChild("receiver").equalTo(user.getId())

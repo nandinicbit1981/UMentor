@@ -21,7 +21,7 @@ public enum MentorStatus {
 
     public static MentorStatus getByStatus(String status) {
         for (MentorStatus mStatus : values()) {
-            if (mStatus.getMentorStatus() == status) {
+            if (mStatus.getMentorStatus().equals(status)) {
                 return mStatus;
             }
         }

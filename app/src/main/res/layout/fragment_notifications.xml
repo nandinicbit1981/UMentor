@@ -4,9 +4,11 @@
     android:layout_height="match_parent"
     tools:context="parimi.com.umentor.views.fragment.NotificationsFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/notifications_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Notifications" />
+        android:layout_height="match_parent">
+
+    </ListView>
 
 </FrameLayout>

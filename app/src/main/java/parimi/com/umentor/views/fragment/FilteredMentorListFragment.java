@@ -20,7 +20,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import parimi.com.umentor.R;
-import parimi.com.umentor.adapters.MentorListAdapter;
+import parimi.com.umentor.adapters.SearchedMentorListAdapter;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
@@ -38,7 +38,7 @@ public class FilteredMentorListFragment extends Fragment {
 
     @BindView(R.id.filtered_mentor_list)
     ListView listView;
-    MentorListAdapter mentorListAdapter;
+    SearchedMentorListAdapter searchedMentorListAdapter;
 
     public FilteredMentorListFragment() {
         // Required empty public constructor
@@ -56,8 +56,8 @@ public class FilteredMentorListFragment extends Fragment {
         if (bundle != null) {
             filteredMentorUid = (List<String>) bundle.get("filteredMentors");
         }
-        mentorListAdapter = new MentorListAdapter(this.getActivity());
-        listView.setAdapter(mentorListAdapter);
+        searchedMentorListAdapter = new SearchedMentorListAdapter(this.getActivity());
+        listView.setAdapter(searchedMentorListAdapter);
         getFilteredMentors();
         return view;
     }
@@ -82,7 +82,7 @@ public class FilteredMentorListFragment extends Fragment {
                     if(!filteredMentors.contains(user)) {
                         filteredMentors.add(user);
                         if(filteredMentors.size() == filteredMentorUid.size()) {
-                            mentorListAdapter.setUsersLlist(filteredMentors);
+                            searchedMentorListAdapter.setUsersLlist(filteredMentors);
                         }
                     }
                 }

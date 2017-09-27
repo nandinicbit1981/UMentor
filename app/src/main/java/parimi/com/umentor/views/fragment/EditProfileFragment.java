@@ -106,22 +106,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
             }
         });
-
-
-        databaseHelper.getSelectedCategories().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
         return view;
     }
 
@@ -132,22 +116,12 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         user.setName(nameTxt.getText().toString());
         user.setAge(Integer.parseInt(ageTxt.getText().toString()));
         user.setExperience(Integer.parseInt(experienceTxt.getText().toString()));
-        //user.setCategory(selectedCategories);
         databaseHelper.saveUser(user);
 
         for(int i=0;i < selectedCategories.size();i++) {
             saveSelectedCategories.put(user.getId(), true);
             databaseHelper.saveUserToCategories(selectedCategories.get(i), user.getId());
         }
-//
-//
-//        Iterator it = selectedCategories.entrySet().iterator();
-//        while (it.hasNext()) {
-//            Map.Entry pair = (Map.Entry)it.next();
-//            databaseHelper.saveUserToCategories(user.getId(), pair.getValue().toString());
-//            it.remove(); // avoids a ConcurrentModificationException
-//        }
-
     }
 
     @Override

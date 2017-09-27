@@ -7,14 +7,22 @@ import parimi.com.umentor.helper.MentorStatus;
  */
 
 public class Requests {
+    private String id;
     private String sender;
     private String receiver;
     private MentorStatus status;
+    private String senderName;
 
-    public Requests(String sender, String receiver, MentorStatus mentorStatus) {
+    public Requests(String id,
+                    String sender,
+                    String receiver,
+                    MentorStatus mentorStatus,
+                    String senderName) {
+        this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.status = mentorStatus;
+        this.senderName = senderName;
     }
 
 
@@ -40,5 +48,21 @@ public class Requests {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }
