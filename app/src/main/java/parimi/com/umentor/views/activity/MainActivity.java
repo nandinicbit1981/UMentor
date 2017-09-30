@@ -37,7 +37,7 @@ import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
-import parimi.com.umentor.views.fragment.MessagesFragment;
+import parimi.com.umentor.views.fragment.MessageListFragment;
 import parimi.com.umentor.views.fragment.MyMentorListFragment;
 import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = new MyMentorListFragment();
                                 break;
                             case R.id.messages:
-                                selectedFragment = new MessagesFragment();
+                                selectedFragment = new MessageListFragment();
                                 break;
                             case R.id.notifications:
                                 selectedFragment = new NotificationsFragment();

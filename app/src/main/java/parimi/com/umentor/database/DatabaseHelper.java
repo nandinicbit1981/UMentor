@@ -6,6 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import javax.inject.Inject;
 
 import parimi.com.umentor.helper.NotificationType;
+import parimi.com.umentor.models.Message;
 import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
@@ -80,5 +81,25 @@ public class DatabaseHelper {
 
     public DatabaseReference getMentors() {
         return mDatabase.child("mentors");
+    }
+
+    public void saveUserChatChannels(Message message, String channelId) {
+        DatabaseReference reference= mDatabase.child("user-chat-channels").child(message.getSenderId()).child(message.getReceiverId()).push();
+        reference.child("channel").setValue(channelId);
+
+        reference= mDatabase.child("user-chat-channels").child(message.getReceiverId()).child(message.getSenderId()).push();
+        reference.child("channel").setValue(channelId);
+    }
+
+    public DatabaseReference getUserChatChannels() {
+        return mDatabase.child("user-chat-channels");
+    }
+
+    public DatabaseReference getChannels() {
+        return mDatabase.child("channels");
+    }
+
+    public void saveChatToChannel(String channelId, Message message){
+        mDatabase.child("channels").child(channelId).push().setValue(message);
     }
 }

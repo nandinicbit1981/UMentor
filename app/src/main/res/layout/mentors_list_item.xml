@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="10dp"
+    android:layout_weight="1"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:layout_weight="0.2"
         android:orientation="horizontal"
         android:paddingRight="5dp"
         android:layout_width="wrap_content"
@@ -17,6 +19,7 @@
             app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
     </LinearLayout>
     <LinearLayout
+        android:layout_weight="0.6"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -35,6 +38,7 @@
                     android:layout_height="wrap_content" />
         </LinearLayout>
         <LinearLayout
+            android:layout_weight="0.2"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -48,6 +52,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/message_img"
+            android:src="@drawable/mentor_message"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
     </LinearLayout>
 
 </LinearLayout>

@@ -16,12 +16,12 @@ import parimi.com.umentor.database.DatabaseHelper;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessagesFragment extends Fragment {
+public class MessageListFragment extends Fragment {
 
     @Inject
     DatabaseHelper mDatabaseHelper;
 
-    public MessagesFragment() {
+    public MessageListFragment() {
         // Required empty public constructor
     }
 

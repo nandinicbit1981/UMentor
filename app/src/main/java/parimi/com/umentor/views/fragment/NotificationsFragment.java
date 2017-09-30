@@ -63,7 +63,6 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
             public void onDataChange(DataSnapshot dataSnapshot) {
                 System.out.println(dataSnapshot.getValue());
                 for(DataSnapshot notification: dataSnapshot.getChildren()) {
-                    Object value = dataSnapshot.getValue();
 
                     Notification notificationInstance = new Notification(notification.child("id").getValue().toString(),
                             notification.child("sender").getValue().toString(),
@@ -103,7 +102,7 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
             notificationAdapter.setNotificationsList(notifications);
 
             //add the user as a mentor
-            databaseHelper.addMentorToUser(currentUser.getId(), notification.getSender());
+            databaseHelper.addMentorToUser(notification.getSender(), currentUser.getId());
         }
 
 
