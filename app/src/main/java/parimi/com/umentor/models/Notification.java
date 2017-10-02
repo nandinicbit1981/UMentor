@@ -12,6 +12,7 @@ public class Notification {
     private String sender;
     private String receiver;
     private String title;
+    private String senderFcmToken;
     private NotificationType notificationType;
     private String message;
 
@@ -20,26 +21,31 @@ public class Notification {
                         String receiver,
                         NotificationType notificationType,
                         String message,
-                        String title) {
+                        String title,
+                        String senderFcmToken) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.notificationType = notificationType;
         this.message = message;
         this.title = title;
+        this.senderFcmToken = senderFcmToken;
     }
 
     public Notification( String sender,
                          String receiver,
                          NotificationType notificationType,
                          String message,
-                         String title) {
+                         String title,
+                         String fcmToken
+                        ) {
 
         this.sender = sender;
         this.receiver = receiver;
         this.notificationType = notificationType;
         this.message = message;
         this.title = title;
+        this.senderFcmToken = fcmToken;
     }
 
     public String getSender() {
@@ -88,5 +94,13 @@ public class Notification {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getSenderFcmToken() {
+        return senderFcmToken;
+    }
+
+    public void setSenderFcmToken(String senderFcmToken) {
+        this.senderFcmToken = senderFcmToken;
     }
 }

@@ -29,6 +29,7 @@ import parimi.com.umentor.helper.NotificationType;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.rest.RestInterface;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +70,8 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
                             notification.child("receiver").getValue().toString(),
                             NotificationType.getByType(notification.child("notificationType").getValue().toString()),
                             notification.child("message").getValue().toString(),
-                            notification.child("title").getValue().toString()
+                            notification.child("title").getValue().toString(),
+                            notification.child("senderFcmToken").getValue().toString()
                     );
                     notifications.add(notificationInstance);
                 }
@@ -103,6 +105,7 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
 
             //add the user as a mentor
             databaseHelper.addMentorToUser(notification.getSender(), currentUser.getId());
+            RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), "Friend Request Accepted", currentUser.getName() + " has accepted your friend request.");
         }
 
 

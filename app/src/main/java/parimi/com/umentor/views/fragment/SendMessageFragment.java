@@ -28,9 +28,12 @@ import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.MessageAdapter;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
+import parimi.com.umentor.helper.NotificationType;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.Message;
+import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.rest.RestInterface;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -103,7 +106,6 @@ public class SendMessageFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    System.out.println(ds);
                     Message message = new Message();
                     message.setReceiverId(ds.child("receiverId").getValue().toString());
                     message.setSenderId(ds.child("senderId").getValue().toString());
@@ -150,6 +152,9 @@ public class SendMessageFragment extends Fragment {
                         databaseHelper.saveChatToChannel(ds.child("channel").getValue().toString(), message);
                     }
                 }
+                Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + " sent you a new message", "New Message", mentor.getFcmToken());
+                databaseHelper.saveNotification(notification);
+                RestInterface.sendNotification(getContext(), mentor.getFcmToken(), "New Message", currentUser.getName() + " sent you a new message");
             }
 
             @Override

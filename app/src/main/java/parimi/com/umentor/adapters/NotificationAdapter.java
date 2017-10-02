@@ -57,8 +57,13 @@ public class NotificationAdapter extends BaseAdapter {
             listView = inflater.inflate(R.layout.notifications_list_item, null);
             final TextView titleText = (TextView) listView.findViewById(R.id.title);
             titleText.setText(notifications.get(i).getTitle());
+            final TextView messageText = (TextView) listView.findViewById(R.id.message);
+            messageText.setText(notifications.get(i).getMessage());
+
             if(notifications.get(i).getNotificationType().equals(NotificationType.REQUEST)) {
                 listView.findViewById(R.id.notification_actions).setVisibility(View.VISIBLE);
+            } else {
+                listView.findViewById(R.id.notification_message).setVisibility(View.VISIBLE);
             }
             Button acceptButton = listView.findViewById(R.id.accept);
             acceptButton.setOnClickListener(new View.OnClickListener() {

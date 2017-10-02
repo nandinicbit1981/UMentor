@@ -1,10 +1,13 @@
 package parimi.com.umentor.views.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -20,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     DatabaseHelper databaseHelper;
-
+    private String fcmToken;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildEventListener;
@@ -63,11 +67,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         UMentorDaggerInjector.get().inject(this);
-        super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        fcmToken = FirebaseInstanceId.getInstance().getToken();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
@@ -141,64 +143,73 @@ public class MainActivity extends AppCompatActivity {
         ProfileFragment fragment = new ProfileFragment();
         fragment.setActivity(MainActivity.this);
         insertFragment(fragment);
+        super.onCreate(null);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     private void updateUsername(final FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
-        FirebaseDatabase.getInstance().getReference("umentor-d21ff").child("users").child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() != null) {
-                     HashMap<String, String> categories = new HashMap<>();
-                    if (dataSnapshot.child("category").getValue() != null) {
-                        categories= (HashMap<String, String>) dataSnapshot.child("category").getValue();
-                    }
-                    user = new User(
-                            dataSnapshot.child("name").getValue().toString(),
-                            dataSnapshot.child("id").getValue().toString(),
-                            dataSnapshot.child("email").getValue().toString(),
-                            dataSnapshot.child("gender").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                            dataSnapshot.child("expertise").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString())
-                    );
 
-                } else{
-                    user = new User(
-                            firebaseUser.getDisplayName(),
-                            firebaseUser.getUid(),
-                            firebaseUser.getEmail(),
-                            "",
-                            0,
-                            "",
-                            0);
+            databaseHelper.getUsers().child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.getValue() != null) {
+                        HashMap<String, String> categories = new HashMap<>();
+                        if (dataSnapshot.child("category").getValue() != null) {
+                            categories = (HashMap<String, String>) dataSnapshot.child("category").getValue();
+                        }
+                        user = new User(
+                                dataSnapshot.child("name").getValue().toString(),
+                                dataSnapshot.child("id").getValue().toString(),
+                                dataSnapshot.child("email").getValue().toString(),
+                                dataSnapshot.child("gender").getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
+                                dataSnapshot.child("expertise").getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
+                                fcmToken);
+
+
+                    } else {
+                        user = new User(
+                                firebaseUser.getDisplayName(),
+                                firebaseUser.getUid(),
+                                firebaseUser.getEmail(),
+                                "",
+                                0,
+                                "",
+                                0,
+                                ""
+                        );
+                    }
+                    SharedPreferenceHelper.saveUser(MainActivity.this, user);
+                    android.support.v4.app.Fragment fragment = new ProfileFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(USER, user);
+                    fragment.setArguments(bundle);
+                    insertFragment(fragment);
+
                 }
 
-                SharedPreferenceHelper.saveUser(MainActivity.this, user);
-                android.support.v4.app.Fragment fragment = new ProfileFragment();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(USER, user);
-                fragment.setArguments(bundle);
-                insertFragment(fragment);
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
+                }
+            });
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
         android.support.v4.app.Fragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(USER, user);
         fragment.setArguments(bundle);
-        super.onResume();
+
     }
 
     @Override
@@ -278,10 +289,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void insertFragment(android.support.v4.app.Fragment fragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.frame_layout, fragment).commit();
+    public void insertFragment(final android.support.v4.app.Fragment fragment) {
+        if(!isFinishing()) {
+            new Handler().post(new Runnable() {
+                public void run() {
+                    FragmentManager manager = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.frame_layout, fragment).commitAllowingStateLoss();
+                }
+            });
+        }
     }
 
 

@@ -11,18 +11,22 @@ public class Requests {
     private String sender;
     private String receiver;
     private MentorStatus status;
+    private String senderFcmToken;
     private String senderName;
 
     public Requests(String id,
                     String sender,
                     String receiver,
                     MentorStatus mentorStatus,
-                    String senderName) {
+                    String senderName,
+                    String fcmToken
+                    ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.status = mentorStatus;
         this.senderName = senderName;
+        this.senderFcmToken = fcmToken;
     }
 
 
@@ -64,5 +68,13 @@ public class Requests {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    public String getSenderFcmToken() {
+        return senderFcmToken;
+    }
+
+    public void setSenderFcmToken(String senderFcmToken) {
+        this.senderFcmToken = senderFcmToken;
     }
 }

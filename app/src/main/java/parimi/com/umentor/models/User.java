@@ -21,6 +21,7 @@ public class User implements Parcelable, Serializable {
     private int age;
     private String expertise;
     private int experience;
+    private String fcmToken;
 
     public User(Parcel in) {
         name = in.readString();
@@ -30,6 +31,7 @@ public class User implements Parcelable, Serializable {
         age = in.readInt();
         expertise = in.readString();
         experience = in.readInt();
+        fcmToken = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -51,7 +53,7 @@ public class User implements Parcelable, Serializable {
     public User(String displayName,
                 String uid, String email,
                 String gender, int age, String expertise,
-                int experience) {
+                int experience, String fcmToken) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
@@ -59,6 +61,7 @@ public class User implements Parcelable, Serializable {
         this.age = age;
         this.expertise = expertise;
         this.experience = experience;
+        this.fcmToken = fcmToken;
     }
 
     public String getName() {
@@ -146,6 +149,7 @@ public class User implements Parcelable, Serializable {
         parcel.writeInt(age);
         parcel.writeString(expertise);
         parcel.writeInt(experience);
+        parcel.writeString(fcmToken);
 
     }
 
@@ -159,5 +163,13 @@ public class User implements Parcelable, Serializable {
         User user = (User) o;
 
         return user.getId().equals(name);
+    }
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

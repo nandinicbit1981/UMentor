@@ -62,7 +62,9 @@ public class DatabaseHelper {
                 requests.getReceiver(),
                 NotificationType.REQUEST,
                 "",
-                requests.getSenderName() + " would like to add you as a mentor");
+                requests.getSenderName() + " would like to add you as a mentor",
+                requests.getSenderFcmToken()
+                );
         notificationsRequest.setValue(notification);
 
     }
@@ -101,5 +103,11 @@ public class DatabaseHelper {
 
     public void saveChatToChannel(String channelId, Message message){
         mDatabase.child("channels").child(channelId).push().setValue(message);
+    }
+
+    public void saveNotification(Notification notification) {
+        DatabaseReference notificationsRequest = mDatabase.child("notifications").push();
+        notification.setId(notificationsRequest.getKey());
+        notificationsRequest.setValue(notification);
     }
 }

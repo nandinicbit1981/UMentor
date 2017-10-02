@@ -22,6 +22,7 @@ import parimi.com.umentor.helper.MentorStatus;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
 /**
@@ -118,11 +119,11 @@ public class ProfileFragment extends Fragment {
                     currentUser.getId(),
                     user.getId(),
                     MentorStatus.REQUEST_MENTOR,
-                    currentUser.getName());
+                    currentUser.getName(),
+                    currentUser.getFcmToken()
+                    );
             databaseHelper.saveRequest(requests);
-//            databaseHelper.getRequests()
-//                    .orderByChild("receiver").equalTo(user.getId())
-//                    .orderByChild("sender").equalTo(currentUser.getId())
+            RestInterface.sendNotification(getContext(), user.getFcmToken(), "Friend Request", currentUser.getName() + " wants to add you as a friend");
         }
 
     }
