@@ -39,14 +39,12 @@ public class RestInterface {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                System.out.println("POLARRRRRRRRRRRR pass");
-                System.out.println(responseBody);
+
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println("POLARRRRRRRRRRRR fail");
-                System.out.println(responseBody);
+
             }
 
         });

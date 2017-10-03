@@ -30,6 +30,7 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.NotificationType;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
+import parimi.com.umentor.helper.UMentorHelper;
 import parimi.com.umentor.models.Message;
 import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
@@ -133,6 +134,8 @@ public class SendMessageFragment extends Fragment {
 
     @OnClick(R.id.message_send_button)
     public void sendMessage() {
+        UMentorHelper.hideKeyboard(this.getContext(), getView());
+
         final Message message = new Message();
         message.setMessage(messageEditText.getText().toString());
         message.setSenderName(currentUser.getName());
@@ -140,6 +143,7 @@ public class SendMessageFragment extends Fragment {
         message.setSenderId(currentUser.getId());
         message.setReceiverId(mentor.getId());
         message.setTimeStamp((new Date()).getTime());
+        messageEditText.getText().clear();
         databaseHelper.getUserChatChannels().child(message.getSenderId()).child(message.getReceiverId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -152,7 +156,7 @@ public class SendMessageFragment extends Fragment {
                         databaseHelper.saveChatToChannel(ds.child("channel").getValue().toString(), message);
                     }
                 }
-                Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + " sent you a new message", "New Message", mentor.getFcmToken());
+                Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + " sent you a new message", "New Message", mentor.getFcmToken(), new Date().getTime());
                 databaseHelper.saveNotification(notification);
                 RestInterface.sendNotification(getContext(), mentor.getFcmToken(), "New Message", currentUser.getName() + " sent you a new message");
             }
@@ -162,8 +166,6 @@ public class SendMessageFragment extends Fragment {
 
             }
         });
-
-
     }
 
 }

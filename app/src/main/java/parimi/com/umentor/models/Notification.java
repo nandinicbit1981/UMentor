@@ -15,6 +15,7 @@ public class Notification {
     private String senderFcmToken;
     private NotificationType notificationType;
     private String message;
+    private long timeStamp;
 
     public Notification(String id,
                         String sender,
@@ -22,7 +23,9 @@ public class Notification {
                         NotificationType notificationType,
                         String message,
                         String title,
-                        String senderFcmToken) {
+                        String senderFcmToken,
+                        long timeStamp
+                        ) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
@@ -30,6 +33,7 @@ public class Notification {
         this.message = message;
         this.title = title;
         this.senderFcmToken = senderFcmToken;
+        this.timeStamp = timeStamp;
     }
 
     public Notification( String sender,
@@ -37,7 +41,8 @@ public class Notification {
                          NotificationType notificationType,
                          String message,
                          String title,
-                         String fcmToken
+                         String fcmToken,
+                         long timeStamp
                         ) {
 
         this.sender = sender;
@@ -46,6 +51,7 @@ public class Notification {
         this.message = message;
         this.title = title;
         this.senderFcmToken = fcmToken;
+        this.timeStamp = timeStamp;
     }
 
     public String getSender() {
@@ -102,5 +108,18 @@ public class Notification {
 
     public void setSenderFcmToken(String senderFcmToken) {
         this.senderFcmToken = senderFcmToken;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.timeStamp == ((Notification) obj).getTimeStamp();
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

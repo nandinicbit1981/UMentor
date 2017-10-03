@@ -62,7 +62,6 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
         databaseHelper.getNotifications().orderByChild("receiver").equalTo(currentUser.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println(dataSnapshot.getValue());
                 for(DataSnapshot notification: dataSnapshot.getChildren()) {
 
                     Notification notificationInstance = new Notification(notification.child("id").getValue().toString(),
@@ -71,9 +70,12 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
                             NotificationType.getByType(notification.child("notificationType").getValue().toString()),
                             notification.child("message").getValue().toString(),
                             notification.child("title").getValue().toString(),
-                            notification.child("senderFcmToken").getValue().toString()
+                            notification.child("senderFcmToken").getValue().toString(),
+                            Long.valueOf(notification.child("timeStamp").getValue().toString())
                     );
-                    notifications.add(notificationInstance);
+                    if(!notifications.contains(notificationInstance)) {
+                        notifications.add(notificationInstance);
+                    }
                 }
                 notificationAdapter = new NotificationAdapter(getActivity(), notifications, NotificationsFragment.this);
                 notificationListView.setAdapter(notificationAdapter);

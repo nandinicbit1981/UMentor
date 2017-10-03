@@ -3,6 +3,8 @@ package parimi.com.umentor.database;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import parimi.com.umentor.helper.NotificationType;
@@ -63,7 +65,8 @@ public class DatabaseHelper {
                 NotificationType.REQUEST,
                 "",
                 requests.getSenderName() + " would like to add you as a mentor",
-                requests.getSenderFcmToken()
+                requests.getSenderFcmToken(),
+                new Date().getTime()
                 );
         notificationsRequest.setValue(notification);
 
