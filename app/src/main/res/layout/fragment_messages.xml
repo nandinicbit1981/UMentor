@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="parimi.com.umentor.views.fragment.MessageListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Messages" />
+   <ListView
+       android:id="@+id/messages_list_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+   </ListView>
 
 </FrameLayout>

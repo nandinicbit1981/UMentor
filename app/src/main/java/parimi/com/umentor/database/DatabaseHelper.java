@@ -77,12 +77,21 @@ public class DatabaseHelper {
         return mDatabase.child("notifications");
     }
 
-    public void addMentorToUser(String userId,String mentorId) {
-        mDatabase.child("mentors").child(userId).child(mentorId).setValue(true);
+    public void addUserToNetwork(String userId, String mentorId) {
+        addMentorToUser(userId, mentorId);
+        addMenteeToMentor(userId, mentorId);
     }
 
-    public DatabaseReference getMentors() {
-        return mDatabase.child("mentors");
+    public void addMentorToUser(String userId,String mentorId) {
+       getNetwork().child(userId).child(mentorId).setValue("mentor");
+    }
+
+    public void addMenteeToMentor(String userId, String mentorId) {
+        getNetwork().child(mentorId).child(userId).setValue("mentee");
+    }
+
+    public DatabaseReference getNetwork() {
+        return mDatabase.child("network");
     }
 
     public void saveUserChatChannels(Message message, String channelId) {

@@ -104,7 +104,8 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
             notificationAdapter.setNotificationsList(notifications);
 
             //add the user as a mentor
-            databaseHelper.addMentorToUser(notification.getSender(), currentUser.getId());
+            databaseHelper.addUserToNetwork(notification.getSender(), currentUser.getId());
+
             RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), "Friend Request Accepted", currentUser.getName() + " has accepted your friend request.");
         }
 

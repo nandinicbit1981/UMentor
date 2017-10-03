@@ -51,7 +51,7 @@ public class SendMessageFragment extends Fragment {
     @BindView(R.id.message_edit_text)
     EditText messageEditText;
 
-    @BindView(R.id.messages_list_view)
+    @BindView(R.id.message_list_view)
     ListView messagesListView;
 
     List<Message> messageList = new ArrayList<>();
