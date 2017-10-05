@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                     attachChildListener();
                 } else {
                     // not signed in
-
                     startActivityForResult(
                             AuthUI.getInstance()
                                     .createSignInIntentBuilder()
@@ -204,16 +203,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        createAuthStateListener();
+
+        if(user != null) {
+            android.support.v4.app.Fragment fragment = new ProfileFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(USER, user);
+            fragment.setArguments(bundle);
+            insertFragment(fragment);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(mAuthStateListener != null ) {
-            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-        }
-        detachChildListener();
     }
 
     @Override
