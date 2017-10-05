@@ -7,14 +7,20 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.inject.Inject;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
+import parimi.com.umentor.database.DatabaseHelper;
 
 /**
  * Created by nandpa on 9/30/17.
  */
 
 public class RestInterface {
+
+    @Inject
+    DatabaseHelper databaseHelper;
 
     private static final String fcmURL = "https://fcm.googleapis.com/fcm/send";
     public static void sendNotification(Context context, String registrationID, String subject, String message) {

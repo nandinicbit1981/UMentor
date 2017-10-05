@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -108,7 +109,14 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
             //add the user as a mentor
             databaseHelper.addUserToNetwork(notification.getSender(), currentUser.getId());
 
-            RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), "Friend Request Accepted", currentUser.getName() + " has accepted your friend request.");
+            Notification acceptedNotification = new Notification(notification.getReceiver(),
+                    notification.getSender(),
+                    NotificationType.ACCEPT,
+                    currentUser.getName() + " has accepted your mentor request.",
+                    "Mentor Request Accepted", notification.getSenderFcmToken(),
+                    new Date().getTime());
+            RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), "Mentor Request Accepted", currentUser.getName() + " has accepted your request.");
+            databaseHelper.saveNotification(acceptedNotification);
         }
 
 

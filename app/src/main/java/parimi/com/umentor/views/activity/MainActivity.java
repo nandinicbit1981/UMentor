@@ -111,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //Manually displaying the first fragment - one time only
-        ProfileFragment fragment = new ProfileFragment();
-        fragment.setActivity(MainActivity.this);
-        insertFragment(fragment);
         super.onCreate(null);
     }
 

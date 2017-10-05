@@ -10,6 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -57,6 +64,7 @@ public class ProfileFragment extends Fragment {
     MainActivity mainActivity;
 
     User currentUser;
+    List<String> networkUserList = new ArrayList<>();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -74,8 +82,8 @@ public class ProfileFragment extends Fragment {
         UMentorDaggerInjector.get().inject(this);
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-        Bundle bundle = getArguments();
-        User currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
+        final Bundle bundle = getArguments();
+        currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         if (bundle != null) {
             user = (User) bundle.get("user");
             if(!currentUser.getId().equals(user.getId())) {
@@ -100,6 +108,24 @@ public class ProfileFragment extends Fragment {
         if(user != null && user.getId() != null) {
             databaseHelper.saveUser(user);
         }
+        databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    networkUserList.add(ds.getKey());
+                    if(networkUserList.contains(user.getId())) {
+                        editButton.setText(getString(R.string.message));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return view;
     }
 
@@ -114,6 +140,14 @@ public class ProfileFragment extends Fragment {
             bundle.putSerializable("user", user);
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
+        }
+        else if(networkUserList.contains(user.getId())) {
+            Bundle messageBundle =  new Bundle();
+            messageBundle.putSerializable("user", user);
+            SendMessageFragment sendMessageFragment = new SendMessageFragment();
+            sendMessageFragment.setArguments(messageBundle);
+
+            ((MainActivity)getActivity()).insertFragment(sendMessageFragment);
         } else {
             Requests requests = new Requests(null,
                     currentUser.getId(),
@@ -123,9 +157,16 @@ public class ProfileFragment extends Fragment {
                     currentUser.getFcmToken()
                     );
             databaseHelper.saveRequest(requests);
-            RestInterface.sendNotification(getContext(), user.getFcmToken(), "Friend Request", currentUser.getName() + " wants to add you as a friend");
+            RestInterface.sendNotification(getContext(), user.getFcmToken(), "Mentor Request", currentUser.getName() + " wants to add you as a mentor");
         }
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(networkUserList.contains(user.getId())) {
+            editButton.setText(getString(R.string.message));
+        }
+    }
 }
