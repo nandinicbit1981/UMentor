@@ -10,6 +10,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -112,6 +114,30 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         super.onCreate(null);
+    }
+
+    // Initiating Menu XML file (menu.xml)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.top_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.signout:
+                FirebaseAuth.getInstance().signOut();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     private void createAuthStateListener() {
