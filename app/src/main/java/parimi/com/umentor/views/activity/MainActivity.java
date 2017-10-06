@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUsername(final FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
 
-            databaseHelper.getUsers().child(firebaseUser.getUid().toString()).addValueEventListener(new ValueEventListener() {
+            databaseHelper.getUsers().child(firebaseUser.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
                     } else {
                         user = new User(
-                                firebaseUser.getDisplayName(),
+                                firebaseUser.getDisplayName() != null ? firebaseUser.getDisplayName() : "",
                                 firebaseUser.getUid(),
                                 firebaseUser.getEmail(),
                                 "",
@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                                 0,
                                 ""
                         );
+                        databaseHelper.saveUser(user);
                     }
                     SharedPreferenceHelper.saveUser(MainActivity.this, user);
                     android.support.v4.app.Fragment fragment = new ProfileFragment();

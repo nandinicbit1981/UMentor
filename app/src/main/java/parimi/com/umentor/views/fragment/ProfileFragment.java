@@ -105,9 +105,7 @@ public class ProfileFragment extends Fragment {
 //            }
 //            expertiseTxt.setText(categoryString);
         }
-        if(user != null && user.getId() != null) {
-            databaseHelper.saveUser(user);
-        }
+
         databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

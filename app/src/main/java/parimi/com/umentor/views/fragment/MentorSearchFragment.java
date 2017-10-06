@@ -107,7 +107,9 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
-                        filteredMentorUid.add(userSnapShot.getKey().toString());
+                        if(!filteredMentorUid.contains(userSnapShot.getKey().toString())) {
+                            filteredMentorUid.add(userSnapShot.getKey().toString());
+                        }
                     }
                     android.support.v4.app.Fragment fragment = new FilteredMentorListFragment();
                     Bundle bundle = new Bundle();
