@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         UMentorDaggerInjector.get().inject(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         fcmToken = FirebaseInstanceId.getInstance().getToken();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
