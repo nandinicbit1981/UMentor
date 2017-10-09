@@ -55,6 +55,9 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     @BindView(R.id.experience)
     EditText experienceTxt;
 
+    @BindView(R.id.expertiseEditText)
+    EditText expertiseTxt;
+
     @BindView(R.id.saveButton)
     Button saveButton;
 
@@ -84,7 +87,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
-
+            expertiseTxt.setText(user.getExpertise());
         }
 
         databaseHelper.getCategories().addValueEventListener(new ValueEventListener() {
@@ -116,6 +119,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         user.setName(nameTxt.getText().toString());
         user.setAge(Integer.parseInt(ageTxt.getText().toString()));
         user.setExperience(Integer.parseInt(experienceTxt.getText().toString()));
+        user.setExpertise(expertiseTxt.getText().toString());
         databaseHelper.saveUser(user);
 
         for(int i=0;i < selectedCategories.size();i++) {

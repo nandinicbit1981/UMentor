@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -51,15 +50,12 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.expertise)
     TextView expertiseTxt;
+//
+//    @BindView(R.id.experience)
+//    TextView experienceTxt;
 
-    @BindView(R.id.experience)
-    TextView experienceTxt;
-
-    @BindView(R.id.email)
-    TextView emailTxt;
-
-    @BindView(R.id.editButton)
-    Button editButton;
+//    @BindView(R.id.editButton)
+//    Button editButton;
 
     MainActivity mainActivity;
 
@@ -87,12 +83,12 @@ public class ProfileFragment extends Fragment {
         if (bundle != null) {
             user = (User) bundle.get("user");
             if(!currentUser.getId().equals(user.getId())) {
-                editButton.setText(getString(R.string.request_mentor));
+                //editButton.setText(getString(R.string.request_mentor));
             }
             nameTxt.setText(user.getName());
-            emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
-            experienceTxt.setText(String.valueOf(user.getExperience()));
+            expertiseTxt.setText(user.getExpertise());
+            //experienceTxt.setText(String.valueOf(user.getExperience()));
 
             String categoryString = "";
 //            if(user.getCategory() != null && user.getCategory() != null) {
@@ -113,7 +109,7 @@ public class ProfileFragment extends Fragment {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     networkUserList.add(ds.getKey());
                     if(networkUserList.contains(user.getId())) {
-                        editButton.setText(getString(R.string.message));
+                        //editButton.setText(getString(R.string.message));
                     }
                 }
             }
@@ -164,7 +160,7 @@ public class ProfileFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(networkUserList.contains(user.getId())) {
-            editButton.setText(getString(R.string.message));
+            //editButton.setText(getString(R.string.message));
         }
     }
 }

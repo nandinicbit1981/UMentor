@@ -12,6 +12,15 @@
         <item name="android:windowBackground">@mipmap/background</item>
     </style>
 
+    <!-- Profile Related styles-->
+    <style name="ProfileSubHeading">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- Firebase related styles-->
+
     <style name="LoginTheme" parent="FirebaseUI">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
