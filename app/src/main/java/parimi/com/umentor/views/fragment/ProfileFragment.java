@@ -109,7 +109,7 @@ public class ProfileFragment extends Fragment {
                             count++;
                         }
                     }
-                    if(!networkUserIdList.contains(currentUser.getId())){
+                    if(!networkUserIdList.contains(currentUser.getId()) || count==0){
                         count++;
                     }
                     existingRating += v;
@@ -141,7 +141,7 @@ public class ProfileFragment extends Fragment {
                     networkUser.setUserId(ds.getKey());
                     networkUser.setRatingGiven((Boolean) ds.child("setRatingGiven").getValue());
                     networkUser.setRating(Float.parseFloat(ds.child("rating").getValue().toString()));
-                    ratingBar.setEnabled(true);
+
                     if(!networkUserList.contains(networkUser)) {
                         networkUserList.add(networkUser);
                     }
@@ -150,6 +150,7 @@ public class ProfileFragment extends Fragment {
                     }
                     if(networkUser.getUserId().equals(currentUser.getId())) {
                         editButton.setText(getString(R.string.message));
+                        ratingBar.setEnabled(true);
                     }
                 }
             }

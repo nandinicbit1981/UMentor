@@ -199,7 +199,7 @@
         android:scaleY=".5"
         android:progressTint="@color/goldenYellow"
         android:progressBackgroundTint="@color/lightGrey"
-
+        android:clickable="false"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         android:layout_marginRight="8dp"
