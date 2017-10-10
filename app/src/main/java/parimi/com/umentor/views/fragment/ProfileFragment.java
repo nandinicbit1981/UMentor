@@ -132,7 +132,7 @@ public class ProfileFragment extends Fragment {
 //            summaryTxt.setText(categoryString);
         }
 
-        databaseHelper.getNetwork().child(user.getId()).addValueEventListener(new ValueEventListener() {
+        databaseHelper.getNetwork().child(user.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

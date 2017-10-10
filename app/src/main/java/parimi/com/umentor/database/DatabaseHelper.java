@@ -30,6 +30,10 @@ public class DatabaseHelper {
         mDatabase.child("users").child(user.getId()).setValue(user);
     }
 
+    public void updateUser(User user) {
+        mDatabase.child("users").child(user.getId()).setValue(user);
+    }
+
     public void saveUserToCategories(String category,String user) {
         mDatabase.child("selectedCategories").child(category).child(user).setValue(true);
     }
@@ -100,6 +104,7 @@ public class DatabaseHelper {
     }
 
     public DatabaseReference getNetwork() {
+        mDatabase.child("network").keepSynced(true);
         return mDatabase.child("network");
     }
 

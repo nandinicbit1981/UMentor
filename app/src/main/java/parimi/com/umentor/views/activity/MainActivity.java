@@ -210,12 +210,13 @@ public class MainActivity extends AppCompatActivity {
                                 0,
                                 "",
                                 0,
-                                "",
+                                fcmToken,
                                 0,
                                 0
                         );
-                        databaseHelper.saveUser(user);
+
                     }
+                    databaseHelper.saveUser(user);
                     SharedPreferenceHelper.saveUser(MainActivity.this, user);
                     android.support.v4.app.Fragment fragment = new ProfileFragment();
                     Bundle bundle = new Bundle();
@@ -237,6 +238,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         if(user != null) {
+
+            fcmToken = FirebaseInstanceId.getInstance().getToken();
+            user.setFcmToken(fcmToken);
+            databaseHelper.saveUser(user);
             android.support.v4.app.Fragment fragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(USER, user);

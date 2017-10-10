@@ -58,7 +58,7 @@ public class MyMentorListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_my_mentor_list, container, false);
         ButterKnife.bind(this, view);
         currentUser = SharedPreferenceHelper.getCurrentUser(getActivity());
-        databaseHelper.getNetwork().child(currentUser.getId()).orderByValue().equalTo("mentor").addValueEventListener(new ValueEventListener() {
+        databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
