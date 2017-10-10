@@ -105,15 +105,17 @@ public class ProfileFragment extends Fragment {
 
                     for(NetworkUser networkUser : networkUserList) {
                         if(networkUser.isRatingGiven()) {
-                            existingRating = networkUser.getRating();
-                            count++;
+                            if(!networkUser.getUserId().equals(currentUser.getId())) {
+                                existingRating += networkUser.getRating();
+                                count++;
+                            }
+
                         }
                     }
-                    if(!networkUserIdList.contains(currentUser.getId()) || count==0){
-                        count++;
-                    }
+
+
                     existingRating += v;
-                    user.setRating(existingRating/(count));
+                    user.setRating(existingRating/(count + 1));
                     databaseHelper.saveUser(user);
                     databaseHelper.addMenteeToMentor(currentUser.getId(), user.getId(), v, true);
                 }
