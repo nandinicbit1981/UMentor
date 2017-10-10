@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import parimi.com.umentor.CheckBoxClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.adapters.CategoryAdapter;
@@ -112,6 +113,25 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         return view;
     }
 
+    @OnTextChanged({R.id.name, R.id.age, R.id.experience, R.id.expertiseEditText})
+    public void fieldsChanged() {
+        enableDisableSaveButton();
+    }
+
+
+    public void enableDisableSaveButton() {
+        if(nameTxt.getText().length() > 0 &&
+                Integer.parseInt(ageTxt.getText().toString()) > 10 &&
+                experienceTxt.getText().length() > 0 &&
+                expertiseTxt.getText().length() > 0 &&
+                selectedCategories.size() > 0) {
+            saveButton.setEnabled(true);
+        } else {
+            saveButton.setEnabled(false);
+        }
+
+    }
+
 
     @OnClick(R.id.saveButton)
     public void onSaveButtonClicked() {
@@ -131,5 +151,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     @Override
     public void onItemSelected(String name) {
         selectedCategories.add(name);
+        enableDisableSaveButton();
     }
 }

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -42,6 +43,7 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.views.fragment.EditProfileFragment;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
 import parimi.com.umentor.views.fragment.MessageListFragment;
 import parimi.com.umentor.views.fragment.MyMentorListFragment;
@@ -218,7 +220,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     databaseHelper.saveUser(user);
                     SharedPreferenceHelper.saveUser(MainActivity.this, user);
-                    android.support.v4.app.Fragment fragment = new ProfileFragment();
+                    Fragment fragment;
+                    if(user.getAge() > 0) {
+                      fragment = new ProfileFragment();
+                    } else {
+                      fragment = new EditProfileFragment();
+                    }
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(USER, user);
                     fragment.setArguments(bundle);
