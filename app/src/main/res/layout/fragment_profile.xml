@@ -72,7 +72,7 @@
         app:layout_constraintVertical_bias="0.333" />
 
     <TextView
-        android:id="@+id/expertise"
+        android:id="@+id/summary"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -198,7 +198,8 @@
         android:scaleX=".5"
         android:scaleY=".5"
         android:progressTint="@color/goldenYellow"
-        android:progressBackgroundTint="@color/white"
+        android:progressBackgroundTint="@color/lightGrey"
+
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="@+id/guideline2"
         android:layout_marginRight="8dp"

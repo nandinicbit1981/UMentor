@@ -19,9 +19,11 @@ public class User implements Parcelable, Serializable {
     private String email;
     private String gender;
     private int age;
-    private String expertise;
+    private String summary;
     private int experience;
     private String fcmToken;
+    private float rating;
+    private int menteesVoted;
 
     public User(Parcel in) {
         name = in.readString();
@@ -29,9 +31,11 @@ public class User implements Parcelable, Serializable {
         email = in.readString();
         gender = in.readString();
         age = in.readInt();
-        expertise = in.readString();
+        summary = in.readString();
         experience = in.readInt();
         fcmToken = in.readString();
+        rating = in.readFloat();
+        menteesVoted = in.readInt();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -52,16 +56,18 @@ public class User implements Parcelable, Serializable {
 
     public User(String displayName,
                 String uid, String email,
-                String gender, int age, String expertise,
-                int experience, String fcmToken) {
+                String gender, int age, String summary,
+                int experience, String fcmToken, float rating, int menteesVoted) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
         this.gender = gender;
         this.age = age;
-        this.expertise = expertise;
+        this.summary = summary;
         this.experience = experience;
         this.fcmToken = fcmToken;
+        this.rating = rating;
+        this.menteesVoted = menteesVoted;
     }
 
     public String getName() {
@@ -96,12 +102,12 @@ public class User implements Parcelable, Serializable {
         this.gender = gender;
     }
 
-    public String getExpertise() {
-        return expertise;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setExpertise(String expertise) {
-        this.expertise = expertise;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public int getExperience() {
@@ -128,7 +134,7 @@ public class User implements Parcelable, Serializable {
         result.put("name", name);
         result.put("email", email);
         result.put("gender", gender);
-        result.put("expertise", expertise);
+        result.put("summary", summary);
         result.put("experience", experience);
 
         return result;
@@ -147,9 +153,11 @@ public class User implements Parcelable, Serializable {
         parcel.writeString(email);
         parcel.writeString(gender);
         parcel.writeInt(age);
-        parcel.writeString(expertise);
+        parcel.writeString(summary);
         parcel.writeInt(experience);
         parcel.writeString(fcmToken);
+        parcel.writeFloat(rating);
+        parcel.writeInt(menteesVoted);
 
     }
 
@@ -171,5 +179,21 @@ public class User implements Parcelable, Serializable {
 
     public void setFcmToken(String fcmToken) {
         this.fcmToken = fcmToken;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public int getMenteesVoted() {
+        return menteesVoted;
+    }
+
+    public void setMenteesVoted(int menteesVoted) {
+        this.menteesVoted = menteesVoted;
     }
 }

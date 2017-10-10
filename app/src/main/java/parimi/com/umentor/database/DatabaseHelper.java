@@ -81,16 +81,22 @@ public class DatabaseHelper {
     }
 
     public void addUserToNetwork(String userId, String mentorId) {
-        addMentorToUser(userId, mentorId);
-        addMenteeToMentor(userId, mentorId);
+        addMentorToUser(userId, mentorId, 0, false);
+        addMenteeToMentor(userId, mentorId, 0, false);
     }
 
-    public void addMentorToUser(String userId,String mentorId) {
-       getNetwork().child(userId).child(mentorId).setValue("mentor");
+    public void addMentorToUser(String userId,String mentorId, float rating, boolean setRatingGiven) {
+        getNetwork().child(userId).child(mentorId).child("mentor").setValue(true);
+        getNetwork().child(userId).child(mentorId).child("mentee").setValue(false);
+        getNetwork().child(userId).child(mentorId).child("rating").setValue(rating);
+        getNetwork().child(userId).child(mentorId).child("setRatingGiven").setValue(setRatingGiven);
     }
 
-    public void addMenteeToMentor(String userId, String mentorId) {
-        getNetwork().child(mentorId).child(userId).setValue("mentee");
+    public void addMenteeToMentor(String userId, String mentorId, float rating, boolean setRatingGiven) {
+        getNetwork().child(mentorId).child(userId).child("mentor").setValue(false);
+        getNetwork().child(mentorId).child(userId).child("mentee").setValue(true);
+        getNetwork().child(mentorId).child(userId).child("rating").setValue(rating);
+        getNetwork().child(mentorId).child(userId).child("setRatingGiven").setValue(setRatingGiven);
     }
 
     public DatabaseReference getNetwork() {

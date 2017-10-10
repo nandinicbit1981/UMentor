@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +28,7 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.MentorStatus;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
+import parimi.com.umentor.models.NetworkUser;
 import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
@@ -48,19 +51,23 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.age)
     TextView ageTxt;
 
-    @BindView(R.id.expertise)
-    TextView expertiseTxt;
+    @BindView(R.id.summary)
+    TextView summaryTxt;
+
+    @BindView(R.id.ratingBar)
+    RatingBar ratingBar;
 //
 //    @BindView(R.id.experience)
 //    TextView experienceTxt;
 
-//    @BindView(R.id.editButton)
-//    Button editButton;
+      @BindView(R.id.editButton)
+      Button editButton;
 
     MainActivity mainActivity;
 
     User currentUser;
-    List<String> networkUserList = new ArrayList<>();
+    List<NetworkUser> networkUserList = new ArrayList<>();
+    List<String> networkUserIdList = new ArrayList<>();
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -83,11 +90,34 @@ public class ProfileFragment extends Fragment {
         if (bundle != null) {
             user = (User) bundle.get("user");
             if(!currentUser.getId().equals(user.getId())) {
-                //editButton.setText(getString(R.string.request_mentor));
+                editButton.setText(getString(R.string.request_mentor));
             }
+            ratingBar.setEnabled(false);
+            ratingBar.setRating(user.getRating());
             nameTxt.setText(user.getName());
             ageTxt.setText(String.valueOf(user.getAge()));
-            expertiseTxt.setText(user.getExpertise());
+            summaryTxt.setText(user.getSummary());
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    float existingRating = 0;
+                    int count = 0;
+
+                    for(NetworkUser networkUser : networkUserList) {
+                        if(networkUser.isRatingGiven()) {
+                            existingRating = networkUser.getRating();
+                            count++;
+                        }
+                    }
+                    if(!networkUserIdList.contains(currentUser.getId())){
+                        count++;
+                    }
+                    existingRating += v;
+                    user.setRating(existingRating/(count));
+                    databaseHelper.saveUser(user);
+                    databaseHelper.addMenteeToMentor(currentUser.getId(), user.getId(), v, true);
+                }
+            });
             //experienceTxt.setText(String.valueOf(user.getExperience()));
 
             String categoryString = "";
@@ -99,17 +129,27 @@ public class ProfileFragment extends Fragment {
 //                    categoryString += category;
 //                }
 //            }
-//            expertiseTxt.setText(categoryString);
+//            summaryTxt.setText(categoryString);
         }
 
-        databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
+        databaseHelper.getNetwork().child(user.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    networkUserList.add(ds.getKey());
-                    if(networkUserList.contains(user.getId())) {
-                        //editButton.setText(getString(R.string.message));
+                    NetworkUser networkUser = new NetworkUser();
+                    networkUser.setUserId(ds.getKey());
+                    networkUser.setRatingGiven((Boolean) ds.child("setRatingGiven").getValue());
+                    networkUser.setRating(Float.parseFloat(ds.child("rating").getValue().toString()));
+                    ratingBar.setEnabled(true);
+                    if(!networkUserList.contains(networkUser)) {
+                        networkUserList.add(networkUser);
+                    }
+                    if(!networkUserIdList.contains(networkUser.getUserId())) {
+                        networkUserIdList.add(networkUser.getUserId());
+                    }
+                    if(networkUser.getUserId().equals(currentUser.getId())) {
+                        editButton.setText(getString(R.string.message));
                     }
                 }
             }
@@ -135,7 +175,8 @@ public class ProfileFragment extends Fragment {
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
         }
-        else if(networkUserList.contains(user.getId())) {
+
+        else if(networkUserIdList.contains(user.getId())) {
             Bundle messageBundle =  new Bundle();
             messageBundle.putSerializable("user", user);
             SendMessageFragment sendMessageFragment = new SendMessageFragment();
@@ -159,8 +200,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(networkUserList.contains(user.getId())) {
-            //editButton.setText(getString(R.string.message));
+
+
+        if(networkUserIdList.contains(user.getId())) {
+            editButton.setText(getString(R.string.message));
         }
     }
+
+
 }

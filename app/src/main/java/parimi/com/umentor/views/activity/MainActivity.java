@@ -193,9 +193,12 @@ public class MainActivity extends AppCompatActivity {
                                 dataSnapshot.child("email").getValue().toString(),
                                 dataSnapshot.child("gender").getValue().toString(),
                                 Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                                dataSnapshot.child("expertise").getValue().toString(),
+                                dataSnapshot.child("summary").getValue().toString(),
                                 Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                                fcmToken);
+                                fcmToken,
+                                Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
+                                Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString())
+                        );
 
 
                     } else {
@@ -207,7 +210,9 @@ public class MainActivity extends AppCompatActivity {
                                 0,
                                 "",
                                 0,
-                                ""
+                                "",
+                                0,
+                                0
                         );
                         databaseHelper.saveUser(user);
                     }
