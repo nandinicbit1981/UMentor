@@ -113,7 +113,6 @@ public class ProfileFragment extends Fragment {
                         }
                     }
 
-
                     existingRating += v;
                     user.setRating(existingRating/(count + 1));
                     databaseHelper.saveUser(user);
@@ -137,7 +136,9 @@ public class ProfileFragment extends Fragment {
         databaseHelper.getNetwork().child(user.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                if(!networkUserIdList.contains(dataSnapshot.getKey())) {
+                    networkUserIdList.add(dataSnapshot.getKey());
+                }
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     NetworkUser networkUser = new NetworkUser();
                     networkUser.setUserId(ds.getKey());
@@ -151,7 +152,7 @@ public class ProfileFragment extends Fragment {
                         networkUserIdList.add(networkUser.getUserId());
                     }
                     if(networkUser.getUserId().equals(currentUser.getId())) {
-                        editButton.setText(getString(R.string.message));
+                        editButton.setText(getString(R.string.send_message_to_mentor));
                         ratingBar.setEnabled(true);
                     }
                 }

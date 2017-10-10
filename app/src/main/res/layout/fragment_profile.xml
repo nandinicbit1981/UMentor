@@ -109,8 +109,10 @@
 
     <Button
         android:id="@+id/editButton"
-        android:layout_width="67dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:background="@drawable/round_transparent_button"
         android:text="@string/edit_profile"
         android:textColor="@color/white"
