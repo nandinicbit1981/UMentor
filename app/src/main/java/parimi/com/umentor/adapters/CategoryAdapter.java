@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import parimi.com.umentor.ButtonClickInterface;
@@ -30,7 +31,7 @@ public class CategoryAdapter extends BaseAdapter {
     String callingFragment;
     CheckBoxClickInterface checkBoxClickInterface;
     ButtonClickInterface buttonClickInterface;
-    private List<String> selectedCategories;
+    private List<String> selectedCategories = new ArrayList<>();
 
     @Override
     public int getCount() {
@@ -41,6 +42,7 @@ public class CategoryAdapter extends BaseAdapter {
         this.categories = categoryList;
         this.context = context;
         this.callingFragment = callingFragment;
+        this.selectedCategories = new ArrayList<>();
     }
 
     @Override
@@ -85,7 +87,7 @@ public class CategoryAdapter extends BaseAdapter {
                 // set value into textview
                 CheckBox categoryCheckBox = (CheckBox) gridView.findViewById(R.id.category_name_checkbox);
                 categoryCheckBox.setText(categories.get(i).getCategory().toString());
-                if(selectedCategories.contains(categories.get(i).getCategory().toString())) {
+                if(this.selectedCategories != null && this.selectedCategories.contains(categories.get(i).getCategory().toString())) {
                     categoryCheckBox.setChecked(true);
                 }
 

@@ -80,8 +80,8 @@ public class FilteredMentorListFragment extends Fragment {
                             Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                             dataSnapshot.child("fcmToken").getValue().toString(),
                             Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                            Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString()),
-                            (List<String>)dataSnapshot.child("menteesVoted").getValue()
+                            (List<String>)dataSnapshot.child("categories").getValue(),
+                            dataSnapshot.child("job").getValue().toString()
                     );
                     if(!filteredMentors.contains(user)) {
                         filteredMentors.add(user);

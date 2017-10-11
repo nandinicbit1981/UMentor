@@ -36,6 +36,8 @@ import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 
+import static parimi.com.umentor.helper.Constants.USER;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -77,7 +79,7 @@ public class SendMessageFragment extends Fragment {
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mentor = (User) bundle.get("user");
+            mentor = (User) bundle.get(USER);
         }
         MessageAdapter messageAdapter = new MessageAdapter(getActivity());
         messagesListView.setAdapter(messageAdapter);

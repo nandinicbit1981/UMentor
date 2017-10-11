@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +35,9 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
+import parimi.com.umentor.views.activity.MainActivity;
+
+import static parimi.com.umentor.helper.Constants.USER;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,11 +61,12 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     @BindView(R.id.summaryEditText)
     EditText expertiseTxt;
 
+    @BindView(R.id.jobTxt)
+    EditText jobEditTxt;
+
     @BindView(R.id.saveButton)
     Button saveButton;
 
-//    @BindView(R.id.category_list_view)
-//    ListView listView;
 
     List<Category> categories = new ArrayList<>();
 
@@ -82,14 +87,14 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            user = (User) bundle.get("user");
+            user = (User) bundle.get(USER);
             nameTxt.setText(user.getName());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
             expertiseTxt.setText(user.getSummary());
             selectedCategories = user.getCategories();
+            jobEditTxt.setText(user.getJob());
         }
-
 
 
         databaseHelper.getCategories().addValueEventListener(new ValueEventListener() {
@@ -104,9 +109,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
                 categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
                 categoryAdapter.setOnChechboxItemSelected(EditProfileFragment.this);
                 categoryAdapter.setCategoriesSelected(selectedCategories);
-               // listView.setAdapter(categoryAdapter);
-
-
             }
 
             @Override
@@ -130,11 +132,14 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         if(nameTxt.getText().length() > 0 &&
                 age > 10 &&
                 experience > 0 &&
+                jobEditTxt.getText().length() > 0 &&
                 expertiseTxt.getText().length() > 0 &&
-                selectedCategories.size() > 0) {
+                (selectedCategories != null && selectedCategories.size() > 0)) {
             saveButton.setEnabled(true);
+            saveButton.setBackground(getActivity().getDrawable(R.drawable.round_transparent_button));
         } else {
             saveButton.setEnabled(false);
+            saveButton.setBackground(getActivity().getDrawable(R.drawable.round_disabled_button));
         }
 
     }
@@ -148,12 +153,18 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         user.setExperience(Integer.parseInt(experienceTxt.getText().toString()));
         user.setSummary(expertiseTxt.getText().toString());
         user.setCategories(selectedCategories);
+        user.setJob(jobEditTxt.getText().toString());
         databaseHelper.saveUser(user);
 
         for(int i=0;i < selectedCategories.size();i++) {
             saveSelectedCategories.put(user.getId(), true);
             databaseHelper.saveUserToCategories(selectedCategories.get(i), user.getId());
         }
+        Fragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(USER, user);
+        fragment.setArguments(bundle);
+        ((MainActivity)getActivity()).insertFragment(fragment);
     }
 
     @OnClick(R.id.select)
@@ -163,8 +174,8 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         LayoutInflater inflater = getLayoutInflater();
         View convertView = (View) inflater.inflate(R.layout.categories_list_view, null);
         alertDialog.setView(convertView);
-        alertDialog.setTitle("Choose a category");
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alertDialog.setTitle(R.string.choose_a_category);
+        alertDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -178,6 +189,9 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     @Override
     public void onItemSelected(String name) {
+        if(selectedCategories == null) {
+            selectedCategories = new ArrayList<>();
+        }
         if(selectedCategories.contains(name)) {
             selectedCategories.remove(name);
         } else {

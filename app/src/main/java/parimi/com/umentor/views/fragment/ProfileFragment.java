@@ -34,6 +34,8 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
+import static parimi.com.umentor.helper.Constants.USER;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -56,12 +58,12 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
-//
-//    @BindView(R.id.experience)
-//    TextView experienceTxt;
 
-      @BindView(R.id.editButton)
-      Button editButton;
+    @BindView(R.id.job)
+    TextView jobTxt;
+
+    @BindView(R.id.editButton)
+    Button editButton;
 
     MainActivity mainActivity;
 
@@ -88,7 +90,7 @@ public class ProfileFragment extends Fragment {
         final Bundle bundle = getArguments();
         currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         if (bundle != null) {
-            user = (User) bundle.get("user");
+            user = (User) bundle.get(USER);
             if(!currentUser.getId().equals(user.getId())) {
                 editButton.setText(getString(R.string.request_mentor));
             }
@@ -97,6 +99,7 @@ public class ProfileFragment extends Fragment {
             nameTxt.setText(user.getName());
             ageTxt.setText(String.valueOf(user.getAge()));
             summaryTxt.setText(user.getSummary());
+            jobTxt.setText(user.getJob());
             ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override
                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -136,9 +139,7 @@ public class ProfileFragment extends Fragment {
         databaseHelper.getNetwork().child(user.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(!networkUserIdList.contains(dataSnapshot.getKey())) {
-                    networkUserIdList.add(dataSnapshot.getKey());
-                }
+
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     NetworkUser networkUser = new NetworkUser();
                     networkUser.setUserId(ds.getKey());
@@ -149,8 +150,13 @@ public class ProfileFragment extends Fragment {
                         networkUserList.add(networkUser);
                     }
                     if(!networkUserIdList.contains(networkUser.getUserId())) {
-                        networkUserIdList.add(networkUser.getUserId());
+                        if(networkUser.getUserId().equals(currentUser.getId()) && !networkUserIdList.contains(dataSnapshot.getKey())){
+                            networkUserIdList.add(dataSnapshot.getKey());
+                        } else {
+                            networkUserIdList.add(networkUser.getUserId());
+                        }
                     }
+
                     if(networkUser.getUserId().equals(currentUser.getId())) {
                         editButton.setText(getString(R.string.send_message_to_mentor));
                         ratingBar.setEnabled(true);
@@ -175,14 +181,14 @@ public class ProfileFragment extends Fragment {
             currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         }
         if(currentUser.getId().equals(user.getId())) {
-            bundle.putSerializable("user", user);
+            bundle.putSerializable(USER, user);
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
         }
 
         else if(networkUserIdList.contains(user.getId())) {
             Bundle messageBundle =  new Bundle();
-            messageBundle.putSerializable("user", user);
+            messageBundle.putSerializable(USER, user);
             SendMessageFragment sendMessageFragment = new SendMessageFragment();
             sendMessageFragment.setArguments(messageBundle);
 

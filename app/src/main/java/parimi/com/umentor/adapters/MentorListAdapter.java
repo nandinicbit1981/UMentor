@@ -19,6 +19,8 @@ import parimi.com.umentor.views.activity.MainActivity;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 import parimi.com.umentor.views.fragment.SendMessageFragment;
 
+import static parimi.com.umentor.helper.Constants.USER;
+
 /**
  * Created by nandpa on 9/27/17.
  */
@@ -70,7 +72,7 @@ public class MentorListAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Fragment fragment = new SendMessageFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("user", mentors.get(i));
+                    bundle.putSerializable(USER, mentors.get(i));
                     fragment.setArguments(bundle);
                     ((MainActivity)context).insertFragment(fragment);
                 }
@@ -85,7 +87,7 @@ public class MentorListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Fragment fragment = new ProfileFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("user", mentors.get(i));
+                bundle.putSerializable(USER, mentors.get(i));
                 fragment.setArguments(bundle);
                 ((MainActivity)context).insertFragment(fragment);
             }

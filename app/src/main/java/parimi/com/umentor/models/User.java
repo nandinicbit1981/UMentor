@@ -24,7 +24,7 @@ public class User implements Parcelable, Serializable {
     private int experience;
     private String fcmToken;
     private float rating;
-    private int menteesVoted;
+    private String job;
     private List<String> categories;
 
     public User(Parcel in) {
@@ -37,7 +37,7 @@ public class User implements Parcelable, Serializable {
         experience = in.readInt();
         fcmToken = in.readString();
         rating = in.readFloat();
-        menteesVoted = in.readInt();
+        job = in.readString();
         categories = in.readArrayList(User.class.getClassLoader());
     }
 
@@ -62,8 +62,8 @@ public class User implements Parcelable, Serializable {
                 String gender, int age, String summary,
                 int experience, String fcmToken,
                 float rating,
-                int menteesVoted,
-                List<String> categories
+                List<String> categories,
+                String job
     ) {
         this.name = displayName;
         this.id = uid;
@@ -74,7 +74,7 @@ public class User implements Parcelable, Serializable {
         this.experience = experience;
         this.fcmToken = fcmToken;
         this.rating = rating;
-        this.menteesVoted = menteesVoted;
+        this.job = job;
         this.categories = categories;
     }
 
@@ -165,7 +165,7 @@ public class User implements Parcelable, Serializable {
         parcel.writeInt(experience);
         parcel.writeString(fcmToken);
         parcel.writeFloat(rating);
-        parcel.writeInt(menteesVoted);
+        parcel.writeString(job);
         parcel.writeList(categories);
 
     }
@@ -198,19 +198,19 @@ public class User implements Parcelable, Serializable {
         this.rating = rating;
     }
 
-    public int getMenteesVoted() {
-        return menteesVoted;
-    }
-
-    public void setMenteesVoted(int menteesVoted) {
-        this.menteesVoted = menteesVoted;
-    }
-
     public List<String> getCategories() {
         return categories;
     }
 
     public void setCategories(List<String> categories) {
         this.categories = categories;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 }

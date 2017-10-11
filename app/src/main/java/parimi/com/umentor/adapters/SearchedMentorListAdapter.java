@@ -17,6 +17,8 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 
+import static parimi.com.umentor.helper.Constants.USER;
+
 /**
  * Created by nandpa on 9/23/17.
  */
@@ -72,7 +74,7 @@ public class SearchedMentorListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Fragment fragment = new ProfileFragment();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("user", usersLlist.get(i));
+                bundle.putSerializable(USER, usersLlist.get(i));
                 fragment.setArguments(bundle);
                 ((MainActivity)context).insertFragment(fragment);
             }

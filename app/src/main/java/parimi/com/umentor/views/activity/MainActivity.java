@@ -52,6 +52,8 @@ import parimi.com.umentor.views.fragment.MyMentorListFragment;
 import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 
+import static parimi.com.umentor.helper.Constants.USER;
+
 public class MainActivity extends AppCompatActivity {
 
     @Inject
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     private static final int RC_SIGN_IN = 999 ;
     private static final int RC_PHOTO_PICKER = 2;
-    private static final String USER = "user";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         UMentorDaggerInjector.get().inject(this);
@@ -201,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
                                 Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                                 fcmToken,
                                 Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                                Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString()),
-                                (List<String>)dataSnapshot.child("categories").getValue()
+                                (List<String>)dataSnapshot.child("categories").getValue(),
+                                dataSnapshot.child("job").getValue().toString()
 
                         );
 
@@ -218,8 +220,8 @@ public class MainActivity extends AppCompatActivity {
                                 0,
                                 fcmToken,
                                 0,
-                                0,
-                                new ArrayList<String>()
+                                new ArrayList<String>(),
+                                ""
                         );
 
                     }
@@ -248,13 +250,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        Fragment fragment;
         if(user != null) {
-
+            if(user.getAge() > 0) {
+               fragment = new ProfileFragment();
+            } else {
+                fragment = new EditProfileFragment();
+            }
             fcmToken = FirebaseInstanceId.getInstance().getToken();
             user.setFcmToken(fcmToken);
             databaseHelper.saveUser(user);
-            android.support.v4.app.Fragment fragment = new ProfileFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(USER, user);
             fragment.setArguments(bundle);
