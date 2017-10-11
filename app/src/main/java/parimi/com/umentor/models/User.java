@@ -7,6 +7,7 @@ import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +25,7 @@ public class User implements Parcelable, Serializable {
     private String fcmToken;
     private float rating;
     private int menteesVoted;
+    private List<String> categories;
 
     public User(Parcel in) {
         name = in.readString();
@@ -36,6 +38,7 @@ public class User implements Parcelable, Serializable {
         fcmToken = in.readString();
         rating = in.readFloat();
         menteesVoted = in.readInt();
+        categories = in.readArrayList(User.class.getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -57,7 +60,7 @@ public class User implements Parcelable, Serializable {
     public User(String displayName,
                 String uid, String email,
                 String gender, int age, String summary,
-                int experience, String fcmToken, float rating, int menteesVoted) {
+                int experience, String fcmToken, float rating, int menteesVoted, List<String> categories) {
         this.name = displayName;
         this.id = uid;
         this.email = email;
@@ -68,6 +71,7 @@ public class User implements Parcelable, Serializable {
         this.fcmToken = fcmToken;
         this.rating = rating;
         this.menteesVoted = menteesVoted;
+        this.categories = categories;
     }
 
     public String getName() {
@@ -158,6 +162,7 @@ public class User implements Parcelable, Serializable {
         parcel.writeString(fcmToken);
         parcel.writeFloat(rating);
         parcel.writeInt(menteesVoted);
+        parcel.writeList(categories);
 
     }
 
@@ -195,5 +200,13 @@ public class User implements Parcelable, Serializable {
 
     public void setMenteesVoted(int menteesVoted) {
         this.menteesVoted = menteesVoted;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 }

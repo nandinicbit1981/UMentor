@@ -6,12 +6,20 @@
     <string name="request_mentor">REQUEST</string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
-    <string name="name">Name:</string>
+    <string name="name">Name</string>
     <string name="experience">Experience</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message">Message</string>
     <string name="send_message_to_mentor">Send message</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="age">Age</string>
+    <string name="enter_your_age">Enter your age</string>
+    <string name="experience_years">Experience (yrs)</string>
+    <string name="enter_years_of_experience">Enter years of experience</string>
+    <string name="summary">Summary</string>
+    <string name="categories">Categories</string>
+    <string name="select">Select</string>
 
 </resources>

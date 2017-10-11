@@ -1,6 +1,8 @@
 package parimi.com.umentor.views.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,29 +48,27 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     @BindView(R.id.name)
     EditText nameTxt;
 
-    @BindView(R.id.email)
-    TextView emailTxt;
-
     @BindView(R.id.age)
     EditText ageTxt;
 
     @BindView(R.id.experience)
     EditText experienceTxt;
 
-    @BindView(R.id.expertiseEditText)
+    @BindView(R.id.summaryEditText)
     EditText expertiseTxt;
 
     @BindView(R.id.saveButton)
     Button saveButton;
 
-    @BindView(R.id.category_list_view)
-    GridView listView;
+//    @BindView(R.id.category_list_view)
+//    ListView listView;
 
     List<Category> categories = new ArrayList<>();
 
     List<String> selectedCategories = new ArrayList<>();
 
     HashMap<String, Boolean> saveSelectedCategories = new HashMap<>();
+    CategoryAdapter categoryAdapter;
 
     public  EditProfileFragment() {
     }
@@ -85,11 +84,12 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         if (bundle != null) {
             user = (User) bundle.get("user");
             nameTxt.setText(user.getName());
-            emailTxt.setText(user.getEmail());
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
             expertiseTxt.setText(user.getSummary());
         }
+
+
 
         databaseHelper.getCategories().addValueEventListener(new ValueEventListener() {
 
@@ -100,9 +100,11 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
                     categories.add(new Category(categoriesSnapshot.getValue().toString()));
                 }
 
-                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
+                categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
                 categoryAdapter.setOnChechboxItemSelected(EditProfileFragment.this);
-                listView.setAdapter(categoryAdapter);
+               // listView.setAdapter(categoryAdapter);
+
+
             }
 
             @Override
@@ -113,16 +115,19 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         return view;
     }
 
-    @OnTextChanged({R.id.name, R.id.age, R.id.experience, R.id.expertiseEditText})
+    @OnTextChanged({R.id.name, R.id.age, R.id.experience, R.id.summaryEditText})
     public void fieldsChanged() {
         enableDisableSaveButton();
     }
 
 
     public void enableDisableSaveButton() {
+        int age = ageTxt.getText().toString().equals("") ? 0 : Integer.parseInt(ageTxt.getText().toString());
+        int experience =  experienceTxt.getText().toString().equals("") ? 0 : Integer.parseInt(experienceTxt.getText().toString());
+
         if(nameTxt.getText().length() > 0 &&
-                Integer.parseInt(ageTxt.getText().toString()) > 10 &&
-                experienceTxt.getText().length() > 0 &&
+                age > 10 &&
+                experience > 0 &&
                 expertiseTxt.getText().length() > 0 &&
                 selectedCategories.size() > 0) {
             saveButton.setEnabled(true);
@@ -148,9 +153,33 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         }
     }
 
+    @OnClick(R.id.select)
+    public void onSelectButtonClicked() {
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = (View) inflater.inflate(R.layout.categories_list_view, null);
+        alertDialog.setView(convertView);
+        alertDialog.setTitle("Choose a category");
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        ListView lv = (ListView) convertView.findViewById(R.id.category_list_view);
+        lv.setAdapter(categoryAdapter);
+        alertDialog.show();
+    }
+
+
     @Override
     public void onItemSelected(String name) {
-        selectedCategories.add(name);
+        if(selectedCategories.contains(name)) {
+            selectedCategories.remove(name);
+        } else {
+            selectedCategories.add(name);
+        }
         enableDisableSaveButton();
     }
 }

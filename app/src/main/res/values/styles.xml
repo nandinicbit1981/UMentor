@@ -19,6 +19,11 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="label">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/dimen_12sp</item>
+    </style>
+
     <!-- Firebase related styles-->
 
     <style name="LoginTheme" parent="FirebaseUI">
