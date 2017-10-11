@@ -30,6 +30,7 @@ public class CategoryAdapter extends BaseAdapter {
     String callingFragment;
     CheckBoxClickInterface checkBoxClickInterface;
     ButtonClickInterface buttonClickInterface;
+    private List<String> selectedCategories;
 
     @Override
     public int getCount() {
@@ -84,6 +85,10 @@ public class CategoryAdapter extends BaseAdapter {
                 // set value into textview
                 CheckBox categoryCheckBox = (CheckBox) gridView.findViewById(R.id.category_name_checkbox);
                 categoryCheckBox.setText(categories.get(i).getCategory().toString());
+                if(selectedCategories.contains(categories.get(i).getCategory().toString())) {
+                    categoryCheckBox.setChecked(true);
+                }
+
                 categoryCheckBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -105,5 +110,9 @@ public class CategoryAdapter extends BaseAdapter {
 
     public  void setOnCategorySelected(ButtonClickInterface buttonClickInterface) {
         this.buttonClickInterface = buttonClickInterface;
+    }
+
+    public void setCategoriesSelected(List<String> selectedCategories) {
+        this.selectedCategories = selectedCategories;
     }
 }

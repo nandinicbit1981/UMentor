@@ -87,6 +87,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             ageTxt.setText(String.valueOf(user.getAge()));
             experienceTxt.setText(String.valueOf(user.getExperience()));
             expertiseTxt.setText(user.getSummary());
+            selectedCategories = user.getCategories();
         }
 
 
@@ -102,6 +103,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
                 categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.EDITPROFILEFRAGMENT);
                 categoryAdapter.setOnChechboxItemSelected(EditProfileFragment.this);
+                categoryAdapter.setCategoriesSelected(selectedCategories);
                // listView.setAdapter(categoryAdapter);
 
 
@@ -145,6 +147,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         user.setAge(Integer.parseInt(ageTxt.getText().toString()));
         user.setExperience(Integer.parseInt(experienceTxt.getText().toString()));
         user.setSummary(expertiseTxt.getText().toString());
+        user.setCategories(selectedCategories);
         databaseHelper.saveUser(user);
 
         for(int i=0;i < selectedCategories.size();i++) {

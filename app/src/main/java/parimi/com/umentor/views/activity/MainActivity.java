@@ -31,8 +31,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -199,7 +201,9 @@ public class MainActivity extends AppCompatActivity {
                                 Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                                 fcmToken,
                                 Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                                Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString())
+                                Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString()),
+                                (List<String>)dataSnapshot.child("categories").getValue()
+
                         );
 
 
@@ -214,7 +218,8 @@ public class MainActivity extends AppCompatActivity {
                                 0,
                                 fcmToken,
                                 0,
-                                0
+                                0,
+                                new ArrayList<String>()
                         );
 
                     }

@@ -60,7 +60,11 @@ public class User implements Parcelable, Serializable {
     public User(String displayName,
                 String uid, String email,
                 String gender, int age, String summary,
-                int experience, String fcmToken, float rating, int menteesVoted, List<String> categories) {
+                int experience, String fcmToken,
+                float rating,
+                int menteesVoted,
+                List<String> categories
+    ) {
         this.name = displayName;
         this.id = uid;
         this.email = email;

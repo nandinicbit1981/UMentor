@@ -93,7 +93,8 @@ public class MessageListFragment extends Fragment {
                             Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                             dataSnapshot.child("fcmToken").getValue().toString(),
                             Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                            Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString())
+                            Integer.parseInt(dataSnapshot.child("menteesVoted").getValue().toString()),
+                            (List<String>)dataSnapshot.child("menteesVoted").getValue()
                     );
                     mentors.add(user);
                     if(mentorIds.size() == mentors.size()) {
