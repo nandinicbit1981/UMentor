@@ -30,7 +30,6 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.NotificationType;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
-import parimi.com.umentor.helper.UMentorHelper;
 import parimi.com.umentor.models.Message;
 import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
@@ -136,7 +135,7 @@ public class SendMessageFragment extends Fragment {
 
     @OnClick(R.id.message_send_button)
     public void sendMessage() {
-        UMentorHelper.hideKeyboard(this.getContext(), getView());
+        //UMentorHelper.hideKeyboard(this.getContext(), getView());
 
         final Message message = new Message();
         message.setMessage(messageEditText.getText().toString());
