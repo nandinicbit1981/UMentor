@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,17 +55,14 @@ public class MentorListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View listView;
-        final ImageView sendMessageImage;
+        final LinearLayout sendMessageImage;
         final TextView experienceText;
         final TextView nameText;
         if (convertView == null) {
             listView = inflater.inflate(R.layout.mentors_list_item, null);
             nameText = (TextView) listView.findViewById(R.id.name);
-            experienceText = (TextView) listView.findViewById(R.id.experience);
-            sendMessageImage = (ImageView) listView.findViewById(R.id.message_img);
+            sendMessageImage = (LinearLayout) listView.findViewById(R.id.message_img);
             nameText.setText(mentors.get(i).getName().toString());
-            experienceText.setText(String.valueOf(mentors.get(i).getExperience()));
-
 
             sendMessageImage.setOnClickListener(new View.OnClickListener() {
                 @Override

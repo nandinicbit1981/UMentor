@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-            <ImageView
+            <parimi.com.umentor.helper.RoundedImageView
                 android:id="@+id/imageView2"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -16,16 +17,42 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
+            android:paddingLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
                 <TextView
                     android:id="@+id/name"
+                    style="@style/MentorListItem"
+                    android:paddingBottom="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/experience"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/job"
+                            style="@style/MentorListItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/MentorListItem"
+                            android:text=" , "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            style="@style/MentorListItem"
+                            android:text="Exp: "
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/experience"
+                            style="@style/MentorListItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
         </LinearLayout>
 
 

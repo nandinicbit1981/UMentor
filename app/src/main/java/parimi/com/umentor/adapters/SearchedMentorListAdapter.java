@@ -63,8 +63,10 @@ public class SearchedMentorListAdapter extends BaseAdapter {
             listView = inflater.inflate(R.layout.users_list_item, null);
             final TextView nameText = (TextView) listView.findViewById(R.id.name);
             final TextView experienceText = (TextView) listView.findViewById(R.id.experience);
+            final TextView jobText = (TextView) listView.findViewById(R.id.job);
             nameText.setText(usersLlist.get(i).getName().toString());
-            experienceText.setText(String.valueOf(usersLlist.get(i).getExperience()));
+            experienceText.setText(String.valueOf(usersLlist.get(i).getExperience()) + " (yrs)");
+            jobText.setText(usersLlist.get(i).getJob());
         } else {
             listView = (View) convertView;
         }

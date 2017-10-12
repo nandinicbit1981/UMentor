@@ -1,67 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:layout_weight="1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
     <LinearLayout
-        android:layout_weight="0.2"
-        android:orientation="horizontal"
-        android:paddingRight="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <ImageView
+        android:layout_height="match_parent"
+        android:layout_weight="0.05"
+        android:orientation="horizontal"
+        android:paddingRight="5dp">
+
+        <parimi.com.umentor.helper.RoundedImageView
             android:id="@+id/imageView2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_weight="0.6"
-        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:paddingTop="10dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/MentorListItem"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-                <TextView
-                    android:text="@string/name"
-                    android:paddingRight="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="0.2"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/experience"
-                android:paddingRight="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/experience"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            </LinearLayout>
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_gravity="right"
+        android:id="@+id/message_img"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="0.25"
+        android:gravity="right">
+
         <ImageView
-            android:id="@+id/message_img"
-            android:src="@drawable/mentor_message"
             android:layout_width="20dp"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:src="@drawable/mentor_message" />
 
     </LinearLayout>
 
