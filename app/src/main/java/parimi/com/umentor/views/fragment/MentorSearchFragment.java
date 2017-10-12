@@ -115,7 +115,12 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("filteredMentors", (Serializable) filteredMentorUid);
                     fragment.setArguments(bundle);
-                    ((MainActivity)getActivity()).insertFragment(fragment);
+                    try {
+                        ((MainActivity) getActivity()).insertFragment(fragment);
+                    } catch(Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+
+                    }
                 }
 
                 @Override
