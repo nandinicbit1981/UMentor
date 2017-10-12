@@ -94,7 +94,11 @@ public class ProfileFragment extends Fragment {
             if(!currentUser.getId().equals(user.getId())) {
                 editButton.setText(getString(R.string.request_mentor));
             }
-            ratingBar.setEnabled(false);
+           // ratingBar.setEnabled(false);
+            ratingBar.setClickable(false);
+            ratingBar.setIsIndicator(true);
+
+
             ratingBar.setRating(user.getRating());
             nameTxt.setText(user.getName());
             ageTxt.setText(String.valueOf(user.getAge()));
@@ -160,6 +164,7 @@ public class ProfileFragment extends Fragment {
                     if(networkUser.getUserId().equals(currentUser.getId())) {
                         editButton.setText(getString(R.string.send_message_to_mentor));
                         ratingBar.setEnabled(true);
+                        ratingBar.setIsIndicator(false);
                     }
                 }
             }
@@ -210,10 +215,10 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
         if(networkUserIdList.contains(user.getId())) {
             editButton.setText(getString(R.string.message));
+            ratingBar.invalidate();
+            ratingBar.setIsIndicator(false);
         }
     }
 
