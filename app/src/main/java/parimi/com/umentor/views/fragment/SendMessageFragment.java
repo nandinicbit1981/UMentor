@@ -81,7 +81,7 @@ public class SendMessageFragment extends Fragment {
         if (bundle != null) {
             mentor = (User) bundle.get(USER);
         }
-        MessageAdapter messageAdapter = new MessageAdapter(getActivity());
+        MessageAdapter messageAdapter = new MessageAdapter(getActivity(), currentUser.getId());
         messagesListView.setAdapter(messageAdapter);
         getChannel();
 
@@ -120,7 +120,7 @@ public class SendMessageFragment extends Fragment {
                         messageList.add(message);
                     }
                     if(messageAdapter == null) {
-                        messageAdapter = new MessageAdapter(getActivity());
+                        messageAdapter = new MessageAdapter(getActivity(), currentUser.getId());
                     }
                     messageAdapter.setMessageLlist(messageList);
                     messagesListView.setAdapter(messageAdapter);

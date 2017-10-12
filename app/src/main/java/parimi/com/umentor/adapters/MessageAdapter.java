@@ -1,10 +1,12 @@
 package parimi.com.umentor.adapters;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,10 +23,13 @@ public class MessageAdapter extends BaseAdapter {
 
     Context context;
     List<Message> messageList = new ArrayList<>();
+    String currentUserId;
 
 
-    public MessageAdapter(Context context) {
+    public MessageAdapter(Context context, String currentUserId) {
+
         this.context = context;
+        this.currentUserId = currentUserId;
     }
 
     @Override
@@ -57,9 +62,14 @@ public class MessageAdapter extends BaseAdapter {
 
         if (convertView == null) {
             listView = inflater.inflate(R.layout.message_list_item, null);
-            final TextView senderText = (TextView) listView.findViewById(R.id.sender);
+            final LinearLayout messageItem = listView.findViewById(R.id.message_item);
+            if(messageList.get(i).getSenderId().equals(currentUserId)) {
+                messageItem.setGravity(Gravity.RIGHT);
+            } else {
+                messageItem.setGravity(Gravity.LEFT);
+            }
             final TextView senderMessageText = (TextView) listView.findViewById(R.id.sender_message);
-            senderText.setText(messageList.get(i).getSenderName().toString());
+            //senderText.setText(messageList.get(i).getSenderName().toString());
             senderMessageText.setText(String.valueOf(messageList.get(i).getMessage()).toString());
         } else {
             listView = (View) convertView;
