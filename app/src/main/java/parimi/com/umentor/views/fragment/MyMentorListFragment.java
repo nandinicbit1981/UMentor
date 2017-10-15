@@ -62,7 +62,9 @@ public class MyMentorListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    mentorIds.add(dataSnapshot1.getKey().toString());
+                    if(dataSnapshot1.child("mentor").getValue().equals(true)) {
+                        mentorIds.add(dataSnapshot1.getKey().toString());
+                    }
                 }
                 getMentorProfiles(mentorIds);
             }

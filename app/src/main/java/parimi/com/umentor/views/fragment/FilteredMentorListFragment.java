@@ -70,24 +70,26 @@ public class FilteredMentorListFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    User user = new User(
-                            dataSnapshot.child("name").getValue().toString(),
-                            dataSnapshot.child("id").getValue().toString(),
-                            dataSnapshot.child("email").getValue().toString(),
-                            dataSnapshot.child("gender").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                            dataSnapshot.child("summary").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                            dataSnapshot.child("fcmToken").getValue().toString(),
-                            Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                            (List<String>)dataSnapshot.child("categories").getValue(),
-                            dataSnapshot.child("job").getValue().toString(),
-                            dataSnapshot.child("profilePic").getValue().toString()
-                    );
-                    if(!filteredMentors.contains(user)) {
-                        filteredMentors.add(user);
-                        if(filteredMentors.size() == filteredMentorUid.size()) {
-                            searchedMentorListAdapter.setUsersLlist(filteredMentors);
+                    if(dataSnapshot.getValue() != null) {
+                        User user = new User(
+                                dataSnapshot.child("name").getValue().toString(),
+                                dataSnapshot.child("id").getValue().toString(),
+                                dataSnapshot.child("email").getValue().toString(),
+                                dataSnapshot.child("gender").getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
+                                dataSnapshot.child("summary").getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
+                                dataSnapshot.child("fcmToken").getValue().toString(),
+                                Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
+                                (List<String>) dataSnapshot.child("categories").getValue(),
+                                dataSnapshot.child("job").getValue().toString(),
+                                dataSnapshot.child("profilePic").getValue().toString()
+                        );
+                        if (!filteredMentors.contains(user)) {
+                            filteredMentors.add(user);
+                            if (filteredMentors.size() == filteredMentorUid.size()) {
+                                searchedMentorListAdapter.setUsersLlist(filteredMentors);
+                            }
                         }
                     }
                 }
