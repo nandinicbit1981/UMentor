@@ -94,7 +94,8 @@ public class MessageListFragment extends Fragment {
                             dataSnapshot.child("fcmToken").getValue().toString(),
                             Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
                             (List<String>)dataSnapshot.child("categories").getValue(),
-                            dataSnapshot.child("job").getValue().toString()
+                            dataSnapshot.child("job").getValue().toString(),
+                            dataSnapshot.child("profilePic").getValue().toString()
                     );
                     mentors.add(user);
                     if(mentorIds.size() == mentors.size()) {

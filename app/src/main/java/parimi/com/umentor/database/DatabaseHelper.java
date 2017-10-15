@@ -2,6 +2,8 @@ package parimi.com.umentor.database;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
@@ -20,10 +22,12 @@ import parimi.com.umentor.models.User;
 public class DatabaseHelper {
 
     private DatabaseReference mDatabase;
+    private FirebaseStorage mstorage;
 
     @Inject
     public DatabaseHelper(){
         mDatabase = FirebaseDatabase.getInstance().getReference("umentor-d21ff");
+        mstorage = FirebaseStorage.getInstance("gs://umentor-d21ff.appspot.com");
     }
 
     public void saveUser(User user) {
@@ -132,5 +136,17 @@ public class DatabaseHelper {
         DatabaseReference notificationsRequest = mDatabase.child("notifications").push();
         notification.setId(notificationsRequest.getKey());
         notificationsRequest.setValue(notification);
+    }
+
+    public StorageReference getStorageRef() {
+        return mstorage.getReference();
+    }
+
+    public StorageReference getImagesRef() {
+        return getStorageRef().child("images");
+    }
+
+    public DatabaseReference getImageDatabaseRef() {
+         return   mDatabase.child("images");
     }
 }

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -83,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
         mDatabaseReference = mFirebaseDatabase.getReference().child("users");
+
         createAuthStateListener();
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
     }
 
     private void updateUsername(final FirebaseUser firebaseUser) {
@@ -204,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
                                 fcmToken,
                                 Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
                                 (List<String>)dataSnapshot.child("categories").getValue(),
-                                dataSnapshot.child("job").getValue().toString()
+                                dataSnapshot.child("job").getValue().toString(),
+                                dataSnapshot.child("profilePic").getValue().toString()
 
                         );
 
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                                 fcmToken,
                                 0,
                                 new ArrayList<String>(),
+                                "",
                                 ""
                         );
 
@@ -251,20 +252,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Fragment fragment;
-        if(user != null) {
-            if(user.getAge() > 0) {
-               fragment = new ProfileFragment();
-            } else {
-                fragment = new EditProfileFragment();
-            }
-            fcmToken = FirebaseInstanceId.getInstance().getToken();
-            user.setFcmToken(fcmToken);
-            databaseHelper.saveUser(user);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(USER, user);
-            fragment.setArguments(bundle);
-            insertFragment(fragment);
-        }
+//        if(user != null) {
+//            if(user.getAge() > 0) {
+//               fragment = new ProfileFragment();
+//            } else {
+//                fragment = new EditProfileFragment();
+//            }
+//            fcmToken = FirebaseInstanceId.getInstance().getToken();
+//            user.setFcmToken(fcmToken);
+//            databaseHelper.saveUser(user);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable(USER, user);
+//            fragment.setArguments(bundle);
+//            insertFragment(fragment);
+//        }
     }
 
     @Override

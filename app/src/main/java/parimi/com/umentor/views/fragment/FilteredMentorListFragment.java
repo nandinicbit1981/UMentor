@@ -81,7 +81,8 @@ public class FilteredMentorListFragment extends Fragment {
                             dataSnapshot.child("fcmToken").getValue().toString(),
                             Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
                             (List<String>)dataSnapshot.child("categories").getValue(),
-                            dataSnapshot.child("job").getValue().toString()
+                            dataSnapshot.child("job").getValue().toString(),
+                            dataSnapshot.child("profilePic").getValue().toString()
                     );
                     if(!filteredMentors.contains(user)) {
                         filteredMentors.add(user);

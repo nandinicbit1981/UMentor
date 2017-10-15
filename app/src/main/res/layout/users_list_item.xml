@@ -10,7 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <parimi.com.umentor.helper.RoundedImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />

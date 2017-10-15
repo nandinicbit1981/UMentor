@@ -2,6 +2,7 @@ package parimi.com.umentor.views.fragment;
 
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import parimi.com.umentor.R;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.MentorStatus;
+import parimi.com.umentor.helper.RoundedImageView;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.NetworkUser;
 import parimi.com.umentor.models.Requests;
@@ -34,6 +37,7 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
+import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -64,6 +68,9 @@ public class ProfileFragment extends Fragment {
 
     @BindView(R.id.editButton)
     Button editButton;
+
+    @BindView(R.id.imageView)
+    RoundedImageView imageView;
 
     MainActivity mainActivity;
 
@@ -98,12 +105,19 @@ public class ProfileFragment extends Fragment {
             ratingBar.setClickable(false);
             ratingBar.setIsIndicator(true);
 
+            try {
 
+                Bitmap bitmap = decodeFromFirebaseBase64(user.getProfilePic());
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             ratingBar.setRating(user.getRating());
             nameTxt.setText(user.getName());
             ageTxt.setText(String.valueOf(user.getAge()));
             summaryTxt.setText(user.getSummary());
             jobTxt.setText(user.getJob());
+
             ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
                 @Override
                 public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {

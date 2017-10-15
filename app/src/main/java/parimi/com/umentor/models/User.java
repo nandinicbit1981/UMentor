@@ -20,6 +20,7 @@ public class User implements Parcelable, Serializable {
     private String email;
     private String gender;
     private int age;
+    private String profilePic;
     private String summary;
     private int experience;
     private String fcmToken;
@@ -39,6 +40,7 @@ public class User implements Parcelable, Serializable {
         rating = in.readFloat();
         job = in.readString();
         categories = in.readArrayList(User.class.getClassLoader());
+        profilePic = in.readString();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -63,7 +65,8 @@ public class User implements Parcelable, Serializable {
                 int experience, String fcmToken,
                 float rating,
                 List<String> categories,
-                String job
+                String job,
+                String profilePic
     ) {
         this.name = displayName;
         this.id = uid;
@@ -76,6 +79,7 @@ public class User implements Parcelable, Serializable {
         this.rating = rating;
         this.job = job;
         this.categories = categories;
+        this.profilePic = profilePic;
     }
 
     public String getName() {
@@ -167,6 +171,7 @@ public class User implements Parcelable, Serializable {
         parcel.writeFloat(rating);
         parcel.writeString(job);
         parcel.writeList(categories);
+        parcel.writeString(profilePic);
 
     }
 
@@ -212,5 +217,13 @@ public class User implements Parcelable, Serializable {
 
     public void setJob(String job) {
         this.job = job;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 }

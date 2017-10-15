@@ -71,6 +71,7 @@ public class MessageAdapter extends BaseAdapter {
             final TextView senderMessageText = (TextView) listView.findViewById(R.id.sender_message);
             //senderText.setText(messageList.get(i).getSenderName().toString());
             senderMessageText.setText(String.valueOf(messageList.get(i).getMessage()).toString());
+
         } else {
             listView = (View) convertView;
         }

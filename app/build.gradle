@@ -7,7 +7,6 @@ android {
         applicationId "parimi.com.umentor"
         minSdkVersion 16
         targetSdkVersion 24
-        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,6 +16,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+
     }
 }
 
@@ -39,6 +44,9 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.2.0'
     compile 'com.firebaseui:firebase-ui:2.3.0'
     compile 'com.facebook.android:facebook-android-sdk:4.22.1'
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.google.android.gms:play-services:11.2.0'
     compile 'com.google.firebase:firebase-messaging:11.2.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
@@ -49,7 +57,9 @@ dependencies {
     compile 'com.google.dagger:dagger-android-support:2.11'
     compile 'com.firebaseui:firebase-ui:1.1.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.google.firebase:firebase-storage:11.2.0'
+    compile 'com.firebase:firebase-client-android:2.4.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
