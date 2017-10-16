@@ -50,13 +50,20 @@ import parimi.com.umentor.views.fragment.MessageListFragment;
 import parimi.com.umentor.views.fragment.MyMentorListFragment;
 import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
+import parimi.com.umentor.widget.UpdateWidgetService;
 
+import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
 
 public class MainActivity extends AppCompatActivity {
 
     @Inject
     DatabaseHelper databaseHelper;
+
+    @Inject
+    UpdateWidgetService service;
+
     private String fcmToken;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -77,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setTitle("");
+
+        //updating widget
+        service.updateWidget(this.getBaseContext(), MENTORREQUESTACCEPTED);
+        service.updateWidget(this.getBaseContext(), RATINGGIVEN);
+
         fcmToken = FirebaseInstanceId.getInstance().getToken();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();

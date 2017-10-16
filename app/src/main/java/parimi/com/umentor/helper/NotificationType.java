@@ -7,6 +7,7 @@ package parimi.com.umentor.helper;
 public enum NotificationType {
     REQUEST("REQUEST"),
     ACCEPT("ACCEPT"),
+    RATING("RATING"),
     MESSAGE("MESSAGE");
 
     private  String notificationType;

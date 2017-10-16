@@ -9,8 +9,6 @@
     <string name="name">Name</string>
     <string name="experience">Experience</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="message">Message</string>
     <string name="send_message_to_mentor">Send message</string>
     <string name="enter_your_name">Enter your name</string>
@@ -24,5 +22,12 @@
     <string name="choose_a_category">\"Choose a category\"</string>
     <string name="ok">OK</string>
     <string name="job">Job</string>
+
+    <!-- constants related strings -->
+    <string name="accept_mentor_request"> has accepted your mentor request.</string>
+    <string name="mentor_count">Mentor:</string>
+    <string name="mentee_count">Mentee:</string>
+    <string name="rating">Rating</string>
+
 
 </resources>

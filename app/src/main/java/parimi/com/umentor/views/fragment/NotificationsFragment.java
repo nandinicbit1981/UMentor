@@ -31,6 +31,9 @@ import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
+import parimi.com.umentor.widget.UpdateWidgetService;
+
+import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,9 +46,13 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
     @BindView(R.id.notifications_list_view)
     ListView notificationListView;
 
+    @Inject
+    UpdateWidgetService service;
+
     User currentUser;
     List<Notification> notifications = new ArrayList<>();
     NotificationAdapter notificationAdapter;
+
 
     public NotificationsFragment() {
         // Required empty public constructor
@@ -112,11 +119,12 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
             Notification acceptedNotification = new Notification(notification.getReceiver(),
                     notification.getSender(),
                     NotificationType.ACCEPT,
-                    currentUser.getName() + " has accepted your mentor request.",
-                    "Mentor Request Accepted", notification.getSenderFcmToken(),
+                    currentUser.getName() + getString(R.string.accept_mentor_request),
+                    MENTORREQUESTACCEPTED, notification.getSenderFcmToken(),
                     new Date().getTime());
-            RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), "Mentor Request Accepted", currentUser.getName() + " has accepted your request.");
+            RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), MENTORREQUESTACCEPTED , currentUser.getName() + getString(R.string.accept_mentor_request));
             databaseHelper.saveNotification(acceptedNotification);
+            service.updateWidget(getActivity(), MENTORREQUESTACCEPTED);
         }
 
 

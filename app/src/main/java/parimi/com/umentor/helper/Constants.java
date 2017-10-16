@@ -9,4 +9,6 @@ public class Constants {
     public static String EDITPROFILEFRAGMENT = "EditProfileFragment";
     public static String USER = "USER";
     public static String ACCEPT = "ACCEPT";
+    public static String MENTORREQUESTACCEPTED ="Mentor Request Accepted";
+    public static String RATINGGIVEN="New Rating by Mentee";
 }

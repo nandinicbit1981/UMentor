@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,15 +30,18 @@ import parimi.com.umentor.R;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.MentorStatus;
+import parimi.com.umentor.helper.NotificationType;
 import parimi.com.umentor.helper.RoundedImageView;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.NetworkUser;
+import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.Requests;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
+import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -136,22 +140,23 @@ public class ProfileFragment extends Fragment {
 
                     existingRating += v;
                     user.setRating(existingRating/(count + 1));
+
+
+                    Notification notification = new Notification(currentUser.getId(),
+                            user.getId(),
+                            NotificationType.RATING,
+                            currentUser.getName() + " gave you a rating of " + v,
+                            RATINGGIVEN, user.getFcmToken(),
+                            new Date().getTime());
+                    databaseHelper.saveNotification(notification);
+
+                    RestInterface.sendNotification(getContext(), user.getFcmToken(), RATINGGIVEN, currentUser.getName() + " gave you a rating of " + v);
+
                     databaseHelper.saveUser(user);
                     databaseHelper.addMenteeToMentor(currentUser.getId(), user.getId(), v, true);
                 }
             });
-            //experienceTxt.setText(String.valueOf(user.getExperience()));
 
-            String categoryString = "";
-//            if(user.getCategory() != null && user.getCategory() != null) {
-//                for (String category : user.getCategory().keySet()) {
-//                    if (categoryString != "") {
-//                        categoryString += ", ";
-//                    }
-//                    categoryString += category;
-//                }
-//            }
-//            summaryTxt.setText(categoryString);
         }
 
         databaseHelper.getNetwork().child(user.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
