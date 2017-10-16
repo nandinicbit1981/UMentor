@@ -7,12 +7,13 @@ import com.google.gson.Gson;
 
 import parimi.com.umentor.models.User;
 
+import static parimi.com.umentor.helper.Constants.UMENTOR;
+
 /**
  * Created by nandpa on 9/24/17.
  */
 
 public class SharedPreferenceHelper {
-    public static final String UMENTOR = "parimi.com.umentor";
 
     public static void saveString(Context context, String itemName, String itemValue) {
         SharedPreferences preferences = context.getSharedPreferences(UMENTOR, Context.MODE_PRIVATE);

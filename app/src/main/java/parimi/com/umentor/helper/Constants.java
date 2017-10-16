@@ -5,6 +5,7 @@ package parimi.com.umentor.helper;
  */
 
 public class Constants {
+    public static final String UMENTOR = "parimi.com.umentor";
     public static String MENTORSEARCHFRAGMENT = "Fragment";
     public static String EDITPROFILEFRAGMENT = "EditProfileFragment";
     public static String USER = "USER";
@@ -12,6 +13,7 @@ public class Constants {
     public static String MENTORREQUESTACCEPTED ="Mentor Request Accepted";
     public static String RATINGGIVEN="New Rating by Mentee";
     public static String FIREBASEDATABASE="umentor-d21ff";
+    public static String fcmURL = "https://fcm.googleapis.com/fcm/send";
 
 
     // Firebase database related constants
@@ -29,6 +31,9 @@ public class Constants {
     public static String USERCHATCHANNELS="user-chat-channels";
     public static String CHANNEL="channel";
     public static String CHANNELS="channels";
+    public static String SHIFTINGMODE="mShiftingMode";
+    public static String API_KEY=""; // Replace this with actual api key
+
 
 
 

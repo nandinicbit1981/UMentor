@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
+import static parimi.com.umentor.helper.Constants.SHIFTINGMODE;
+
 /**
  * Created by nandpa on 9/16/17.
  */
@@ -16,7 +18,7 @@ public class BottomNavigationViewHelper {
     public static void removeShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
-            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            Field shiftingMode = menuView.getClass().getDeclaredField(SHIFTINGMODE);
             shiftingMode.setAccessible(true);
             shiftingMode.setBoolean(menuView, false);
             shiftingMode.setAccessible(false);

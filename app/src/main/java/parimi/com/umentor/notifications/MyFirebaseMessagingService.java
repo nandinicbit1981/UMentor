@@ -3,14 +3,9 @@ package parimi.com.umentor.notifications;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -19,16 +14,13 @@ import javax.inject.Inject;
 import parimi.com.umentor.R;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
-import parimi.com.umentor.helper.SharedPreferenceHelper;
-import parimi.com.umentor.models.User;
-import parimi.com.umentor.widget.HomeWidgetProvider;
 import parimi.com.umentor.widget.UpdateWidgetService;
 
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private static final String TAG = "MyFirebaseMessagingService";
+    private static final String TAG = MyFirebaseMessagingService.class.getCanonicalName();
 
     @Inject
     UpdateWidgetService service;
@@ -38,8 +30,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "Notification Message Body: ");
-        Log.d(TAG, "title "+ remoteMessage.getData());
+
         UMentorDaggerInjector.get().inject(this);
 
 

@@ -12,6 +12,9 @@ import javax.inject.Inject;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import parimi.com.umentor.database.DatabaseHelper;
+import parimi.com.umentor.helper.Constants;
+
+import static parimi.com.umentor.helper.Constants.fcmURL;
 
 /**
  * Created by nandpa on 9/30/17.
@@ -22,10 +25,9 @@ public class RestInterface {
     @Inject
     DatabaseHelper databaseHelper;
 
-    private static final String fcmURL = "https://fcm.googleapis.com/fcm/send";
     public static void sendNotification(Context context, String registrationID, String subject, String message) {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("Authorization", "key=AIzaSyD-EQLKRvqLmnRaMFfBtT0RIa6mYZg5xV4");
+        client.addHeader("Authorization", "key="+ Constants.API_KEY);
         client.addHeader("Content-type","application/json");
         String notificationMessage = prepareNotificationPayloadForAndroid(registrationID, subject, message);
         StringEntity entity = null;
