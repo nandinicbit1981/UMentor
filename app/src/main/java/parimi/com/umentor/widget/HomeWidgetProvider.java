@@ -10,6 +10,10 @@ import android.widget.RemoteViews;
 
 import parimi.com.umentor.R;
 
+import static parimi.com.umentor.helper.Constants.MENTEE;
+import static parimi.com.umentor.helper.Constants.MENTOR;
+import static parimi.com.umentor.helper.Constants.RATING;
+
 /**
  * Created by nandpa on 10/15/17.
  */
@@ -34,9 +38,9 @@ public class HomeWidgetProvider extends AppWidgetProvider {
 
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
-        String mentee = String.valueOf(extras.getSerializable("mentee")!= null ? extras.getSerializable("mentee") : "");
-        String mentor = String.valueOf(extras.getSerializable("mentor")!= null ? extras.getSerializable("mentor") : "");
-        String rating = String.valueOf(extras.getSerializable("rating")!= null ? extras.getSerializable("rating") : "");
+        String mentee = String.valueOf(extras.getSerializable(MENTEE)!= null ? extras.getSerializable(MENTEE) : "");
+        String mentor = String.valueOf(extras.getSerializable(MENTOR)!= null ? extras.getSerializable(MENTOR) : "");
+        String rating = String.valueOf(extras.getSerializable(RATING)!= null ? extras.getSerializable(RATING) : "");
 
         if (action != null && action.equals(UPDATE_ACTION)) {
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

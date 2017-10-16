@@ -52,9 +52,12 @@ import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 import parimi.com.umentor.widget.UpdateWidgetService;
 
+import static parimi.com.umentor.helper.Constants.CATEGORIES;
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
+import static parimi.com.umentor.helper.Constants.USERS;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -85,15 +88,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setTitle("");
 
-        //updating widget
-        service.updateWidget(this.getBaseContext(), MENTORREQUESTACCEPTED);
-        service.updateWidget(this.getBaseContext(), RATINGGIVEN);
-
         fcmToken = FirebaseInstanceId.getInstance().getToken();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseStorage = FirebaseStorage.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("users");
+        mDatabaseReference = mFirebaseDatabase.getReference().child(USERS);
 
         createAuthStateListener();
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
@@ -213,8 +212,8 @@ public class MainActivity extends AppCompatActivity {
                                 dataSnapshot.child("summary").getValue().toString(),
                                 Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                                 fcmToken,
-                                Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                                (List<String>)dataSnapshot.child("categories").getValue(),
+                                Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
+                                (List<String>)dataSnapshot.child(CATEGORIES).getValue(),
                                 dataSnapshot.child("job").getValue().toString(),
                                 dataSnapshot.child("profilePic").getValue().toString()
 
@@ -240,6 +239,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                     databaseHelper.saveUser(user);
                     SharedPreferenceHelper.saveUser(MainActivity.this, user);
+
+                    //updating widget
+                    service.updateWidget(getBaseContext(), MENTORREQUESTACCEPTED);
+                    service.updateWidget(getBaseContext(), RATINGGIVEN);
+
                     Fragment fragment;
                     if(user.getAge() > 0) {
                       fragment = new ProfileFragment();

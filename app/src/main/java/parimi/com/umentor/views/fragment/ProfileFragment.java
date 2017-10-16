@@ -41,7 +41,9 @@ import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
+import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.SETRATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -166,8 +168,8 @@ public class ProfileFragment extends Fragment {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     NetworkUser networkUser = new NetworkUser();
                     networkUser.setUserId(ds.getKey());
-                    networkUser.setRatingGiven((Boolean) ds.child("setRatingGiven").getValue());
-                    networkUser.setRating(Float.parseFloat(ds.child("rating").getValue().toString()));
+                    networkUser.setRatingGiven((Boolean) ds.child(SETRATINGGIVEN).getValue());
+                    networkUser.setRating(Float.parseFloat(ds.child(RATING).getValue().toString()));
 
                     if(!networkUserList.contains(networkUser)) {
                         networkUserList.add(networkUser);

@@ -35,6 +35,7 @@ import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 
+import static parimi.com.umentor.helper.Constants.CHANNEL;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -92,7 +93,7 @@ public class SendMessageFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    getMessages(ds.child("channel").getValue().toString());
+                    getMessages(ds.child(CHANNEL).getValue().toString());
                 }
             }
 
@@ -154,7 +155,7 @@ public class SendMessageFragment extends Fragment {
                     databaseHelper.saveUserChatChannels(message, channelRef.getKey());
                 } else {
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        databaseHelper.saveChatToChannel(ds.child("channel").getValue().toString(), message);
+                        databaseHelper.saveChatToChannel(ds.child(CHANNEL).getValue().toString(), message);
                     }
                 }
                 Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + " sent you a new message", "New Message", mentor.getFcmToken(), new Date().getTime());

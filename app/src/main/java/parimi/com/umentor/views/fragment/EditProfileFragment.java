@@ -123,7 +123,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         Bundle bundle = getArguments();
 
         storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference = databaseHelper.getImageDatabaseRef();
         if (bundle != null) {
             user = (User) bundle.get(USER);
             nameTxt.setText(user.getName());

@@ -77,7 +77,7 @@ public class SearchedMentorListAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
             nameText.setText(usersLlist.get(i).getName().toString());
-            experienceText.setText(String.valueOf(usersLlist.get(i).getExperience()) + " (yrs)");
+            experienceText.setText(String.valueOf(usersLlist.get(i).getExperience()) + context.getString(R.string.yrs));
             jobText.setText(usersLlist.get(i).getJob());
         } else {
             listView = (View) convertView;

@@ -26,6 +26,9 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 
+import static parimi.com.umentor.helper.Constants.MENTOR;
+import static parimi.com.umentor.helper.Constants.RATING;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -62,7 +65,7 @@ public class MyMentorListFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    if(dataSnapshot1.child("mentor").getValue().equals(true)) {
+                    if(dataSnapshot1.child(MENTOR).getValue().equals(true)) {
                         mentorIds.add(dataSnapshot1.getKey().toString());
                     }
                 }
@@ -93,7 +96,7 @@ public class MyMentorListFragment extends Fragment {
                             dataSnapshot.child("summary").getValue().toString(),
                             Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                             dataSnapshot.child("fcmToken").getValue().toString(),
-                            Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
+                            Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
                             (List<String>)dataSnapshot.child("categories").getValue(),
                             dataSnapshot.child("job").getValue().toString(),
                             dataSnapshot.child("profilePic").getValue().toString()

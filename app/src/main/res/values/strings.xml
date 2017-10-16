@@ -22,12 +22,14 @@
     <string name="choose_a_category">\"Choose a category\"</string>
     <string name="ok">OK</string>
     <string name="job">Job</string>
+    <string name="yrs"> (yrs)</string>
 
     <!-- constants related strings -->
     <string name="accept_mentor_request"> has accepted your mentor request.</string>
     <string name="mentor_count">Mentor:</string>
     <string name="mentee_count">Mentee:</string>
     <string name="rating">Rating</string>
+
 
 
 </resources>

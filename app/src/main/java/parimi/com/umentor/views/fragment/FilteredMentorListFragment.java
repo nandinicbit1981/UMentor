@@ -25,6 +25,9 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
 
+import static parimi.com.umentor.helper.Constants.CATEGORIES;
+import static parimi.com.umentor.helper.Constants.RATING;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -80,8 +83,8 @@ public class FilteredMentorListFragment extends Fragment {
                                 dataSnapshot.child("summary").getValue().toString(),
                                 Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
                                 dataSnapshot.child("fcmToken").getValue().toString(),
-                                Float.parseFloat(dataSnapshot.child("rating").getValue().toString()),
-                                (List<String>) dataSnapshot.child("categories").getValue(),
+                                Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
+                                (List<String>) dataSnapshot.child(CATEGORIES).getValue(),
                                 dataSnapshot.child("job").getValue().toString(),
                                 dataSnapshot.child("profilePic").getValue().toString()
                         );

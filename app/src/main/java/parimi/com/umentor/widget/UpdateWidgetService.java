@@ -17,7 +17,10 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 
+import static parimi.com.umentor.helper.Constants.MENTEE;
+import static parimi.com.umentor.helper.Constants.MENTOR;
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 
 /**
@@ -54,10 +57,10 @@ public class UpdateWidgetService extends Service {
                     mentee = 0;
                     mentor = 0;
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if(ds.child("mentee").getValue().equals(true)) {
+                        if(ds.child(MENTEE).getValue().equals(true)) {
                             mentee++;
                         }
-                        if(ds.child("mentor").getValue().equals(true)) {
+                        if(ds.child(MENTOR).getValue().equals(true)) {
                             mentor++;
                         }
                     }
@@ -66,8 +69,8 @@ public class UpdateWidgetService extends Service {
                     Intent i = new Intent(context, HomeWidgetProvider.class);
                     i.setAction(HomeWidgetProvider.UPDATE_ACTION);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("mentee", mentee);
-                    i.putExtra("mentor", mentor);
+                    i.putExtra(MENTEE, mentee);
+                    i.putExtra(MENTOR, mentor);
                     context.sendBroadcast(i);
                 }
 
@@ -84,7 +87,7 @@ public class UpdateWidgetService extends Service {
                     Intent i = new Intent(context, HomeWidgetProvider.class);
                     i.setAction(HomeWidgetProvider.UPDATE_ACTION);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("rating", dataSnapshot.child("rating").getValue().toString());
+                    i.putExtra(RATING, dataSnapshot.child(RATING).getValue().toString());
                     context.sendBroadcast(i);
                 }
 
