@@ -43,16 +43,17 @@ public class RestInterface {
             @Override
             public void onStart() {
                 // called before request is started
+                System.out.println("started");
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                System.out.println("success");
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                System.out.println("failed");
             }
 
         });

@@ -36,6 +36,14 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 
 import static parimi.com.umentor.helper.Constants.CHANNEL;
+import static parimi.com.umentor.helper.Constants.MESSAGE;
+import static parimi.com.umentor.helper.Constants.NEWMESSAGE;
+import static parimi.com.umentor.helper.Constants.RECEIVERID;
+import static parimi.com.umentor.helper.Constants.RECEIVERNAME;
+import static parimi.com.umentor.helper.Constants.SENDERID;
+import static parimi.com.umentor.helper.Constants.SENDERNAME;
+import static parimi.com.umentor.helper.Constants.SENTNEWMESSAGE;
+import static parimi.com.umentor.helper.Constants.TIMESTAMP;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -110,12 +118,12 @@ public class SendMessageFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Message message = new Message();
-                    message.setReceiverId(ds.child("receiverId").getValue().toString());
-                    message.setSenderId(ds.child("senderId").getValue().toString());
-                    message.setSenderName(ds.child("senderName").getValue().toString());
-                    message.setReceiverName(ds.child("receiverName").getValue().toString());
-                    message.setMessage(ds.child("message").getValue().toString());
-                    message.setTimeStamp(Long.valueOf(ds.child("timeStamp").getValue().toString()));
+                    message.setReceiverId(ds.child(RECEIVERID).getValue().toString());
+                    message.setSenderId(ds.child(SENDERID).getValue().toString());
+                    message.setSenderName(ds.child(SENDERNAME).getValue().toString());
+                    message.setReceiverName(ds.child(RECEIVERNAME).getValue().toString());
+                    message.setMessage(ds.child(MESSAGE).getValue().toString());
+                    message.setTimeStamp(Long.valueOf(ds.child(TIMESTAMP).getValue().toString()));
                     if(!messageList.contains(message)) {
                         messageList.add(message);
                     }
@@ -158,9 +166,9 @@ public class SendMessageFragment extends Fragment {
                         databaseHelper.saveChatToChannel(ds.child(CHANNEL).getValue().toString(), message);
                     }
                 }
-                Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + " sent you a new message", "New Message", mentor.getFcmToken(), new Date().getTime());
+                Notification notification = new Notification(currentUser.getId(), mentor.getId(), NotificationType.MESSAGE, currentUser.getName() + SENTNEWMESSAGE, NEWMESSAGE, mentor.getFcmToken(), new Date().getTime());
                 databaseHelper.saveNotification(notification);
-                RestInterface.sendNotification(getContext(), mentor.getFcmToken(), "New Message", currentUser.getName() + " sent you a new message");
+                RestInterface.sendNotification(getContext(), mentor.getFcmToken(), NEWMESSAGE, currentUser.getName() + SENTNEWMESSAGE);
             }
 
             @Override

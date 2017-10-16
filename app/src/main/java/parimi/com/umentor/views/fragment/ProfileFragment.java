@@ -41,6 +41,9 @@ import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
+import static parimi.com.umentor.helper.Constants.ADDASMENTOR;
+import static parimi.com.umentor.helper.Constants.GAVERATING;
+import static parimi.com.umentor.helper.Constants.MENTORREQUEST;
 import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.SETRATINGGIVEN;
@@ -147,7 +150,7 @@ public class ProfileFragment extends Fragment {
                     Notification notification = new Notification(currentUser.getId(),
                             user.getId(),
                             NotificationType.RATING,
-                            currentUser.getName() + " gave you a rating of " + v,
+                            currentUser.getName() + GAVERATING + v,
                             RATINGGIVEN, user.getFcmToken(),
                             new Date().getTime());
                     databaseHelper.saveNotification(notification);
@@ -228,7 +231,7 @@ public class ProfileFragment extends Fragment {
                     currentUser.getFcmToken()
                     );
             databaseHelper.saveRequest(requests);
-            RestInterface.sendNotification(getContext(), user.getFcmToken(), "Mentor Request", currentUser.getName() + " wants to add you as a mentor");
+            RestInterface.sendNotification(getContext(), user.getFcmToken(), MENTORREQUEST, currentUser.getName() + ADDASMENTOR);
         }
 
     }

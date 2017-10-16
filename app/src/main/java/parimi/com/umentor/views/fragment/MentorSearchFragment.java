@@ -31,6 +31,8 @@ import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
+import static parimi.com.umentor.helper.Constants.*;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
@@ -113,7 +115,7 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
                     }
                     android.support.v4.app.Fragment fragment = new FilteredMentorListFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("filteredMentors", (Serializable) filteredMentorUid);
+                    bundle.putSerializable(FILTEREDMENTORS, (Serializable) filteredMentorUid);
                     fragment.setArguments(bundle);
                     try {
                         ((MainActivity) getActivity()).insertFragment(fragment);

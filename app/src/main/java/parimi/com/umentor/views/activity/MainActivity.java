@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +41,7 @@ import parimi.com.umentor.R;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
+import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.EditProfileFragment;
@@ -52,10 +52,19 @@ import parimi.com.umentor.views.fragment.NotificationsFragment;
 import parimi.com.umentor.views.fragment.ProfileFragment;
 import parimi.com.umentor.widget.UpdateWidgetService;
 
+import static parimi.com.umentor.helper.Constants.AGE;
 import static parimi.com.umentor.helper.Constants.CATEGORIES;
+import static parimi.com.umentor.helper.Constants.EMAIL;
+import static parimi.com.umentor.helper.Constants.EXPERIENCE;
+import static parimi.com.umentor.helper.Constants.GENDER;
+import static parimi.com.umentor.helper.Constants.ID;
+import static parimi.com.umentor.helper.Constants.JOB;
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.NAME;
+import static parimi.com.umentor.helper.Constants.PROFILEPIC;
 import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.SUMMARY;
 import static parimi.com.umentor.helper.Constants.USER;
 import static parimi.com.umentor.helper.Constants.USERS;
 
@@ -200,22 +209,22 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() != null) {
                         HashMap<String, String> categories = new HashMap<>();
-                        if (dataSnapshot.child("category").getValue() != null) {
-                            categories = (HashMap<String, String>) dataSnapshot.child("category").getValue();
+                        if (dataSnapshot.child(Constants.CATEGORY).getValue() != null) {
+                            categories = (HashMap<String, String>) dataSnapshot.child(Constants.CATEGORY).getValue();
                         }
                         user = new User(
-                                dataSnapshot.child("name").getValue().toString(),
-                                dataSnapshot.child("id").getValue().toString(),
-                                dataSnapshot.child("email").getValue().toString(),
-                                dataSnapshot.child("gender").getValue().toString(),
-                                Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                                dataSnapshot.child("summary").getValue().toString(),
-                                Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
+                                dataSnapshot.child(NAME).getValue().toString(),
+                                dataSnapshot.child(ID).getValue().toString(),
+                                dataSnapshot.child(EMAIL).getValue().toString(),
+                                dataSnapshot.child(GENDER).getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child(AGE).getValue().toString()),
+                                dataSnapshot.child(SUMMARY).getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child(EXPERIENCE).getValue().toString()),
                                 fcmToken,
                                 Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
                                 (List<String>)dataSnapshot.child(CATEGORIES).getValue(),
-                                dataSnapshot.child("job").getValue().toString(),
-                                dataSnapshot.child("profilePic").getValue().toString()
+                                dataSnapshot.child(JOB).getValue().toString(),
+                                dataSnapshot.child(PROFILEPIC).getValue().toString()
 
                         );
 
@@ -296,9 +305,9 @@ public class MainActivity extends AppCompatActivity {
             case RC_SIGN_IN :
                 if(resultCode == RESULT_OK)
                     System.out.println(data);
-                    Toast.makeText(getBaseContext(), "Signed in", Toast.LENGTH_LONG);
+
                 if(resultCode == RESULT_CANCELED) {
-                    Toast.makeText(getBaseContext(), " Not signed in", Toast.LENGTH_SHORT );
+
                 }
                 break;
             case RC_PHOTO_PICKER :

@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static parimi.com.umentor.helper.Constants.*;
+
 /**
  * Created by nandpa on 8/26/17.
  */
@@ -142,12 +144,12 @@ public class User implements Parcelable, Serializable {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
-        result.put("name", name);
-        result.put("email", email);
-        result.put("gender", gender);
-        result.put("summary", summary);
-        result.put("experience", experience);
+        result.put(ID, id);
+        result.put(NAME, name);
+        result.put(EMAIL, email);
+        result.put(GENDER, gender);
+        result.put(SUMMARY, summary);
+        result.put(EXPERIENCE, experience);
 
         return result;
     }

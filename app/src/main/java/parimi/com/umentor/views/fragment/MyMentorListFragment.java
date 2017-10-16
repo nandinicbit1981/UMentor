@@ -26,8 +26,7 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
 import parimi.com.umentor.models.User;
 
-import static parimi.com.umentor.helper.Constants.MENTOR;
-import static parimi.com.umentor.helper.Constants.RATING;
+import static parimi.com.umentor.helper.Constants.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,18 +87,18 @@ public class MyMentorListFragment extends Fragment {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     User user = new User(
-                            dataSnapshot.child("name").getValue().toString(),
-                            dataSnapshot.child("id").getValue().toString(),
-                            dataSnapshot.child("email").getValue().toString(),
-                            dataSnapshot.child("gender").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                            dataSnapshot.child("summary").getValue().toString(),
-                            Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                            dataSnapshot.child("fcmToken").getValue().toString(),
+                            dataSnapshot.child(NAME).getValue().toString(),
+                            dataSnapshot.child(ID).getValue().toString(),
+                            dataSnapshot.child(EMAIL).getValue().toString(),
+                            dataSnapshot.child(GENDER).getValue().toString(),
+                            Integer.parseInt(dataSnapshot.child(AGE).getValue().toString()),
+                            dataSnapshot.child(SUMMARY).getValue().toString(),
+                            Integer.parseInt(dataSnapshot.child(EXPERIENCE).getValue().toString()),
+                            dataSnapshot.child(FCMTOKEN).getValue().toString(),
                             Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
-                            (List<String>)dataSnapshot.child("categories").getValue(),
-                            dataSnapshot.child("job").getValue().toString(),
-                            dataSnapshot.child("profilePic").getValue().toString()
+                            (List<String>)dataSnapshot.child(CATEGORIES).getValue(),
+                            dataSnapshot.child(JOB).getValue().toString(),
+                            dataSnapshot.child(PROFILEPIC).getValue().toString()
                     );
                     mentors.add(user);
                     if(mentorIds.size() == mentors.size()) {

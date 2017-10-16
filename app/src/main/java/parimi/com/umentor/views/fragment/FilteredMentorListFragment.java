@@ -25,8 +25,7 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.models.User;
 
-import static parimi.com.umentor.helper.Constants.CATEGORIES;
-import static parimi.com.umentor.helper.Constants.RATING;
+import static parimi.com.umentor.helper.Constants.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +56,7 @@ public class FilteredMentorListFragment extends Fragment {
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            filteredMentorUid = (List<String>) bundle.get("filteredMentors");
+            filteredMentorUid = (List<String>) bundle.get(FILTEREDMENTORS);
         }
         searchedMentorListAdapter = new SearchedMentorListAdapter(this.getActivity());
         listView.setAdapter(searchedMentorListAdapter);
@@ -75,18 +74,18 @@ public class FilteredMentorListFragment extends Fragment {
 
                     if(dataSnapshot.getValue() != null) {
                         User user = new User(
-                                dataSnapshot.child("name").getValue().toString(),
-                                dataSnapshot.child("id").getValue().toString(),
-                                dataSnapshot.child("email").getValue().toString(),
-                                dataSnapshot.child("gender").getValue().toString(),
-                                Integer.parseInt(dataSnapshot.child("age").getValue().toString()),
-                                dataSnapshot.child("summary").getValue().toString(),
-                                Integer.parseInt(dataSnapshot.child("experience").getValue().toString()),
-                                dataSnapshot.child("fcmToken").getValue().toString(),
+                                dataSnapshot.child(NAME).getValue().toString(),
+                                dataSnapshot.child(ID).getValue().toString(),
+                                dataSnapshot.child(EMAIL).getValue().toString(),
+                                dataSnapshot.child(GENDER).getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child(AGE).getValue().toString()),
+                                dataSnapshot.child(SUMMARY).getValue().toString(),
+                                Integer.parseInt(dataSnapshot.child(EXPERIENCE).getValue().toString()),
+                                dataSnapshot.child(FCMTOKEN).getValue().toString(),
                                 Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
                                 (List<String>) dataSnapshot.child(CATEGORIES).getValue(),
-                                dataSnapshot.child("job").getValue().toString(),
-                                dataSnapshot.child("profilePic").getValue().toString()
+                                dataSnapshot.child(JOB).getValue().toString(),
+                                dataSnapshot.child(PROFILEPIC).getValue().toString()
                         );
                         if (!filteredMentors.contains(user)) {
                             filteredMentors.add(user);

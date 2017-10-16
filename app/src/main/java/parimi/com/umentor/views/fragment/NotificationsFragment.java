@@ -33,7 +33,7 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.widget.UpdateWidgetService;
 
-import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,19 +67,19 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_notifications, container, false);
         ButterKnife.bind(this, view);
-        databaseHelper.getNotifications().orderByChild("receiver").equalTo(currentUser.getId()).addValueEventListener(new ValueEventListener() {
+        databaseHelper.getNotifications().orderByChild(RECEIVER).equalTo(currentUser.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot notification: dataSnapshot.getChildren()) {
 
-                    Notification notificationInstance = new Notification(notification.child("id").getValue().toString(),
-                            notification.child("sender").getValue().toString(),
-                            notification.child("receiver").getValue().toString(),
-                            NotificationType.getByType(notification.child("notificationType").getValue().toString()),
-                            notification.child("message").getValue().toString(),
-                            notification.child("title").getValue().toString(),
-                            notification.child("senderFcmToken").getValue().toString(),
-                            Long.valueOf(notification.child("timeStamp").getValue().toString())
+                    Notification notificationInstance = new Notification(notification.child(ID).getValue().toString(),
+                            notification.child(SENDER).getValue().toString(),
+                            notification.child(RECEIVER).getValue().toString(),
+                            NotificationType.getByType(notification.child(NOTIFICATIONTYPE).getValue().toString()),
+                            notification.child(MESSAGE).getValue().toString(),
+                            notification.child(TITLE).getValue().toString(),
+                            notification.child(SENDERFCMTOKEN).getValue().toString(),
+                            Long.valueOf(notification.child(TIMESTAMP).getValue().toString())
                     );
                     if(!notifications.contains(notificationInstance)) {
                         notifications.add(notificationInstance);

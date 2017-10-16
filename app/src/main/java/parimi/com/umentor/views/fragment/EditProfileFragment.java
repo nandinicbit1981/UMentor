@@ -54,6 +54,7 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
+import static parimi.com.umentor.helper.Constants.DATA;
 import static parimi.com.umentor.helper.Constants.USER;
 
 /**
@@ -303,7 +304,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap imageBitmap = (Bitmap) extras.get(DATA);
            // bitmapIntoImageView(imageView, imageBitmap, getActivity());
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 imageBitmap = Bitmap.createScaledBitmap(imageBitmap, imageView.getWidth(),imageView.getHeight(),true);
