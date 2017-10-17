@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:background="@drawable/round_failure_button"
             style="@style/whiteText"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_height="wrap_content"
             android:id="@+id/reject"
             android:text="@string/reject"

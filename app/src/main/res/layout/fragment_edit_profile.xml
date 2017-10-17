@@ -5,7 +5,6 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
@@ -21,10 +20,10 @@
                 android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait" />
+                app:srcCompat="@drawable/profile" />
 
         </LinearLayout>
 
@@ -41,7 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/name" />
 
 
@@ -51,7 +50,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:hint="@string/enter_your_name"
                 android:textSize="12sp" />
 
@@ -62,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
@@ -72,7 +71,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/age" />
 
             <EditText
@@ -81,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:hint="@string/enter_your_age"
                 android:inputType="number"
                 android:textSize="12sp" />
@@ -93,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <TextView
@@ -101,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/job" />
 
             <EditText
@@ -110,14 +109,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"/>
+                android:gravity="start"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="start"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
@@ -127,7 +126,7 @@
 
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/experience_years" />
 
             <EditText
@@ -136,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:hint="@string/enter_years_of_experience"
                 android:inputType="number"
                 android:textSize="12sp" />
@@ -148,7 +147,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <TextView
@@ -156,7 +155,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/summary" />
 
             <EditText
@@ -165,7 +164,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left|top"
+                android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:lines="5" />
         </LinearLayout>
@@ -176,7 +175,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <TextView
@@ -184,7 +183,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/categories" />
 
             <LinearLayout
@@ -200,8 +199,8 @@
                     android:layout_height="20dp"
                     android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:drawableRight="@drawable/arrow_down_black"
-                    android:text="select" />
+                    android:drawableEnd="@drawable/arrow_down_black"
+                    android:text="@string/select" />
 
 
             </LinearLayout>
@@ -221,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_transparent_button"
-                android:text="Save" />
+                android:text="@string/save" />
         </LinearLayout>
     </LinearLayout>
 

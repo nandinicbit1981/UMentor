@@ -3,6 +3,7 @@ package parimi.com.umentor.notifications;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 
@@ -18,6 +19,7 @@ import parimi.com.umentor.widget.UpdateWidgetService;
 
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.UPDATEWIDGETTYPE;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getCanonicalName();
@@ -47,11 +49,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         int code = 1000;
         notificationManager.notify(code, notificationBuilder.build());
+        Intent intent = new Intent(this, UpdateWidgetService.class);
 
         if (remoteMessage.getNotification().getTitle().toString().equals(MENTORREQUESTACCEPTED)) {
-            service.updateWidget(this.getBaseContext(), MENTORREQUESTACCEPTED);
+            intent.putExtra(UPDATEWIDGETTYPE, MENTORREQUESTACCEPTED);
         } else {
-            service.updateWidget(this.getBaseContext(), RATINGGIVEN);
+            intent.putExtra(UPDATEWIDGETTYPE, RATINGGIVEN);
         }
+
+        startService(intent);
+
     }
 }

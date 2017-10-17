@@ -63,7 +63,8 @@ public class Constants {
     public static String RECEIVERNAME="receiverName";
     public static String SENTNEWMESSAGE=" sent you a new message";
     public static String NEWMESSAGE="New Message";
-    public static String API_KEY=""; // Replace this with actual api key
+    public static String UPDATEWIDGETTYPE="updateWidgetType";
+    public static String API_KEY="AIzaSyD-EQLKRvqLmnRaMFfBtT0RIa6mYZg5xV4"; // Replace this with actual api key
 
 
 

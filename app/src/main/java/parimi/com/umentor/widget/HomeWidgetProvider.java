@@ -38,9 +38,19 @@ public class HomeWidgetProvider extends AppWidgetProvider {
 
         String action = intent.getAction();
         Bundle extras = intent.getExtras();
-        String mentee = String.valueOf(extras.getSerializable(MENTEE)!= null ? extras.getSerializable(MENTEE) : "");
-        String mentor = String.valueOf(extras.getSerializable(MENTOR)!= null ? extras.getSerializable(MENTOR) : "");
-        String rating = String.valueOf(extras.getSerializable(RATING)!= null ? extras.getSerializable(RATING) : "");
+        String mentee = "";
+        String mentor = "";
+        String rating = "";
+        if(extras != null && extras.size() > 0) {
+            mentee = String.valueOf(extras.getSerializable(MENTEE)!= null ? extras.getSerializable(MENTEE) : "");
+            mentor = String.valueOf(extras.getSerializable(MENTOR)!= null ? extras.getSerializable(MENTOR) : "");
+            rating = String.valueOf(extras.getSerializable(RATING)!= null ? extras.getSerializable(RATING) : "");
+        } else {
+            mentee = "0";
+            mentor = "0";
+            rating = "0";
+        }
+
 
         if (action != null && action.equals(UPDATE_ACTION)) {
             final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);

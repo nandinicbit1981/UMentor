@@ -1,9 +1,8 @@
 package parimi.com.umentor.widget;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +21,13 @@ import static parimi.com.umentor.helper.Constants.MENTOR;
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.UPDATEWIDGETTYPE;
 
 /**
  * Created by nandpa on 10/15/17.
  */
 
-public class UpdateWidgetService extends Service {
+public class UpdateWidgetService extends IntentService {
 
     private static User currentUser;
     private long mentee;
@@ -38,17 +38,14 @@ public class UpdateWidgetService extends Service {
 
     @Inject
     public UpdateWidgetService() {
-
+        super(UpdateWidgetService.class.getName());
     }
 
-    @Nullable
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-    public void updateWidget(final Context context, String updateWidgetType) {
+    protected void onHandleIntent(@Nullable Intent intent) {
         UMentorDaggerInjector.get().inject(this);
+        context = this;
+        String updateWidgetType = intent.getExtras().getSerializable(UPDATEWIDGETTYPE).toString();
         currentUser = SharedPreferenceHelper.getCurrentUser(context);
         if(updateWidgetType.equals(MENTORREQUESTACCEPTED)) {
             databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
@@ -57,10 +54,10 @@ public class UpdateWidgetService extends Service {
                     mentee = 0;
                     mentor = 0;
                     for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if(ds.child(MENTEE).getValue().equals(true)) {
+                        if((ds.child(MENTEE).getValue() != null) && (ds.child(MENTEE).getValue().equals(true))) {
                             mentee++;
                         }
-                        if(ds.child(MENTOR).getValue().equals(true)) {
+                        if((ds.child(MENTOR).getValue() != null) && (ds.child(MENTOR).getValue().equals(true))) {
                             mentor++;
                         }
                     }
@@ -98,6 +95,4 @@ public class UpdateWidgetService extends Service {
             });
         }
     }
-
-
 }

@@ -19,17 +19,27 @@
     <string name="summary">Summary</string>
     <string name="categories">Categories</string>
     <string name="select">Select</string>
+    <string name="save">Save</string>
     <string name="choose_a_category">\"Choose a category\"</string>
     <string name="ok">OK</string>
     <string name="job">Job</string>
     <string name="yrs"> (yrs)</string>
+    <string name="exp">Exp: </string>
 
     <!-- constants related strings -->
     <string name="accept_mentor_request"> has accepted your mentor request.</string>
     <string name="mentor_count">Mentor:</string>
     <string name="mentee_count">Mentee:</string>
     <string name="rating">Rating</string>
-
+    <string name="search">Search</string>
+    <string name="send">Send</string>
+    <string name="divider">|</string>
+    <string name="profile">Profile</string>
+    <string name="mentors">Mentors</string>
+    <string name="messages">Messages</string>
+    <string name="notifications">Notifications</string>
+    <string name="signout">Sign out</string>
+    <string name="comma">,</string>
 
 
 </resources>

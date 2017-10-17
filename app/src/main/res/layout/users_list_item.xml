@@ -13,7 +13,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                app:srcCompat="@drawable/profile" />
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -37,12 +37,12 @@
                             android:layout_height="wrap_content" />
                         <TextView
                             style="@style/MentorListItem"
-                            android:text=" , "
+                            android:text="@string/comma"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             style="@style/MentorListItem"
-                            android:text="Exp: "
+                            android:text="@string/exp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView

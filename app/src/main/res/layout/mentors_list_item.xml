@@ -18,7 +18,7 @@
             android:id="@+id/imageView"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+            app:srcCompat="@drawable/profile" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,14 +41,14 @@
         android:paddingRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_weight="0.25"
-        android:gravity="right">
+        android:gravity="end">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:src="@drawable/mentor_message" />
 
     </LinearLayout>
