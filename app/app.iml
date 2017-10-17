@@ -121,7 +121,6 @@
     <orderEntry type="library" exported="" name="firebase-common-license-11.4.2" level="project" />
     <orderEntry type="library" exported="" name="firebase-storage-common-license-11.4.2" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.3.6" level="project" />
-    <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="transition-26.1.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="multidex-instrumentation-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="butterknife-annotations-8.8.1" level="project" />
@@ -154,7 +153,6 @@
     <orderEntry type="library" exported="" name="firebase-analytics-license-11.4.2" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-firestore-11.4.2" level="project" />
-    <orderEntry type="library" exported="" name="picasso-2.5.2" level="project" />
     <orderEntry type="library" exported="" name="firebase-iid-11.4.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-auth-api-phone-11.4.2" level="project" />
     <orderEntry type="library" exported="" name="jsr305-3.0.1" level="project" />
