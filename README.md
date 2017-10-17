@@ -86,6 +86,11 @@ This screen can be used to edit the profile information of the user <br /> <br/>
  <br/>
  <br/>
  
+ In addition to above, when we view a mentor's profile, we can rate the mentor and that will show up on his profile.
+ 
+ Version 2 : will have the user being able to post the rating to linkedin and boost up the profile
+ Please contact me if you have any questions please send an email to "nandinicbit@gmail.com"
+ 
  
  
  
