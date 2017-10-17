@@ -11,5 +11,5 @@ Step 3 : Update the API_KEY constant in Constants.java with the Web API Key(This
 
 # Workflow :
 
-1. Login screen : 
-  
+1. Login screen :
+
