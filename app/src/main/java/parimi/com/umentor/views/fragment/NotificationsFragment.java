@@ -1,6 +1,7 @@
 package parimi.com.umentor.views.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,7 +34,16 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.widget.UpdateWidgetService;
 
-import static parimi.com.umentor.helper.Constants.*;
+import static parimi.com.umentor.helper.Constants.ID;
+import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
+import static parimi.com.umentor.helper.Constants.MESSAGE;
+import static parimi.com.umentor.helper.Constants.NOTIFICATIONTYPE;
+import static parimi.com.umentor.helper.Constants.RECEIVER;
+import static parimi.com.umentor.helper.Constants.SENDER;
+import static parimi.com.umentor.helper.Constants.SENDERFCMTOKEN;
+import static parimi.com.umentor.helper.Constants.TIMESTAMP;
+import static parimi.com.umentor.helper.Constants.TITLE;
+import static parimi.com.umentor.helper.Constants.UPDATEWIDGETTYPE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +134,9 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
                     new Date().getTime());
             RestInterface.sendNotification(getContext(), notification.getSenderFcmToken(), MENTORREQUESTACCEPTED , currentUser.getName() + getString(R.string.accept_mentor_request));
             databaseHelper.saveNotification(acceptedNotification);
-            service.updateWidget(getActivity(), MENTORREQUESTACCEPTED);
+            Intent intent = new Intent(getActivity(), UpdateWidgetService.class);
+            intent.putExtra(UPDATEWIDGETTYPE, MENTORREQUESTACCEPTED);
+            getActivity().startService(intent);
         }
 
 

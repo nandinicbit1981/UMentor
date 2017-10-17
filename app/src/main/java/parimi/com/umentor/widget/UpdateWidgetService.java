@@ -21,6 +21,7 @@ import static parimi.com.umentor.helper.Constants.MENTOR;
 import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.UPDATEALL;
 import static parimi.com.umentor.helper.Constants.UPDATEWIDGETTYPE;
 
 /**
@@ -48,51 +49,64 @@ public class UpdateWidgetService extends IntentService {
         String updateWidgetType = intent.getExtras().getSerializable(UPDATEWIDGETTYPE).toString();
         currentUser = SharedPreferenceHelper.getCurrentUser(context);
         if(updateWidgetType.equals(MENTORREQUESTACCEPTED)) {
-            databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    mentee = 0;
-                    mentor = 0;
-                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                        if((ds.child(MENTEE).getValue() != null) && (ds.child(MENTEE).getValue().equals(true))) {
-                            mentee++;
-                        }
-                        if((ds.child(MENTOR).getValue() != null) && (ds.child(MENTOR).getValue().equals(true))) {
-                            mentor++;
-                        }
-                    }
-
-                    //updating widget
-                    Intent i = new Intent(context, HomeWidgetProvider.class);
-                    i.setAction(HomeWidgetProvider.UPDATE_ACTION);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(MENTEE, mentee);
-                    i.putExtra(MENTOR, mentor);
-                    context.sendBroadcast(i);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        } else if(updateWidgetType.equals(RATINGGIVEN)){
-            databaseHelper.getUsers().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    Intent i = new Intent(context, HomeWidgetProvider.class);
-                    i.setAction(HomeWidgetProvider.UPDATE_ACTION);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra(RATING, dataSnapshot.child(RATING).getValue().toString());
-                    context.sendBroadcast(i);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+           updateMentorCount();
         }
+        else if(updateWidgetType.equals(RATINGGIVEN)){
+           updateRating();
+        }
+        else if(updateWidgetType.equals(UPDATEALL)) {
+            updateMentorCount();
+            updateRating();
+        }
+    }
+
+    private void updateMentorCount() {
+        databaseHelper.getNetwork().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mentee = 0;
+                mentor = 0;
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if((ds.child(MENTEE).getValue() != null) && (ds.child(MENTEE).getValue().equals(true))) {
+                        mentee++;
+                    }
+                    if((ds.child(MENTOR).getValue() != null) && (ds.child(MENTOR).getValue().equals(true))) {
+                        mentor++;
+                    }
+                }
+
+                //updating widget
+                Intent i = new Intent(context, HomeWidgetProvider.class);
+                i.setAction(HomeWidgetProvider.UPDATE_ACTION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(MENTEE, mentee);
+                i.putExtra(MENTOR, mentor);
+                context.sendBroadcast(i);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void updateRating(){
+        databaseHelper.getUsers().child(currentUser.getId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Intent i = new Intent(context, HomeWidgetProvider.class);
+                i.setAction(HomeWidgetProvider.UPDATE_ACTION);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra(RATING, dataSnapshot.child(RATING).getValue().toString());
+                context.sendBroadcast(i);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -94,7 +94,7 @@ public class MyMentorListFragment extends Fragment {
                             Integer.parseInt(dataSnapshot.child(AGE).getValue().toString()),
                             dataSnapshot.child(SUMMARY).getValue().toString(),
                             Integer.parseInt(dataSnapshot.child(EXPERIENCE).getValue().toString()),
-                            dataSnapshot.child(FCMTOKEN).getValue().toString(),
+                            dataSnapshot.child(FCMTOKEN).getValue() != null ? dataSnapshot.child(FCMTOKEN).getValue().toString() : "",
                             Float.parseFloat(dataSnapshot.child(RATING).getValue().toString()),
                             (List<String>)dataSnapshot.child(CATEGORIES).getValue(),
                             dataSnapshot.child(JOB).getValue().toString(),

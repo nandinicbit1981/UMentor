@@ -59,12 +59,12 @@ import static parimi.com.umentor.helper.Constants.EXPERIENCE;
 import static parimi.com.umentor.helper.Constants.GENDER;
 import static parimi.com.umentor.helper.Constants.ID;
 import static parimi.com.umentor.helper.Constants.JOB;
-import static parimi.com.umentor.helper.Constants.MENTORREQUESTACCEPTED;
 import static parimi.com.umentor.helper.Constants.NAME;
 import static parimi.com.umentor.helper.Constants.PROFILEPIC;
 import static parimi.com.umentor.helper.Constants.RATING;
-import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.SUMMARY;
+import static parimi.com.umentor.helper.Constants.UPDATEALL;
+import static parimi.com.umentor.helper.Constants.UPDATEWIDGETTYPE;
 import static parimi.com.umentor.helper.Constants.USER;
 import static parimi.com.umentor.helper.Constants.USERS;
 
@@ -202,7 +202,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUsername(final FirebaseUser firebaseUser) {
         this.firebaseUser = firebaseUser;
-
+            if(fcmToken == null) {
+                fcmToken = FirebaseInstanceId.getInstance().getToken();
+            }
             databaseHelper.getUsers().child(firebaseUser.getUid().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -248,9 +250,10 @@ public class MainActivity extends AppCompatActivity {
                     databaseHelper.saveUser(user);
                     SharedPreferenceHelper.saveUser(MainActivity.this, user);
 
-                    //updating widget
-                    service.updateWidget(getBaseContext(), MENTORREQUESTACCEPTED);
-                    service.updateWidget(getBaseContext(), RATINGGIVEN);
+
+                    Intent intent = new Intent(MainActivity.this, UpdateWidgetService.class);
+                    intent.putExtra(UPDATEWIDGETTYPE, UPDATEALL);
+                    startService(intent);
 
                     Fragment fragment;
                     if(user.getAge() > 0) {

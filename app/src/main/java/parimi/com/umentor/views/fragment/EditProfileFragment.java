@@ -2,13 +2,10 @@ package parimi.com.umentor.views.fragment;
 
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,7 +15,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -99,11 +95,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     CategoryAdapter categoryAdapter;
     StorageReference storageReference;
     DatabaseReference databaseReference;
-    int Image_Request_Code = 7;
-    Uri FilePathUri;
 
-
-    ProgressDialog progressDialog ;
     public  EditProfileFragment() {
     }
 
@@ -127,16 +119,15 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             jobEditTxt.setText(user.getJob());
             try {
 
-                Bitmap bitmap = decodeFromFirebaseBase64(user.getProfilePic());
-                imageView.setImageBitmap(bitmap);
+                if(user.getProfilePic() != null && !user.getProfilePic().equals("")) {
+                    Bitmap bitmap = decodeFromFirebaseBase64(user.getProfilePic());
+                    imageView.setImageBitmap(bitmap);
+                } else {
+                    imageView.setImageDrawable(getResources().getDrawable(R.drawable.profile));
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            Picasso.with(getContext())
-//                    .load(mRestaurant.getImageUrl())
-//                    .resize(MAX_WIDTH, MAX_HEIGHT)
-//                    .centerCrop()
-//                    .into(mImageLabel);
         }
 
 
@@ -257,13 +248,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     @OnClick(R.id.imageView)
     public void clickedImage() {
-        // Creating intent.
-//        Intent intent = new Intent();
-//
-//        // Setting intent type as image to select image from phone storage.
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -272,47 +256,17 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-////        if (requestCode == Image_Request_Code && resultCode == RESULT_OK && data != null && data.getData() != null) {
-////
-////            FilePathUri = data.getData();
-////
-////            try {
-////
-////                // Getting selected image into Bitmap.
-////                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), FilePathUri);
-////
-////                // Setting up bitmap selected image into ImageView.
-////                imageView.setImageBitmap(bitmap);
-////
-////                // After selecting image change choose button above text.
-////              //  ChooseButton.setText("Image Selected");
-////
-////            }
-////            catch (IOException e) {
-////
-////                e.printStackTrace();
-////            }
-////        }
-//    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get(DATA);
-           // bitmapIntoImageView(imageView, imageBitmap, getActivity());
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
                 imageBitmap = Bitmap.createScaledBitmap(imageBitmap, imageView.getWidth(),imageView.getHeight(),true);
             }
             bitmap = imageBitmap;
             imageView.setImageBitmap(imageBitmap);
             imageView.invalidate();
-            //imageView.setImageBitmap(imageBitmap);
             encodeBitmapAndSaveToFirebase(imageBitmap);
         }
     }
@@ -323,18 +277,6 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
         user.setProfilePic(imageEncoded);
         databaseHelper.saveUser(user);
-    }
-
-    // Creating Method to get the selected image file Extension from File Path URI.
-    public String GetFileExtension(Uri uri) {
-
-        ContentResolver contentResolver = getContext().getContentResolver();
-
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-
-        // Returning the file Extension.
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri)) ;
-
     }
 
     @Override
