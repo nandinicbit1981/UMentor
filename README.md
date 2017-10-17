@@ -55,33 +55,33 @@ This screen can be used to edit the profile information of the user <br /> <br/>
  <br/>
  
  7 . Mentor will receive a notification , where he will be able to accept/ reject the request <br/> <br/>
-     <img src="https://github.com/nandinicbit1981/UMentor/blob/master/notification_add_request.png" width="200" height="350" />
+       <img src="https://github.com/nandinicbit1981/UMentor/blob/master/notification_add_request.png" width="200" height="350" />
 
  <br/>
  <br/>
  
  8. List of Mentors can be selected using the mentor icon at the bottom navigation <br/>
-    <img src="https://github.com/nandinicbit1981/UMentor/blob/master/mentors.png" width="200" height="350" />
+       <img src="https://github.com/nandinicbit1981/UMentor/blob/master/mentors.png" width="200" height="350" />
 
  <br/>
  <br/>
  
  9. List of Messages can be seen using the messages icon at the bottom navigation <br />
     
-          <img src="https://github.com/nandinicbit1981/UMentor/blob/master/messages.png" width="200" height="350" />
+       <img src="https://github.com/nandinicbit1981/UMentor/blob/master/messages.png" width="200" height="350" />
 
  <br/>
  <br/>
  
  10. On selecting the message icon at the above list, we can send messages to the mentor/mentee <br />
-          <img src="https://github.com/nandinicbit1981/UMentor/blob/master/message.png" width="200" height="350" />
+       <img src="https://github.com/nandinicbit1981/UMentor/blob/master/message.png" width="200" height="350" />
 
  <br/>
  <br/>
  
  11. Notifications are sent when request is sent, messages are received, or mentee rates a mentor.By clicking the notifications option at the end of the screen, we can see the list of notifications received.
           
-   <img src="https://github.com/nandinicbit1981/UMentor/blob/master/notifications.png" width="200" height="350" />
+        <img src="https://github.com/nandinicbit1981/UMentor/blob/master/notifications.png" width="200" height="350" />
 
  <br/>
  <br/>
