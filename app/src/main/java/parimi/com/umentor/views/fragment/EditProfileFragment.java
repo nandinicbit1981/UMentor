@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +48,7 @@ import parimi.com.umentor.adapters.CategoryAdapter;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
+import parimi.com.umentor.helper.RoundedImageView;
 import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
@@ -87,7 +87,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
     Button saveButton;
 
     @BindView(R.id.imageView)
-    ImageView imageView;
+    RoundedImageView imageView;
 
     private static final int REQUEST_IMAGE_CAPTURE = 111;
 

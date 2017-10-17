@@ -17,7 +17,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <parimi.com.umentor.helper.RoundedImageView
                 android:id="@+id/imageView"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
