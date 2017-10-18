@@ -45,6 +45,7 @@ import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.helper.RoundedImageView;
+import parimi.com.umentor.helper.UMentorHelper;
 import parimi.com.umentor.models.Category;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
@@ -84,6 +85,8 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
 
     @BindView(R.id.imageView)
     RoundedImageView imageView;
+
+
 
     private static final int REQUEST_IMAGE_CAPTURE = 111;
 
@@ -285,6 +288,12 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         if(bitmap != null) {
             imageView.setImageBitmap(bitmap);
         }
+    }
+
+
+    @OnClick(R.id.edit_profile_container)
+    public void clickOutside() {
+        UMentorHelper.hideKeyboard(getActivity(), getView());
     }
 
 }

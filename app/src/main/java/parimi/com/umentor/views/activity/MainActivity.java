@@ -44,6 +44,7 @@ import parimi.com.umentor.database.DatabaseHelper;
 import parimi.com.umentor.helper.BottomNavigationViewHelper;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.helper.SharedPreferenceHelper;
+import parimi.com.umentor.helper.UMentorHelper;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.fragment.EditProfileFragment;
 import parimi.com.umentor.views.fragment.MentorSearchFragment;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     UpdateWidgetService service;
 
+
     private String fcmToken;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseReference = mFirebaseDatabase.getReference().child(USERS);
 
         createAuthStateListener();
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        UMentorHelper.hideKeyboard(getBaseContext(), bottomNavigationView);
                         android.support.v4.app.Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.profile:
@@ -382,6 +385,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
 
 
 }
