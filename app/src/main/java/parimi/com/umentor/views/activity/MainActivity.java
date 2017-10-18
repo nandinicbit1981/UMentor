@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setTitle("UMentor");
 
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setBackgroundDrawable(getDrawable(R.drawable.toolbar_gradient));
         fcmToken = FirebaseInstanceId.getInstance().getToken();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mFirebaseAuth = FirebaseAuth.getInstance();
