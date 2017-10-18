@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parimi.com.umentor.R;
+import parimi.com.umentor.helper.UMentorHelper;
 import parimi.com.umentor.models.Message;
 
 /**
@@ -58,7 +59,7 @@ public class MessageAdapter extends BaseAdapter {
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listView;
+        final View listView;
 
         if (convertView == null) {
             listView = inflater.inflate(R.layout.message_list_item, null);
@@ -70,7 +71,12 @@ public class MessageAdapter extends BaseAdapter {
             }
             final TextView senderMessageText = (TextView) listView.findViewById(R.id.sender_message);
             senderMessageText.setText(String.valueOf(messageList.get(i).getMessage()).toString());
-
+            listView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UMentorHelper.hideKeyboard(context, listView);
+                }
+            });
         } else {
             listView = (View) convertView;
         }

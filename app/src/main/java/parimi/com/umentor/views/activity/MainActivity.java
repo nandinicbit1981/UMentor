@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private FirebaseStorage mFirebaseStorage;
     private StorageReference mStorageReference;
-
+    private BottomNavigationView bottomNavigationView;
     User user;
     FirebaseUser firebaseUser;
     private static final int RC_SIGN_IN = 999 ;
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseReference = mFirebaseDatabase.getReference().child(USERS);
 
         createAuthStateListener();
-        final BottomNavigationView bottomNavigationView = (BottomNavigationView)
+        bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
 
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
@@ -200,6 +200,10 @@ public class MainActivity extends AppCompatActivity {
         };
 
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+    }
+
+    public BottomNavigationView getBottomNavigationView() {
+        return bottomNavigationView;
     }
     @Override
     protected void attachBaseContext(Context base) {

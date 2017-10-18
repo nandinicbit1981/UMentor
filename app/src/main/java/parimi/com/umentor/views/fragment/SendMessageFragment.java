@@ -144,8 +144,6 @@ public class SendMessageFragment extends Fragment {
 
     @OnClick(R.id.message_send_button)
     public void sendMessage() {
-        //UMentorHelper.hideKeyboard(this.getContext(), getView());
-
         final Message message = new Message();
         message.setMessage(messageEditText.getText().toString());
         message.setSenderName(currentUser.getName());
