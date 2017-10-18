@@ -29,7 +29,7 @@
                 />
             <TextView
                 style="@style/whiteText"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:id="@+id/mentee_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -47,7 +47,7 @@
                 />
             <TextView
                 style="@style/whiteText"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:id="@+id/mentor_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -65,7 +65,7 @@
                 />
             <TextView
                 style="@style/whiteText"
-                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

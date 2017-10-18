@@ -17,7 +17,7 @@
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
-            android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
                 <TextView

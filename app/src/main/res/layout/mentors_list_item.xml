@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.05"
         android:orientation="horizontal"
-        android:paddingRight="5dp">
+        android:paddingEnd="5dp">
 
         <parimi.com.umentor.helper.RoundedImageView
             android:id="@+id/imageView"
@@ -38,7 +38,7 @@
     <LinearLayout
         android:id="@+id/message_img"
         android:paddingTop="10dp"
-        android:paddingRight="20dp"
+        android:paddingEnd="20dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
