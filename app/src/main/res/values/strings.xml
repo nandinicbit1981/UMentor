@@ -25,6 +25,7 @@
     <string name="job">Job</string>
     <string name="yrs"> (yrs)</string>
     <string name="exp">Exp: </string>
+    <string name="time_stamp">timeStamp</string>
 
     <!-- constants related strings -->
     <string name="accept_mentor_request"> has accepted your mentor request.</string>

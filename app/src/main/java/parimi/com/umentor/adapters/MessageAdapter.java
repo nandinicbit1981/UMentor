@@ -1,11 +1,12 @@
 package parimi.com.umentor.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,27 +21,26 @@ import parimi.com.umentor.models.Message;
  * Created by nandpa on 9/23/17.
  */
 
-public class MessageAdapter extends BaseAdapter {
+public class MessageAdapter extends ArrayAdapter<Message> {
 
     Context context;
     List<Message> messageList = new ArrayList<>();
     String currentUserId;
 
 
-    public MessageAdapter(Context context, String currentUserId) {
-
+    public MessageAdapter(Context context, List<Message> messages) {
+        super(context, 0, messages);
+        this.messageList = messages;
         this.context = context;
+    }
+
+    public void setCurrentUserId(String currentUserId) {
         this.currentUserId = currentUserId;
     }
 
     @Override
     public int getCount() {
-        return messageList.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return null;
+        return this.messageList.size();
     }
 
     @Override
@@ -48,10 +48,22 @@ public class MessageAdapter extends BaseAdapter {
         return 0;
     }
 
-    public void setMessageLlist(List<Message> messageList) {
+    public void addMessageItem(Message message) {
+        add(message);
+    }
 
-        notifyDataSetInvalidated();
+    public void setMessageLlist(List<Message> messageList) {
         this.messageList = messageList;
+        notifyDataSetChanged();
+    }
+
+    public void addMessagesToList(List<Message> messages) {
+        this.messageList.addAll(messages);
+        notifyDataSetChanged();
+    }
+
+    public void addMessageToList(Message message) {
+        this.messageList.add(message);
         notifyDataSetChanged();
     }
 
@@ -59,28 +71,42 @@ public class MessageAdapter extends BaseAdapter {
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View listView;
-
-        if (convertView == null) {
-            listView = inflater.inflate(R.layout.message_list_item, null);
-            final LinearLayout messageItem = listView.findViewById(R.id.message_item);
-            if(messageList.get(i).getSenderId().equals(currentUserId)) {
-                messageItem.setGravity(Gravity.RIGHT);
+        MessagesViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.message_list_item, viewGroup, false);
+                viewHolder = new MessagesViewHolder();
+                viewHolder.senderMessageTxt = (TextView) convertView.findViewById(R.id.sender_message);
+                viewHolder.messageItem = convertView.findViewById(R.id.message_item);
+                convertView.setTag(viewHolder);
             } else {
-                messageItem.setGravity(Gravity.LEFT);
+                viewHolder = (MessagesViewHolder) convertView.getTag();
             }
-            final TextView senderMessageText = (TextView) listView.findViewById(R.id.sender_message);
-            senderMessageText.setText(String.valueOf(messageList.get(i).getMessage()).toString());
-            listView.setOnClickListener(new View.OnClickListener() {
+
+            viewHolder.senderMessageTxt.setText(String.valueOf(this.messageList.get(i).getMessage()).toString());
+
+            if(this.messageList.get(i).getSenderId().equals(currentUserId)) {
+                viewHolder.senderMessageTxt.setBackground(ContextCompat.getDrawable(context, R.drawable.chat_background));
+                viewHolder.messageItem.setGravity(Gravity.RIGHT);
+            } else {
+                viewHolder.senderMessageTxt.setBackground(ContextCompat.getDrawable(context, R.drawable.chat_background_other));
+                viewHolder.messageItem.setGravity(Gravity.LEFT);
+            }
+
+
+            final View finalConvertView = convertView;
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    UMentorHelper.hideKeyboard(context, listView);
+                    UMentorHelper.hideKeyboard(context, finalConvertView);
                 }
             });
-        } else {
-            listView = (View) convertView;
-        }
 
-        return listView;
+
+        return convertView;
+    }
+
+    public class MessagesViewHolder {
+        TextView senderMessageTxt;
+        LinearLayout messageItem;
     }
 }

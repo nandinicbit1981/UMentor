@@ -67,6 +67,7 @@ public class SendMessageFragment extends Fragment {
 
     List<Message> messageList = new ArrayList<>();
     MessageAdapter messageAdapter;
+    boolean initial = false;
 
     User mentor = null;
 
@@ -89,7 +90,8 @@ public class SendMessageFragment extends Fragment {
         if (bundle != null) {
             mentor = (User) bundle.get(USER);
         }
-        MessageAdapter messageAdapter = new MessageAdapter(getActivity(), currentUser.getId());
+        messageAdapter = new MessageAdapter(getActivity(), messageList);
+        messageAdapter.setCurrentUserId(currentUser.getId());
         messagesListView.setAdapter(messageAdapter);
         getChannel();
 
@@ -113,9 +115,21 @@ public class SendMessageFragment extends Fragment {
     }
 
     private void getMessages(String channel) {
-        databaseHelper.getChannels().child(channel).addValueEventListener(new ValueEventListener() {
+        databaseHelper.getChannels().child(channel).orderByChild(TIMESTAMP).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(messageAdapter == null) {
+                    messageAdapter = new MessageAdapter(getActivity(), messageList);
+                    messageAdapter.setCurrentUserId(currentUser.getId());
+                    messagesListView.setAdapter(messageAdapter);
+                }
+                if(messageList.size() == 0) {
+                    initial = true;
+                } else {
+                    initial = false;
+                }
+
+                List<Message> newMessageList = new ArrayList<Message>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Message message = new Message();
                     message.setReceiverId(ds.child(RECEIVERID).getValue().toString());
@@ -125,14 +139,16 @@ public class SendMessageFragment extends Fragment {
                     message.setMessage(ds.child(MESSAGE).getValue().toString());
                     message.setTimeStamp(Long.valueOf(ds.child(TIMESTAMP).getValue().toString()));
                     if(!messageList.contains(message)) {
-                        messageList.add(message);
+//                        messageList.add(message);
+//                        newMessageList.add(message);
+                        messageAdapter.add(message);
                     }
-                    if(messageAdapter == null) {
-                        messageAdapter = new MessageAdapter(getActivity(), currentUser.getId());
-                    }
-                    messageAdapter.setMessageLlist(messageList);
-                    messagesListView.setAdapter(messageAdapter);
                 }
+//                if(initial) {
+//                    messageAdapter.setMessageLlist(messageList);
+//                } else {
+//                    messageAdapter.addMessageToList(newMessageList);
+//                }
             }
 
             @Override
@@ -140,6 +156,12 @@ public class SendMessageFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getChannel();
     }
 
     @OnClick(R.id.message_send_button)
