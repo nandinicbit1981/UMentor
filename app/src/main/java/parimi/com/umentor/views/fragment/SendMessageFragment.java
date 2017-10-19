@@ -129,7 +129,6 @@ public class SendMessageFragment extends Fragment {
                     initial = false;
                 }
 
-                List<Message> newMessageList = new ArrayList<Message>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     Message message = new Message();
                     message.setReceiverId(ds.child(RECEIVERID).getValue().toString());
@@ -139,16 +138,10 @@ public class SendMessageFragment extends Fragment {
                     message.setMessage(ds.child(MESSAGE).getValue().toString());
                     message.setTimeStamp(Long.valueOf(ds.child(TIMESTAMP).getValue().toString()));
                     if(!messageList.contains(message)) {
-//                        messageList.add(message);
-//                        newMessageList.add(message);
                         messageAdapter.add(message);
                     }
                 }
-//                if(initial) {
-//                    messageAdapter.setMessageLlist(messageList);
-//                } else {
-//                    messageAdapter.addMessageToList(newMessageList);
-//                }
+
             }
 
             @Override
