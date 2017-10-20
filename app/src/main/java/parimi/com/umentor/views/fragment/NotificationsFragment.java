@@ -131,11 +131,29 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
     }
 
     @Override
-    public void onRequestAccepted(Notification notification, String acceptOrReject) {
+    public void onRequestAccepted(final Notification notification, String acceptOrReject) {
         if (acceptOrReject.equals(Constants.ACCEPT)) {
 
             //remove the notification as we no longer add it.
             databaseHelper.getNotifications().child(notification.getId()).removeValue();
+
+            databaseHelper.getRequests().addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if(ds.child(SENDER).getValue().equals(notification.getSender()) &&
+                                ds.child(RECEIVER).getValue().equals(notification.getReceiver())) {
+                            databaseHelper.getRequests().child(ds.getKey()).removeValue();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             //update the adapter
             notifications.remove(notification);

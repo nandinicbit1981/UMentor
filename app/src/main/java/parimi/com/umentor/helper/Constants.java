@@ -14,7 +14,8 @@ public class Constants {
     public static String RATINGGIVEN="New Rating by Mentee";
     public static String FIREBASEDATABASE="umentor-d21ff";
     public static String fcmURL = "https://fcm.googleapis.com/fcm/send";
-
+    public static String AWAITINGAPPROVAL= "AWAITING YOUR APPROVAL, CHECK NOTIFICATIONS";
+    public static String REQUEST_SENT= "REQUEST SENT";
 
     // Firebase database related constants
     public static String USERS = "users";

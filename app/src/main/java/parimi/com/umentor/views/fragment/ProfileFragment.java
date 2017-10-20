@@ -42,10 +42,12 @@ import parimi.com.umentor.views.activity.MainActivity;
 
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
 import static parimi.com.umentor.helper.Constants.ADDASMENTOR;
+import static parimi.com.umentor.helper.Constants.AWAITINGAPPROVAL;
 import static parimi.com.umentor.helper.Constants.GAVERATING;
 import static parimi.com.umentor.helper.Constants.MENTORREQUEST;
 import static parimi.com.umentor.helper.Constants.RATING;
 import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
+import static parimi.com.umentor.helper.Constants.REQUEST_SENT;
 import static parimi.com.umentor.helper.Constants.SETRATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
 
@@ -199,6 +201,31 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        databaseHelper.getRequests().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if(currentUser.getId().equals(ds.child("receiver").getValue()) &&
+                            user.getId().equals(ds.child("sender").getValue()) &&
+                            ds.child("status").getValue().toString().equals(MentorStatus.REQUEST_MENTOR.getMentorStatus())) {
+                          editButton.setText(AWAITINGAPPROVAL);
+                    }
+
+                    if(currentUser.getId().equals(ds.child("sender").getValue()) &&
+                            user.getId().equals(ds.child("receiver").getValue()) &&
+                            ds.child("status").getValue().toString().equals(MentorStatus.REQUEST_MENTOR.getMentorStatus())) {
+                        editButton.setText(REQUEST_SENT);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         return view;
     }
 
@@ -213,16 +240,19 @@ public class ProfileFragment extends Fragment {
             bundle.putSerializable(USER, user);
             fragment.setArguments(bundle);
             ((MainActivity) getActivity()).insertFragment(fragment);
-        }
-
-        else if(networkUserIdList.contains(user.getId())) {
+        } else if(networkUserIdList.contains(user.getId())) {
             Bundle messageBundle =  new Bundle();
             messageBundle.putSerializable(USER, user);
             SendMessageFragment sendMessageFragment = new SendMessageFragment();
             sendMessageFragment.setArguments(messageBundle);
 
             ((MainActivity)getActivity()).insertFragment(sendMessageFragment);
-        } else {
+        } else if(editButton.getText().equals(AWAITINGAPPROVAL)) {
+            ((MainActivity) getActivity()).insertFragment(new NotificationsFragment());
+        } else if(editButton.getText().equals(REQUEST_SENT)) {
+            //DO NOTHING
+        }
+        else {
             Requests requests = new Requests(null,
                     currentUser.getId(),
                     user.getId(),
@@ -230,6 +260,7 @@ public class ProfileFragment extends Fragment {
                     currentUser.getName(),
                     currentUser.getFcmToken()
                     );
+            editButton.setText(REQUEST_SENT);
             databaseHelper.saveRequest(requests);
             RestInterface.sendNotification(getContext(), user.getFcmToken(), MENTORREQUEST, currentUser.getName() + ADDASMENTOR);
         }
