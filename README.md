@@ -1,8 +1,7 @@
 # UMentor
 
 This repository contains the source code for UMentor Android App.
-
-What is UMentor?
+<br/>
 This app helps Mentors to connect with Mentees. This app uses firebase as the realtime database.
 Features include:<br/> <br/>
 
