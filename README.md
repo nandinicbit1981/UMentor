@@ -1,6 +1,19 @@
 # UMentor
 
-This Android App helps connect Mentors with Mentees.
+This repository contains the source code for UMentor Android App.
+
+What is UMentor?
+This app helps Mentors to connect with Mentees. This app uses firebase as the realtime database.
+Features include:<br/> <br/>
+
+    - Login using Google/Email.<br/>
+    - Search for existing mentors.<br/>
+    - Realtime notifications on adding/accepting mentor requests.<br/>
+    - Realtime Chat applications for the mentors and mentees to interact with each other.<br/>
+    - Rating a mentor based on the mentorship received.
+
+    <br/>
+    <br/>
 
 # To run the app
 <br />
@@ -91,7 +104,7 @@ This screen can be used to edit the profile information of the user <br /> <br/>
 
  <br/>
  <br/>
- 
+
  Version 2 : will have the user being able to post the rating to linkedin and boost up the profile
  Please contact me if you have any questions please send an email to "nandinicbit@gmail.com"
  
