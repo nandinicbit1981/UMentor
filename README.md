@@ -87,6 +87,10 @@ This screen can be used to edit the profile information of the user <br /> <br/>
  <br/>
  
  In addition to above, when we view a mentor's profile, we can rate the mentor and that will show up on his profile.
+   <img src="https://github.com/nandinicbit1981/UMentor/blob/master/rating.png" width="200" height="350" />
+
+ <br/>
+ <br/>
  
  Version 2 : will have the user being able to post the rating to linkedin and boost up the profile
  Please contact me if you have any questions please send an email to "nandinicbit@gmail.com"
