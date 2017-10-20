@@ -6,14 +6,12 @@ What is UMentor?
 This app helps Mentors to connect with Mentees. This app uses firebase as the realtime database.
 Features include:<br/> <br/>
 
-    - Login using Google/Email.<br/>
-    - Search for existing mentors.<br/>
-    - Realtime notifications on adding/accepting mentor requests.<br/>
-    - Realtime Chat applications for the mentors and mentees to interact with each other.<br/>
+    - Login using Google/Email.
+    - Search for existing mentors.
+    - Realtime notifications on adding/accepting mentor requests.
+    - Realtime Chat applications for the mentors and mentees to interact with each other.
     - Rating a mentor based on the mentorship received.
 
-    <br/>
-    <br/>
 
 # To run the app
 <br />
