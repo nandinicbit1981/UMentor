@@ -97,7 +97,7 @@
     </style>
 
     <style name="FirebaseUI.WrapperStyle">
-        <item name="android:background">@mipmap/bg_login_flow</item>
+        <item name="android:background">@drawable/splash</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingTop">16dp</item>
