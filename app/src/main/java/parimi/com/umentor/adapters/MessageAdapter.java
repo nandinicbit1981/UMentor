@@ -48,25 +48,6 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         return 0;
     }
 
-    public void addMessageItem(Message message) {
-        add(message);
-    }
-
-    public void setMessageLlist(List<Message> messageList) {
-        this.messageList = messageList;
-        notifyDataSetChanged();
-    }
-
-    public void addMessagesToList(List<Message> messages) {
-        this.messageList.addAll(messages);
-        notifyDataSetChanged();
-    }
-
-    public void addMessageToList(Message message) {
-        this.messageList.add(message);
-        notifyDataSetChanged();
-    }
-
     @Override
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context

@@ -1,12 +1,14 @@
 package parimi.com.umentor.models;
 
+import android.support.annotation.NonNull;
+
 import parimi.com.umentor.helper.NotificationType;
 
 /**
  * Created by nandpa on 9/27/17.
  */
 
-public class Notification {
+public class Notification implements Comparable<Notification>{
 
     private String id;
     private String sender;
@@ -121,5 +123,13 @@ public class Notification {
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+
+    @Override
+    public int compareTo(@NonNull Notification notification) {
+        if(this.timeStamp > notification.timeStamp) return 1;
+        if(this.timeStamp < notification.timeStamp) return -1;
+        return 0;
     }
 }

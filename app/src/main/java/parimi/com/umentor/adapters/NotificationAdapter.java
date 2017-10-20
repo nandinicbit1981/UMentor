@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import parimi.com.umentor.ButtonClickInterface;
+import parimi.com.umentor.NotificationsClickInterface;
 import parimi.com.umentor.R;
 import parimi.com.umentor.helper.Constants;
 import parimi.com.umentor.helper.NotificationType;
@@ -26,11 +27,13 @@ public class NotificationAdapter extends BaseAdapter {
     private final Context context;
     List<Notification> notifications = new ArrayList<>();
     ButtonClickInterface buttonClickListener;
+    NotificationsClickInterface notificationsClickInterface;
 
-    public NotificationAdapter(Context context, List<Notification> notifications, ButtonClickInterface buttonClickListener) {
+    public NotificationAdapter(Context context, List<Notification> notifications, ButtonClickInterface buttonClickListener, NotificationsClickInterface notificationsClickInterface) {
         this.notifications = notifications;
         this.context = context;
         this.buttonClickListener = buttonClickListener;
+        this.notificationsClickInterface = notificationsClickInterface;
     }
 
     @Override
@@ -52,34 +55,54 @@ public class NotificationAdapter extends BaseAdapter {
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listView;
+        NotificationsViewHolder viewHolder;
         if (convertView == null) {
-            listView = inflater.inflate(R.layout.notifications_list_item, null);
-            final TextView titleText = (TextView) listView.findViewById(R.id.title);
-            titleText.setText(notifications.get(i).getTitle());
-            final TextView messageText = (TextView) listView.findViewById(R.id.message);
-            messageText.setText(notifications.get(i).getMessage());
-
-            if(notifications.get(i).getNotificationType().equals(NotificationType.REQUEST)) {
-                listView.findViewById(R.id.notification_actions).setVisibility(View.VISIBLE);
-            } else {
-                listView.findViewById(R.id.message).setVisibility(View.VISIBLE);
-            }
-            Button acceptButton = listView.findViewById(R.id.accept);
-            acceptButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    buttonClickListener.onRequestAccepted(notifications.get(i), Constants.ACCEPT);
-                }
-            });
+            convertView = inflater.inflate(R.layout.notifications_list_item, viewGroup, false);
+            viewHolder = new NotificationsViewHolder();
+            viewHolder.titleText =  convertView.findViewById(R.id.title);
+            viewHolder.messageText = convertView.findViewById(R.id.message);
+            viewHolder.acceptButton = convertView.findViewById(R.id.accept);
+            convertView.setTag(viewHolder);
         } else {
-            listView = (View) convertView;
+            viewHolder = (NotificationsViewHolder) convertView.getTag();
         }
-        return listView;
+
+        viewHolder.titleText.setText(notifications.get(i).getTitle());
+        viewHolder.messageText.setText(notifications.get(i).getMessage());
+
+        if(notifications.get(i).getNotificationType().equals(NotificationType.REQUEST)) {
+            convertView.findViewById(R.id.notification_actions).setVisibility(View.VISIBLE);
+        } else {
+            convertView.findViewById(R.id.message).setVisibility(View.VISIBLE);
+        }
+
+
+        viewHolder.acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonClickListener.onRequestAccepted(notifications.get(i), Constants.ACCEPT);
+            }
+        });
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notificationsClickInterface.onItemClicked(notifications.get(i).getSender(),
+                            notifications.get(i).getNotificationType());
+            }
+        });
+
+        return convertView;
     }
 
     public void setNotificationsList(List<Notification> notifications) {
         this.notifications = notifications;
         notifyDataSetChanged();
+    }
+
+    public class NotificationsViewHolder {
+        TextView titleText;
+        TextView messageText;
+        Button acceptButton;
     }
 }
