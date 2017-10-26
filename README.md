@@ -111,8 +111,6 @@ This screen can be used to edit the profile information of the user <br /> <br/>
 
  # License
 
- <br/><br/>
-
   Copyright (C) 2015 The Android Open Source Project
  <br/><br/>
   Licensed under the Apache License, Version 2.0 (the "License");
