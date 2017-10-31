@@ -61,9 +61,10 @@ dependencies {
     compile 'com.google.dagger:dagger-android:2.11'
     compile 'com.google.dagger:dagger-android-support:2.11'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.github.nandinicbit1981:Linkedinintegration:2.0.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
-    compile project(':androidlinkedinintegration')
+
 }
 apply plugin: 'com.google.gms.google-services'
