@@ -96,6 +96,13 @@
                 android:progressTint="@color/goldenYellow"
                 android:scaleX=".5"
                 android:scaleY=".5" />
+                <Button
+                    android:id="@+id/linkedin_share_btn"
+                    android:text="Share"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </Button>
         </LinearLayout>
 
         <LinearLayout

@@ -2,6 +2,7 @@ package parimi.com.umentor.views.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import parimi.com.lintegration.activity.PostLinkedinActivity;
 import parimi.com.umentor.R;
 import parimi.com.umentor.application.UMentorDaggerInjector;
 import parimi.com.umentor.database.DatabaseHelper;
@@ -40,6 +42,8 @@ import parimi.com.umentor.models.User;
 import parimi.com.umentor.rest.RestInterface;
 import parimi.com.umentor.views.activity.MainActivity;
 
+import static parimi.com.lintegration.constant.Constant.POST_LINKEDIN_COMMENT;
+import static parimi.com.lintegration.constant.Constant.POST_LINKEDIN_LINK;
 import static parimi.com.umentor.helper.CommonHelper.decodeFromFirebaseBase64;
 import static parimi.com.umentor.helper.Constants.ADDASMENTOR;
 import static parimi.com.umentor.helper.Constants.AWAITINGAPPROVAL;
@@ -50,7 +54,6 @@ import static parimi.com.umentor.helper.Constants.RATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.REQUEST_SENT;
 import static parimi.com.umentor.helper.Constants.SETRATINGGIVEN;
 import static parimi.com.umentor.helper.Constants.USER;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -83,6 +86,9 @@ public class ProfileFragment extends Fragment {
     @BindView(R.id.imageView)
     RoundedImageView imageView;
 
+    @BindView(R.id.linkedin_share_btn)
+    Button linkedInShareBtn;
+
     MainActivity mainActivity;
 
     User currentUser;
@@ -105,6 +111,14 @@ public class ProfileFragment extends Fragment {
         UMentorDaggerInjector.get().inject(this);
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
+//        FragmentManager fg = getFragmentManager();
+//        LinkedinPostFragment linkedinPostFragment = new LinkedinPostFragment();
+//        Bundle args = new Bundle();
+//        args.putString(POST_LINKEDIN_TEXT, "share");
+//        linkedinPostFragment.setArguments(args);
+//        fg.beginTransaction().replace(R.id.fl_linkedin_share, linkedinPostFragment).commit();
+
+
         final Bundle bundle = getArguments();
         currentUser = SharedPreferenceHelper.getCurrentUser(getContext());
         if (bundle != null) {
@@ -275,6 +289,14 @@ public class ProfileFragment extends Fragment {
             ratingBar.invalidate();
             ratingBar.setIsIndicator(false);
         }
+    }
+
+    @OnClick(R.id.linkedin_share_btn)
+    public void shareOnLinkedin() {
+        Intent intent = new Intent(getActivity(), PostLinkedinActivity.class);
+        intent.putExtra(POST_LINKEDIN_COMMENT, "I received a new rating from one of my mentees on UMentor App");
+        intent.putExtra(POST_LINKEDIN_LINK, "https://play.google.com/store/apps/details?id=parimi.com.umentor&ah=NbcuyPJk-gNdxj-c8CVL4NH7YLk");
+        startActivity(intent);
     }
 
 

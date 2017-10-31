@@ -93,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 999 ;
     private static final int RC_PHOTO_PICKER = 2;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         UMentorDaggerInjector.get().inject(this);
@@ -310,9 +312,11 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case RC_SIGN_IN :
                 if(resultCode == RESULT_OK)

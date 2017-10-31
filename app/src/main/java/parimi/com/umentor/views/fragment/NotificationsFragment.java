@@ -203,6 +203,8 @@ public class NotificationsFragment extends Fragment implements ButtonClickInterf
                         fragment = new ProfileFragment();
                     } else if(notificationType.equals(NotificationType.MESSAGE)) {
                         fragment = new SendMessageFragment();
+                    } else if(notificationType.equals(NotificationType.RATING)) {
+                        fragment = new ProfileFragment();
                     }
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(USER, user);

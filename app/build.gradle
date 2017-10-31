@@ -10,11 +10,11 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "parimi.com.umentor"
-        minSdkVersion 16
-        targetSdkVersion 24
+        minSdkVersion 19
+        targetSdkVersion 26
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -39,13 +39,11 @@ def butterknife_version = "8.8.1"
 def dagger_version = "2.6"
 
 dependencies {
-
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_version}"
     annotationProcessor "com.google.dagger:dagger-compiler:${dagger_version}"
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // Required only if Twitter login support is required
-    compile('com.twitter.sdk.android:twitter-core:3.0.0@aar') { transitive = true }
-    // Displaying images
+
     // Displaying images
     compile "com.jakewharton:butterknife:${butterknife_version}"
     compile "com.google.dagger:dagger:${dagger_version}"
@@ -66,5 +64,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
+    compile project(':androidlinkedinintegration')
 }
 apply plugin: 'com.google.gms.google-services'
