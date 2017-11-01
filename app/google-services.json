@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "987598133433-t6ubgeas0gom5ohjv3ratb4u7f0uuuk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "parimi.com.umentor",
+            "certificate_hash": "f8588a0b0d80874979748122f2147f068fca2e3c"
+          }
+        },
+        {
+          "client_id": "987598133433-2fbeab6lan6r2mogl4o3efqtc9lm6hiv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "parimi.com.umentor",
+            "certificate_hash": "08fc40788a01affe0bccc0edd7e191272d5d4fab"
+          }
+        },
+        {
           "client_id": "987598133433-8v98tvlph23m2hbtqessdksbsn54j4lc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +46,9 @@
       "api_key": [
         {
           "current_key": "AIzaSyCuD0edrOgum9172NQxjonW0WEVEE849bY"
+        },
+        {
+          "current_key": "AIzaSyC_onhOXQXjphuXLRa7fMYcwLaPteNMft8"
         }
       ],
       "services": {
