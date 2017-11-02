@@ -222,7 +222,7 @@
                 style="@style/whiteText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_transparent_button"
+                android:background="@drawable/round_disabled_button"
                 android:text="@string/save" />
         </LinearLayout>
     </LinearLayout>

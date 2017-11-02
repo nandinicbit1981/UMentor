@@ -111,6 +111,7 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
         ButterKnife.bind(this, view);
         Bundle bundle = getArguments();
 
+
         storageReference = FirebaseStorage.getInstance().getReference();
         if (bundle != null) {
             user = (User) bundle.get(USER);
@@ -178,6 +179,8 @@ public class EditProfileFragment extends Fragment implements CheckBoxClickInterf
             saveButton.setEnabled(false);
             saveButton.setBackground(getActivity().getDrawable(R.drawable.round_disabled_button));
         }
+
+
 
     }
 

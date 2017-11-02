@@ -18,4 +18,9 @@ public class Category {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.category == ((Category) o).getCategory();
+    }
 }

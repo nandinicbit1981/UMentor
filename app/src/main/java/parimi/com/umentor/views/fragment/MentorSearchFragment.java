@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +32,7 @@ import parimi.com.umentor.models.Notification;
 import parimi.com.umentor.models.User;
 import parimi.com.umentor.views.activity.MainActivity;
 
-import static parimi.com.umentor.helper.Constants.*;
+import static parimi.com.umentor.helper.Constants.FILTEREDMENTORS;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -43,10 +44,13 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
 
     @BindView(R.id.gridview)
     GridView gridView;
+
+    @BindView(R.id.search)
+    Button searchBtn;
     List<Category> selectedCategories = new ArrayList<>();
     List<User> filteredMentors = new ArrayList<>();
     List<String> filteredMentorUid = new ArrayList<>();
-
+    CategoryAdapter categoryAdapter;
 
     public MentorSearchFragment() {
         // Required empty public constructor
@@ -72,7 +76,7 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
                     categories.add(new Category(categoriesSnapshot.getValue().toString()));
                 }
 
-                CategoryAdapter categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.MENTORSEARCHFRAGMENT);
+                categoryAdapter = new CategoryAdapter(getActivity(), categories, Constants.MENTORSEARCHFRAGMENT);
                 categoryAdapter.setOnCategorySelected(MentorSearchFragment.this);
                 gridView.setAdapter(categoryAdapter);
 
@@ -90,9 +94,29 @@ public class MentorSearchFragment extends android.support.v4.app.Fragment implem
     @Override
     public void onItemSelected(String name) {
         Category category = new Category(name);
+        List<String> categoryStringList = new ArrayList<>();
         if(!selectedCategories.contains(category)) {
             selectedCategories.add(category);
+        } else {
+            selectedCategories.remove(category);
         }
+
+        for(Category category1 : selectedCategories) {
+            if(!categoryStringList.contains(category1.getCategory())) {
+                categoryStringList.add(category1.getCategory());
+            } else {
+                categoryStringList.remove(category1.getCategory());
+            }
+
+        }
+        if(selectedCategories.size() > 0) {
+            searchBtn.setEnabled(true);
+            searchBtn.setBackground(getContext().getDrawable(R.drawable.round_blue_button));
+        } else {
+            searchBtn.setEnabled(false);
+            searchBtn.setBackground(getContext().getDrawable(R.drawable.round_disabled_button));
+        }
+        categoryAdapter.setCategoriesSelected(categoryStringList);
     }
 
     @Override

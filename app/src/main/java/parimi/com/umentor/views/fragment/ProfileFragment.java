@@ -125,6 +125,8 @@ public class ProfileFragment extends Fragment {
             user = (User) bundle.get(USER);
             if(!currentUser.getId().equals(user.getId())) {
                 editButton.setText(getString(R.string.request_mentor));
+            } else {
+                linkedInShareBtn.setVisibility(View.VISIBLE);
             }
            // ratingBar.setEnabled(false);
             ratingBar.setClickable(false);

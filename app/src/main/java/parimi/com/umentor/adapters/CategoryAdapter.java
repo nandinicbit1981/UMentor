@@ -72,14 +72,21 @@ public class CategoryAdapter extends BaseAdapter {
                 // set value into textview
                 final Button button = (Button) gridView.findViewById(R.id.category_name);
                 button.setText(categories.get(i).getCategory().toString());
-
+                final String category = categories.get(i).getCategory();
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                        if(selectedCategories.contains(category)) {
+                            button.setBackground(context.getDrawable(R.drawable.round_transparent_button));
+                        } else {
+                            button.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                        }
                         buttonClickInterface.onItemSelected(((AppCompatButton)view).getText().toString());
+
                     }
                 });
+
+
             } else {
                 // get layout from mobile.xml
                 gridView = inflater.inflate(R.layout.category_list_item_checkbox, null);
